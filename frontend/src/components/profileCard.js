@@ -4,6 +4,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 
 import stockPhoto from '../static/stock_photo.jpeg';
+import { PopupButton } from "react-calendly";
 
 
 const ProfileCard = () => {
@@ -27,9 +28,7 @@ const ProfileCard = () => {
                 />
 
                 <CardContent>
-                    <Typography sx={{mb: 1.5}} color="text.secondary">
-                        Meet me [Link to Calendly]
-                    </Typography>
+    
                     <Typography variant="body">
                         [Bio] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis id volutpat libero. 
                         Sed aliquam vitae nunc vel imperdiet. Suspendisse sit amet sapien porttitor, accumsan elit molestie, faucibus nisi. 
@@ -39,7 +38,17 @@ const ProfileCard = () => {
 
                 </CardContent>
             </Card>
+            <PopupButton url="https://calendly.com/soto26938"
+                        /*
+                        * react-calendly uses React's Portal feature (https://reactjs.org/docs/portals.html) to render the popup modal. As a result, you'll need to
+                        * specify the rootElement property to ensure that the modal is inserted into the correct domNode.
+                        * see more: https://github.com/tcampb/react-calendly
+                        */
+                        rootElement={document.getElementById("root")}
+                        text="Meet Me!"  
+            />
         </Box>
+        
     );
 };
 
