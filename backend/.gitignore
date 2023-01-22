@@ -1,5 +1,5 @@
 .env
-client-secret.json
+client_secret.json
 __pycache__
 google_env
 env/
