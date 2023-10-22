@@ -44,7 +44,5 @@ class FlowManager:
         return id_info
     
     def get_flow_authorization_url(self):
-        authorization_url, session = self.flow.authorization_url()
-        state = session["state"]
+        authorization_url, state = self.flow.authorization_url()
         return authorization_url, state
-
