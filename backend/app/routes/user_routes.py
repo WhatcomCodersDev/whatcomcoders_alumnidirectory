@@ -47,10 +47,7 @@ def update_user_info():
 @bp.route("/api/current_user", methods=["GET"])
 @jwt_required()
 def current_user():
-    print("request", request)
-    print("cookies", request.cookies)
     current_user_email = get_jwt_identity()
-    # print(current_user_email)
     user_data = firestore_db.get_user_data_by_email(current_user_email) 
     return jsonify(name=user_data['name'])
 

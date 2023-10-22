@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/authContext";
 import logo from "../static/logo.png";
 
 const NavBar = () => {
-  const { isLoggedIn, userName } = useContext(AuthContext);
+  const { isLoggedIn, userName, logout } = useContext(AuthContext);
 
   return (
     <AppBar
@@ -42,9 +42,15 @@ const NavBar = () => {
         </Box>
         <Box display="flex">
           {isLoggedIn ? (
-            <Button color="inherit" component={Link} to="/userinfo">
-              {userName}
-            </Button>
+            <>
+              <Button color="inherit" component={Link} to="/userinfo">
+                {userName}
+              </Button>
+              {/* This is the new logout button */}
+              <Button color="inherit" onClick={logout}>
+                Logout
+              </Button>
+            </>
           ) : (
             <Button color="inherit" component={Link} to="/login">
               Login

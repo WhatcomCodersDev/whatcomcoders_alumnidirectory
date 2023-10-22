@@ -4,7 +4,7 @@ import { AuthContext } from "../contexts/authContext";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState(null);
 
   const fetchCurrentUserAPI = async () => {
@@ -28,6 +28,27 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/auth/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+      if (response.ok) {
+        setIsLoggedIn(false);
+        setUserName(null);
+      } else {
+        const errorText = await response.text();
+        console.error(`Logout Error: ${response.status} - ${errorText}`);
+      }
+    } catch (error) {
+      console.error("Logout failed:", error.message);
+    }
+  };
+
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
@@ -47,7 +68,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userName }}>
+    <AuthContext.Provider value={{ isLoggedIn, userName, logout }}>
       {children}
     </AuthContext.Provider>
   );

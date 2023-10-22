@@ -47,3 +47,10 @@ def login():
     return Response(response=json.dumps({'auth_url': authorization_url}),
                     status=200,
                     mimetype='application/json')
+
+@bp.route("/auth/logout", methods=["POST"])
+def logout():
+    response = make_response()
+    # Clear the access_token_cookie
+    response.set_cookie('access_token_cookie', '', expires=0)
+    return response
