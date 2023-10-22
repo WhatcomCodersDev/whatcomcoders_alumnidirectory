@@ -3,6 +3,7 @@ client_secret.json
 __pycache__
 google_env
 env/
+gcloud_secrets.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
