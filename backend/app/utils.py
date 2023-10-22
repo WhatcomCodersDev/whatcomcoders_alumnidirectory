@@ -8,7 +8,6 @@ collections.Iterable = collections.abc.Iterable
 
 from google_auth_oauthlib.flow import Flow
 from google.cloud import storage
-from flask import current_app
 
 def setup_google_auth_flow()-> Flow:
     client_secrets_file = os.path.join(

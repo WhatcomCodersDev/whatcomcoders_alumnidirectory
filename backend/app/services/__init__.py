@@ -1,21 +1,13 @@
-import logging 
-
-from google.cloud import firestore 
+from app.services.jwt_manager import jwt_manager
+from app.services.flow_manager import FlowManager
+from app.services.logger_manager import LoggerManager
+from app.services.firestore_wrapper import FirestoreDBWrapper
 from app.utils import setup_google_auth_flow
-from flask_jwt_extended import JWTManager
+from google.cloud import firestore 
 
-firestore_db = firestore.Client()
+firestore_client = firestore.Client()
 flow = setup_google_auth_flow()
-jwt_manager = JWTManager()
 
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s', datefmt='%d/%m/%Y %H:%M:%S')
-handler = logging.StreamHandler()
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-
-file_handler = logging.FileHandler('application.log')
-file_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
+flow_manager = FlowManager(flow)
+firestore_db = FirestoreDBWrapper(firestore_client)
+logger_manager = LoggerManager()
