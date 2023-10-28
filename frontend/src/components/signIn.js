@@ -3,11 +3,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = (props) => {
-  //   const history = useNavigate();
+  const history = useNavigate();
 
   const handleLogin = (e) => {
     props.login(e);
-    // history.push("/userinfo");
+    history.push("/userinfo");
   };
   return (
     <div style={{ padding: "10px", border: "2px solid black", margin: "20px" }}>

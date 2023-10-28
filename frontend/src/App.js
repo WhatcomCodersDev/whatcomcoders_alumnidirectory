@@ -5,8 +5,8 @@ import React from "react";
 import Axios from "axios";
 import NavBar from "./components/NavBar";
 import UserInfo from "./components/UserInfo";
-import ProfileCardsDirectory from "./components/ProfileCardsDirectory";
 import PrivateRoute from "./components/PrivateRoute";
+import ProfileCardsDirectory from "./pages/ProfileCardsDirectory";
 
 const Home = () => <div>Home Page</div>;
 const About = () => <div>About Page</div>;

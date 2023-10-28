@@ -33,18 +33,19 @@ const UserInfo = ({ defaultEmail = "", defaultPicture = "" }) => {
           credentials: "include",
         });
         const data = await response.json();
-
-        setName(data.name || "");
-        setEmail(data.email || "");
-        setCompany(data.company || "");
-        setJobTitle(data.jobTitle || "");
-        setLinkedinUrl(data.linkedinUrl || "");
-        setDescription(data.description || "");
-        setPicture(data.picture || "");
-        setCalendlyUrl(data.calendlyUrl || "");
-        setReferral(data.referral || false);
-        setMentoring(data.mentoring || false);
-        setCoffeeChat(data.coffeeChat || false);
+        if (data) {
+          setName(data.name);
+          setEmail(data.email);
+          setCompany(data.company);
+          setJobTitle(data.jobTitle);
+          setLinkedinUrl(data.linkedinUrl);
+          setDescription(data.description);
+          setPicture(data.picture);
+          setCalendlyUrl(data.calendlyUrl);
+          setReferral(data.referral || false);
+          setMentoring(data.mentoring || false);
+          setCoffeeChat(data.coffeeChat || false);
+        }
       } catch (error) {
         console.log("Failed to fetch user profile:", error);
       }
@@ -148,7 +149,7 @@ const UserInfo = ({ defaultEmail = "", defaultPicture = "" }) => {
         />
         <textarea
           className="text-area"
-          placeholder="Description"
+          placeholder="Write your bio int the 3rd person. Include: What your're doing now. Past Experiences/Accomplishments. Something fun and personal. (at least 300 chars please)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />

@@ -4,6 +4,10 @@
   position: relative;
   display: inline-block;
   transition: all 0.3s;
+
+  /* display: flex; */
+  /* flex-direction: row; */
+  align-items: center;
 }
 
 .card-container.fullscreen {
@@ -27,7 +31,10 @@
   overflow-y: visible;
   display: flex;
   flex-direction: column; /* Makes sure the content stays at the bottom when in fullscreen */
-
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .profile-card.fullscreen {
@@ -35,7 +42,6 @@
   height: 70%;
   max-height: 70%; 
   max-width: 600px;
-  overflow-y: auto;
   background-color: #fff;
   border-radius: 15px; /* Soft rounded corners for fullscreen */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
@@ -46,16 +52,23 @@
 }
 
 .profile-card.fullscreen .card-content {
-  display: block; /* Show this section in fullscreen */
+  display: block; 
   padding: 20px;
   overflow-y: auto;
+  z-index: 10;
 }
 
 .card-media {
   height: 275px;  /* Give it a fixed height for the normal state */
   width: 275px;
+  border-radius: 50%;
   background-size: cover;
-  transition: height 0.3s, width 0.3s;  /* Transition for smooth scaling */
+  transition: height 0.3s, width 0.3s;  /*Transition for smooth scaling */
+}
+
+.card-media:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
 }
 
 .profile-card.fullscreen .card-media {
@@ -67,9 +80,47 @@
 
 }
 
+.profile-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.profile-card .user-name {
+  font-size: 24px;
+  font-weight: 600; 
+}
+
+.profile-card .user-position, .profile-card .user-company {
+  font-size: 18px;
+  font-weight: 400;
+  color: grey;
+}
+
+.profile-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+
 
 .card-content {
-  display: none; /* Hide this section by default */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+  margin: auto;
+}
+
+.card-short-content {
+  display: block;
+  max-height: 3rem;
+  overflow: hidden;
+}
+
+.card-short-content, .card-content {
+  font-size: 16px;
+  margin-top: 10px;
 }
 
 .card-media.fullscreen {
@@ -81,6 +132,7 @@
 .user-info {
   text-align: center;
   margin-top: 8px;
+  font-weight: bold
 }
 
 .user-details {
@@ -100,12 +152,13 @@
 }
 
 .popup-button {
-  z-index: 2;  /* a value higher than the fullscreen card's z-index */
+  z-index: 1100;  /* a value higher than the fullscreen card's z-index */
   position: relative;  /* to establish a stacking context for the z-index */
 }
 
 
 .popup-button.fullscreen {
+  z-index: 1100;
   margin-top: 20px;
 }
   
@@ -159,3 +212,8 @@
     opacity: 0.7; /* Reduce the opacity to show it's disabled */
 }
 
+.interest-icons {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+}
