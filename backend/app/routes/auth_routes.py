@@ -21,10 +21,11 @@ def callback():
     id_info = flow_manager.get_id_info(credentials)
     user_info = flow_manager.get_user_info(credentials)
     
-    if user_info.get("picture"):
-        upload_photo_to_bucket(user_info.get("picture"), id_info.get("sub"))
+    if not firestore_db.get_user_data_by_email(user_info.get("email")):
+        if user_info.get("picture"):
+            upload_photo_to_bucket(user_info.get("picture"), id_info.get("sub"))
+        firestore_db.store_user_in_db(user_info)
 
-    firestore_db.store_user_in_db(user_info)
     access_token = create_access_token(identity=user_info.get("email"))
     redirect_url = "http://localhost:3000"
     # redirect_url = f'{current_app.config["BASE_URL"]}'

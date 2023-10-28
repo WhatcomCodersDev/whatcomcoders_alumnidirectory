@@ -6,18 +6,14 @@ collections.Iterable = collections.abc.Iterable
 class FirestoreDBWrapper:
     def __init__(self, firestore_client):
         self.firestore_client = firestore_client 
-        print("firestore_client", firestore_client)
 
     def store_user_in_db(self, user_info: dict) -> None:
-        print("self.firestore_client", self.firestore_client)
         """Stores the user info in Firestore"""
         user_ref = self.firestore_client.collection('users').document(user_info.get('email'))
         user_ref.set(user_info)
 
     def get_user_data_by_email(self, email: str) -> dict:
         """Retrieves user data from Firestore by email"""
-        print("self.firestore_client", self.firestore_client)
-
         user_ref = self.firestore_client.collection('users').document(email)
         user_data = user_ref.get()
 
