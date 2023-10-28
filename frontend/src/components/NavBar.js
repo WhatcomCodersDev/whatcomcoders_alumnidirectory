@@ -1,4 +1,5 @@
 import "../styles/theme.css";
+import "../styles/navBar.css";
 import React, { useContext } from "react";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";

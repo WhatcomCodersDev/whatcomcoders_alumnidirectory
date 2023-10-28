@@ -1,0 +1,28 @@
+/* NavBar */
+.appbar {
+    background-color: red;
+    display: flex;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 20px;
+    vertical-align: middle;
+    transition: color 0.3s;
+}
+
+.nav-item:last-child {
+    margin-right: 0; 
+}
+
+.nav-item:hover {
+    color: #ccc;
+}
+
+.logo img {
+    height: 40px;
+    background-color: white;
+    display: inline-block;
+    vertical-align: middle;
+}
