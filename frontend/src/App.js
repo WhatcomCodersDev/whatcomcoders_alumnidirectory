@@ -7,9 +7,9 @@ import NavBar from "./components/NavBar";
 import UserInfo from "./components/UserInfo";
 import PrivateRoute from "./components/PrivateRoute";
 import ProfileCardsDirectory from "./pages/ProfileCardsDirectory";
+import LandingPage from "./pages/LandingPage";
+import ResourcesPage from "./pages/ResourcesPage";
 
-const Home = () => <div>Home Page</div>;
-const About = () => <div>About Page</div>;
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function App() {
@@ -31,8 +31,8 @@ function App() {
           path="/login"
           element={<SignIn login={handleClick}></SignIn>}
         />
-        <Route path="/" element={<PrivateRoute component={Home} />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/about" element={<ResourcesPage />} />
         <Route
           path="/userinfo"
           element={<PrivateRoute component={UserInfo} />}

@@ -43,7 +43,6 @@ const NavBar = () => {
               <Button color="inherit" component={Link} to="/userinfo">
                 {userName}
               </Button>
-              {/* This is the new logout button */}
               <Button color="inherit" onClick={logout}>
                 Logout
               </Button>

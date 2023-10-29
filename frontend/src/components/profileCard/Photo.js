@@ -5,6 +5,7 @@ const Photo = ({ data, isFullscreen }) => {
   return (
     <CardMedia
       sx={{
+        objectFit: "cover",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
