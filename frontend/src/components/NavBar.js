@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/authContext";
-import logo from "../static/logo.png";
+import Logo from "./Logo";
 
 const NavBar = () => {
   const { isLoggedIn, userName, logout } = useContext(AuthContext);
@@ -16,18 +16,15 @@ const NavBar = () => {
       className="appbar"
       position="static"
     >
-      <Toolbar>
+      <Toolbar sx={{ minHeight: 64 }}>
+        <Logo />
         <Box display="flex" flexGrow={1}>
           <Typography
             variant="h6"
             style={{ marginRight: "20px" }}
             component={Link}
             to="/"
-          >
-            <div style={{ backgroundColor: "white", display: "inline-block" }}>
-              <img src={logo} alt="whatcom coders logo" height="40px" />
-            </div>{" "}
-          </Typography>
+          ></Typography>
           <Typography
             variant="h6"
             component={Link}

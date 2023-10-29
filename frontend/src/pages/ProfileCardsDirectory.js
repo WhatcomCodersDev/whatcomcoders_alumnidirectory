@@ -1,8 +1,8 @@
 import "../styles/theme.css";
-import "../styles/profileCardsDirectory.css";
 import React, { useState, useEffect } from "react";
 import ProfileCard from "../components/profileCard/ProfileCard";
 import SearchBar from "../components/SearchBar";
+import Box from "@mui/material/Box";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 console.log(apiUrl);
@@ -50,11 +50,31 @@ const ProfileCardsDirectory = () => {
     <div>
       <SearchBar onSearch={handleSearch} />
 
-      <div className="profile-grid-container">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          flexWrap: "wrap",
+          justifyContent: "flex-start",
+          gap: 2,
+          padding: "20px 0",
+        }}
+      >
         {filteredUsers.map((user) => (
-          <ProfileCard key={user.email} data={user} />
+          <Box
+            key={user.email}
+            sx={{
+              flex: "0 0 275px",
+              height: "650px",
+              width: "650px",
+              overflow: "hidden",
+              // marginBottom: 1,
+            }}
+          >
+            <ProfileCard data={user} />
+          </Box>
         ))}
-      </div>
+      </Box>
     </div>
   );
 };

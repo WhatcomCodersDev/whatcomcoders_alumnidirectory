@@ -1,23 +1,15 @@
-import "../../styles/profileCard.css";
 import React, { useState } from "react";
-import {
-  CardContent,
-  Typography,
-  ClickAwayListener,
-  Card,
-  CardMedia,
-} from "@mui/material";
-import { PopupButton } from "react-calendly";
-import CoffeeIcon from "@mui/icons-material/Coffee";
-import BusinessIcon from "@mui/icons-material/Business";
-import BookIcon from "@mui/icons-material/Book";
+import { ClickAwayListener, Card, Box } from "@mui/material";
 import Photo from "./Photo";
+import DescriptionCard from "./Description";
+import PersonalInfo from "./PersonalInfo";
+import GeneralInfo from "./GeneralInfo";
 
 const ProfileCard = ({ data }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const handleToggleFullscreen = (e) => {
-    if (isFullscreen === false) {
+    if (!isFullscreen) {
       const cardMediaElement = document.querySelector(
         ".MuiCard-root.profile-card"
       );
@@ -28,73 +20,67 @@ const ProfileCard = ({ data }) => {
     }
   };
 
-  const handleClickAway = (e) => {
+  const handleClickAway = () => {
     setIsFullscreen(false);
   };
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
-      <div className={`card-container ${isFullscreen ? "fullscreen" : ""}`}>
+      <Box
+        sx={{
+          margin: "2px",
+          transform: "scale(0.9)",
+          position: "relative",
+          display: "inline-block",
+          transition: "all 0.3s",
+          alignItems: "center",
+          width: isFullscreen ? "90%" : "275px",
+          height: isFullscreen ? "90%" : "650px",
+          maxHeight: "525px",
+          maxWidth: "600px",
+          overflow: "hidden",
+          ...(isFullscreen && {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            justifyContent: "center",
+            display: "flex",
+            zIndex: 1000,
+          }),
+        }}
+      >
         <Card
-          className={`profile-card ${isFullscreen ? "fullscreen" : ""}`}
+          sx={{
+            width: isFullscreen ? "90%" : "80%",
+            height: isFullscreen ? "90%" : "80%",
+            cursor: "pointer",
+            transition: "all 0.3s",
+            overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "20px",
+            borderRadius: "15px",
+            boxShadow: isFullscreen
+              ? "0 10px 20px rgba(0, 0, 0, 0.2)"
+              : "0 4px 8px rgba(0, 0, 0, 0.1)",
+            ":hover": {
+              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.15)",
+            },
+            border: "3px solid #333", // Add this line for the outline
+          }}
           onClick={handleToggleFullscreen}
         >
           <Photo data={data} isFullscreen={isFullscreen} />
-
-          {data.calendlyUrl && (
-            <PopupButton
-              className="popup-button"
-              url="https://calendly.com/soto26938"
-              rootElement={document.getElementById("root")}
-              text="Meet Me!"
-            />
-          )}
-          {isFullscreen ? (
-            <CardContent className="card-content">
-              <Typography variant="body2">
-                {data.description || "Lorem ipsum..."}
-              </Typography>
-              {/* <div className="interest-icons">
-                {data.coffeeChat && (
-                  <CoffeeIcon className="icon" fontSize="small" />
-                )}
-                {data.referral && (
-                  <BusinessIcon className="icon" fontSize="small" />
-                )}
-                {data.mentoring && (
-                  <BookIcon className="icon" fontSize="small" />
-                )}
-              </div> */}
-            </CardContent>
-          ) : (
-            <CardContent className="card-short-content">
-              <Typography variant="body2" noWrap>
-                {data.description?.substr(0, 100) + "..." || "Lorem ipsum..."}
-                {/* {isFullscreen
-                  ? data.description || "Lorem ipsum..."
-                  : data.description.substr(0, 100) + "..."} */}
-              </Typography>
-              <div className="interest-icons">
-                {data.coffeeChat && (
-                  <CoffeeIcon className="icon" fontSize="small" />
-                )}
-                {data.referral && (
-                  <BusinessIcon className="icon" fontSize="small" />
-                )}
-                {data.mentoring && (
-                  <BookIcon className="icon" fontSize="small" />
-                )}
-              </div>
-            </CardContent>
-          )}
+          <GeneralInfo data={data} isFullscreen={isFullscreen} />
+          <DescriptionCard data={data} isFullscreen={isFullscreen} />
+          <PersonalInfo data={data} isFullscreen={isFullscreen} />
         </Card>
-        <div className="user-info">
-          <Typography variant="h6">{data.name || "Name"}</Typography>
-          <Typography variant="body2">
-            {data.company || ""} - {data.jobTitle || ""}
-          </Typography>
-        </div>
-      </div>
+      </Box>
     </ClickAwayListener>
   );
 };
