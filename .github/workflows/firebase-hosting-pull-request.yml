@@ -20,3 +20,6 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GOTHIC_SLED_375305 }}
           projectId: gothic-sled-375305
+          entryPoint: frontend/
+          # The following line is optional and can be included if you want to deploy PRs to a preview channel
+          # channelId: "a unique identifier for the preview channel, such as PR number"

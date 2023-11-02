@@ -21,3 +21,4 @@ jobs:
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_GOTHIC_SLED_375305 }}"
           channelId: live
           projectId: gothic-sled-375305
+          entryPoint: frontend/
