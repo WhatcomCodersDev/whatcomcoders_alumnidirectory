@@ -3,14 +3,16 @@ import { Button, Container, Typography, Box, Grid, Link } from "@mui/material";
 import styled from "@emotion/styled";
 
 const HeroImage = styled(Box)`
+  border: 1px solid red; // For debugging
+  //   background-color: blue; // For debugging
   height: 500px;
-  background-image: url("path-to-your-hero-image.jpg");
+  background-image: url("./stock_photo.jpeg");
   background-size: cover;
   background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: black;
 `;
 
 const LandingPage = () => {
@@ -22,11 +24,11 @@ const LandingPage = () => {
         justifyContent="space-between"
         alignItems="center"
         marginBottom={4}
+        marginTop={2}
       >
-        <Typography variant="h4">WWU CS Connect</Typography>
-        <Button variant="contained" color="primary">
-          Login/Join
-        </Button>
+        <Typography variant="h3" flexGrow={1} textAlign="center">
+          Whatcom Coders Alumni Network
+        </Typography>
       </Box>
 
       {/* Hero Section */}
@@ -38,7 +40,7 @@ const LandingPage = () => {
           <Typography variant="h5" marginBottom={3}>
             Discover, Engage & Grow Together
           </Typography>
-          <Button variant="contained" color="secondary" size="large">
+          <Button variant="contained" color="primary" size="large">
             Join our Waitlist
           </Button>
         </Box>
@@ -77,7 +79,7 @@ const LandingPage = () => {
         <Typography variant="h5" gutterBottom>
           Explore Our Resources
         </Typography>
-        <Button variant="outlined" color="primary">
+        <Button variant="contained" color="primary">
           Check Out Resources
         </Button>
       </Box>
@@ -91,7 +93,7 @@ const LandingPage = () => {
           component={Link}
           href="https://discord.gg/your-discord-link"
           variant="contained"
-          color="secondary"
+          color="primary"
           marginTop={2}
         >
           Join Discord

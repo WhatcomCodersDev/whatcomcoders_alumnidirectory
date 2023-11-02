@@ -34,8 +34,8 @@ const ProfileCard = ({ data }) => {
           display: "inline-block",
           transition: "all 0.3s",
           alignItems: "center",
-          width: isFullscreen ? "90%" : "275px",
-          height: isFullscreen ? "90%" : "650px",
+          width: isFullscreen ? "90%" : "90%",
+          height: isFullscreen ? "90%" : "90%",
           maxHeight: "525px",
           maxWidth: "600px",
           overflow: "hidden",
@@ -76,9 +76,9 @@ const ProfileCard = ({ data }) => {
           onClick={handleToggleFullscreen}
         >
           <Photo data={data} isFullscreen={isFullscreen} />
-          <GeneralInfo data={data} isFullscreen={isFullscreen} />
+          {/* <GeneralInfo data={data} isFullscreen={isFullscreen} />
           <DescriptionCard data={data} isFullscreen={isFullscreen} />
-          <PersonalInfo data={data} isFullscreen={isFullscreen} />
+          <PersonalInfo data={data} isFullscreen={isFullscreen} /> */}
         </Card>
       </Box>
     </ClickAwayListener>
