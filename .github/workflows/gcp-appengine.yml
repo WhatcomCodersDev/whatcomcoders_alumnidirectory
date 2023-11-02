@@ -23,12 +23,12 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0
         with:
-          project_id: your-gcp-project-id
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: gothic-sled-375305
+          service_account_key: "${{ secrets.GCP_SA_KEY }}"
           export_default_credentials: true
 
       # Deploy to Google App Engine (only for merges, not for PRs)
       - name: Deploy to App Engine
         if: github.event_name == 'push'
-        run: gcloud app deploy backend/app.yaml --project your-gcp-project-id
+        run: gcloud app deploy backend/app.yaml --project gothic-sled-375305
         working-directory: ./backend
