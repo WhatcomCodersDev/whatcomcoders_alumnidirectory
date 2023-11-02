@@ -103,8 +103,19 @@ const UserInfo = ({ defaultEmail = "", defaultPicture = "" }) => {
   };
 
   return (
-    <div className="user-info-container">
+    <div className="user-info-container" style={{ marginTop: "30px" }}>
       <div className="input-group">
+        <img
+          className="profile-picture"
+          src={picture}
+          alt="User"
+          style={{ display: "block", marginLeft: "auto", marginRight: "auto" }}
+        />
+        <input
+          className="file-input"
+          type="file"
+          onChange={(e) => setPicture(URL.createObjectURL(e.target.files[0]))}
+        />
         <input
           className="text-input"
           type="text"
@@ -152,12 +163,6 @@ const UserInfo = ({ defaultEmail = "", defaultPicture = "" }) => {
           placeholder="Write your bio int the 3rd person. Include: What your're doing now. Past Experiences/Accomplishments. Something fun and personal. (at least 300 chars please)"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-        />
-        <img className="profile-picture" src={picture} alt="User" />
-        <input
-          className="file-input"
-          type="file"
-          onChange={(e) => setPicture(URL.createObjectURL(e.target.files[0]))}
         />
       </div>
 

@@ -5,12 +5,13 @@ const Photo = ({ data, isFullscreen }) => {
   return (
     <CardMedia
       sx={{
+        flexShrink: 0,
         objectFit: "cover",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: isFullscreen ? "90%" : "100%",
-        width: isFullscreen ? "80%" : "100%",
+        height: isFullscreen ? "90%" : "200px",
+        width: isFullscreen ? "80%" : "200px",
         borderRadius: "0%", // Remove rounding
         backgroundSize: "cover",
         transition: "height 0.3s, width 0.3s",
@@ -18,8 +19,6 @@ const Photo = ({ data, isFullscreen }) => {
           transform: "scale(1.05)",
           transition: "transform 0.3s",
         },
-        maxWidth: "200px",
-        maxHeight: "200px",
       }}
       className="card-media"
       image={data.picture || stockPhoto}

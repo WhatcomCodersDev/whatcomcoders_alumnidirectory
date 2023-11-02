@@ -20,10 +20,10 @@ const DescriptionCard = ({ data, isFullscreen }) => {
       sx={{
         whiteSpace: "wrap",
         overflow: "hidden",
-        overflowY: isFullscreen ? "scroll" : "auto",
+        overflowY: isFullscreen ? "scroll" : "hidden",
         textOverflow: "ellipsis",
-        maxHeight: "200px",
-        maxWidth: "800px",
+        // maxHeight: "200px",
+        // maxWidth: "800px",
         margin: "auto",
         height: isFullscreen ? "auto" : "200px",
         ...(isFullscreen && {

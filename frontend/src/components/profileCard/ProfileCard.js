@@ -7,6 +7,7 @@ import GeneralInfo from "./GeneralInfo";
 
 const ProfileCard = ({ data }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [activeCardId, setActiveCardId] = useState(null);
 
   const handleToggleFullscreen = (e) => {
     if (!isFullscreen) {
@@ -43,12 +44,16 @@ const ProfileCard = ({ data }) => {
             position: "fixed",
             top: 0,
             left: 0,
+            right: 0,
+            bottom: 0,
             width: "100vw",
             height: "100vh",
             backgroundColor: "rgba(0, 0, 0, 0.5)",
             justifyContent: "center",
+            alignItems: "center",
             display: "flex",
             zIndex: 1000,
+            transform: "translate(90%, 30%)", // Centers the card
           }),
         }}
       >
@@ -76,9 +81,9 @@ const ProfileCard = ({ data }) => {
           onClick={handleToggleFullscreen}
         >
           <Photo data={data} isFullscreen={isFullscreen} />
-          {/* <GeneralInfo data={data} isFullscreen={isFullscreen} />
+          <GeneralInfo data={data} isFullscreen={isFullscreen} />
           <DescriptionCard data={data} isFullscreen={isFullscreen} />
-          <PersonalInfo data={data} isFullscreen={isFullscreen} /> */}
+          <PersonalInfo data={data} isFullscreen={isFullscreen} />
         </Card>
       </Box>
     </ClickAwayListener>
