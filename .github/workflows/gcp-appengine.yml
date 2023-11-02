@@ -31,4 +31,3 @@ jobs:
       - name: Deploy to App Engine
         if: github.event_name == 'push'
         run: gcloud app deploy backend/app.yaml --project gothic-sled-375305
-        working-directory: ./backend

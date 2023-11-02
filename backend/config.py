@@ -38,3 +38,4 @@ class ProductionConfig(Config):
     BASE_URL = "https://www.whatcomcoders.com/"
     DOMAIN = ".whatcomcoders.com"
     SAMESITE_COOKIE_SETTING = "None"
+    DEBUG = False
