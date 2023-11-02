@@ -9,7 +9,7 @@ console.log(apiUrl);
 
 const ProfileCardsDirectory = () => {
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
 
   const handleSearch = (term) => {

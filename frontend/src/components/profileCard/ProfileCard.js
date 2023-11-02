@@ -7,7 +7,6 @@ import GeneralInfo from "./GeneralInfo";
 
 const ProfileCard = ({ data }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [activeCardId, setActiveCardId] = useState(null);
 
   const handleToggleFullscreen = (e) => {
     if (!isFullscreen) {

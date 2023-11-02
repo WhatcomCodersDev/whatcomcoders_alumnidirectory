@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/authContext";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const UserInfo = ({ defaultEmail = "", defaultPicture = "" }) => {
-  const { isLoggedIn, userName } = useContext(AuthContext);
+  const { userName } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState(null);
