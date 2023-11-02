@@ -35,7 +35,8 @@ const GeneralInfo = ({ data, isFullscreen }) => {
       {data.calendlyUrl && (
         <Button
           sx={{
-            marginTop: 2,
+            marginTop: 1,
+            // marginBottom: 2,
             backgroundColor: "#00a2ff",
             color: "white",
             "&:hover": {

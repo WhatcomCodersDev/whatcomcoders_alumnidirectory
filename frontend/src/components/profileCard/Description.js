@@ -9,7 +9,6 @@ const DescriptionCard = ({ data, isFullscreen }) => {
         str
       ) : (
         <>
-          {" "}
           {str} <br />
         </>
       )
@@ -19,25 +18,23 @@ const DescriptionCard = ({ data, isFullscreen }) => {
     <CardContent
       sx={{
         whiteSpace: "wrap",
-        overflow: "hidden",
-        overflowY: isFullscreen ? "scroll" : "hidden",
+        overflow: "scroll",
         textOverflow: "ellipsis",
-        // maxHeight: "200px",
-        // maxWidth: "800px",
-        margin: "auto",
         height: isFullscreen ? "auto" : "200px",
-        ...(isFullscreen && {
-          display: "block",
-          padding: 2,
-          overflowY: "scroll",
-          zIndex: 10,
-        }),
+        width: "800px",
+        margin: "auto",
+        border: "1px solid red", // For debugging
+
+        display: isFullscreen ? "block" : "none",
+        padding: isFullscreen ? 2 : null,
+        overflowY: isFullscreen ? "auto" : "auto",
+        zIndex: isFullscreen ? 10 : null,
       }}
     >
       <Typography
         variant="body1"
         sx={{
-          marginY: 2,
+          // marginY: 2,
           textDecoration: "none",
           textTransform: "none",
           paragraph: true,

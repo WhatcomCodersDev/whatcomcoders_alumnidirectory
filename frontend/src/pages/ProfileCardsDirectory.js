@@ -65,8 +65,8 @@ const ProfileCardsDirectory = () => {
             key={user.email}
             sx={{
               flex: "0 0 275px",
-              height: "650px",
-              width: "650px",
+              height: "850px",
+              width: "850px",
               overflow: "hidden",
               // marginBottom: 1,
             }}

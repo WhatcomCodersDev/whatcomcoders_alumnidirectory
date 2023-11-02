@@ -37,8 +37,8 @@ const ProfileCard = ({ data }) => {
           alignItems: "center",
           width: isFullscreen ? "90%" : "90%",
           height: isFullscreen ? "90%" : "90%",
-          maxHeight: "525px",
-          maxWidth: "600px",
+          maxHeight: isFullscreen ? null : "525px",
+          maxWidth: isFullscreen ? null : "600px",
           overflow: "hidden",
           ...(isFullscreen && {
             position: "fixed",
@@ -53,7 +53,7 @@ const ProfileCard = ({ data }) => {
             alignItems: "center",
             display: "flex",
             zIndex: 1000,
-            transform: "translate(90%, 30%)", // Centers the card
+            // transform: "translate(90%, 30%)", // Centers the card
           }),
         }}
       >

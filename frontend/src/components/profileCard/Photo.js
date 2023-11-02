@@ -10,8 +10,8 @@ const Photo = ({ data, isFullscreen }) => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: isFullscreen ? "90%" : "200px",
-        width: isFullscreen ? "80%" : "200px",
+        height: isFullscreen ? "40%" : "200px",
+        width: isFullscreen ? "30%" : "200px",
         borderRadius: "0%", // Remove rounding
         backgroundSize: "cover",
         transition: "height 0.3s, width 0.3s",
