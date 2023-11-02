@@ -35,6 +35,7 @@ def get_user_data(email):
 @bp.route("/api/people", methods=["GET"])
 def get_all_users():
     users_list = firestore_db.get_all_users()
+
     print(jsonify(users_list))
     return jsonify(users_list)
 

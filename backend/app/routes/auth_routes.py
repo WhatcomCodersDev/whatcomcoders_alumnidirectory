@@ -27,16 +27,16 @@ def callback():
         firestore_db.store_user_in_db(user_info)
 
     access_token = create_access_token(identity=user_info.get("email"))
-    redirect_url = "http://localhost:3000"
-    # redirect_url = f'{current_app.config["BASE_URL"]}'
+    # redirect_url = "http://localhost:3000"
+    redirect_url = f'{current_app.config["BASE_URL"]}'
 
     response = make_response(redirect(redirect_url))
     response.set_cookie('access_token_cookie', 
                         access_token, 
-                        httponly=True, 
-                        samesite='Lax', 
+                        httponly=False, 
+                        samesite=current_app.config["SAMESITE_COOKIE_SETTING"], 
                         secure=True, 
-                        domain='localhost', 
+                        # domain=".whatcomcoders.com", 
                         path='/')
     print(response)
 

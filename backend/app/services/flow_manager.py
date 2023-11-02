@@ -45,4 +45,5 @@ class FlowManager:
     
     def get_flow_authorization_url(self):
         authorization_url, state = self.flow.authorization_url()
+        print("authorization_url", authorization_url)
         return authorization_url, state

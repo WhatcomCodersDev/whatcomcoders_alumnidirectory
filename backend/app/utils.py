@@ -12,6 +12,15 @@ from google.cloud import storage
 def setup_google_auth_flow()-> Flow:
     client_secrets_file = os.path.join(
     pathlib.Path(__file__).parent, "../client_secret.json")
+    
+    flask_env = os.environ.get('FLASK_ENV', default='development')
+    if flask_env == 'development':
+        redirect_uri = "http://localhost:4000/callback"
+    elif flask_env == 'production':
+        redirect_uri = "https://gothic-sled-375305.uc.r.appspot.com/callback"
+    else:
+        raise ValueError(f"Unexpected FLASK_ENV value: {flask_env}")
+
 
     flow = Flow.from_client_secrets_file(
         client_secrets_file=client_secrets_file,
@@ -20,8 +29,7 @@ def setup_google_auth_flow()-> Flow:
             "https://www.googleapis.com/auth/userinfo.email",
             "openid",
         ],
-        redirect_uri="http://localhost:4000/callback"
-        # redirect_uri="https://gothic-sled-375305.firebaseapp.com/callback"
+        redirect_uri=redirect_uri
     )
     return flow
 

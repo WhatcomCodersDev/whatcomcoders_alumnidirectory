@@ -26,12 +26,16 @@ class DevelopmentConfig(Config):
     TESTING = True
     HOST = "0.0.0.0"
     PORT = 4000
-    REDIRECT_URI = "http://localhost:4000/callback"
-    BASE_URL = "http://localhost:4000/"
+    REDIRECT_URI = "http://localhost:4000/callback" 
+    BASE_URL = "http://localhost:3000/"
+    DOMAIN = "localhost"
+    SAMESITE_COOKIE_SETTING = "Lax"
 
 class ProductionConfig(Config):
     HOST = "0.0.0.0"
     PORT = 8080
-    REDIRECT_URI = "https://gothic-sled-375305.firebaseapp.com/callback"
-    BASE_URL = "https://gothic-sled-375305.firebaseapp.com/"
+    REDIRECT_URI = "https://www.whatcomcoders.com/callback" 
+    BASE_URL = "https://www.whatcomcoders.com/"
+    DOMAIN = ".whatcomcoders.com"
+    SAMESITE_COOKIE_SETTING = "None"
 
