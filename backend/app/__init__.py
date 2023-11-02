@@ -10,7 +10,7 @@ from app.services import firestore_db, flow_manager, jwt_manager, logger_manager
 
 def create_flask_app() -> Flask:
     app = Flask(__name__)
-    environment = os.environ.get('FLASK_ENV', default='development')
+    environment = os.environ.get('FLASK_ENV', default='production')
     
     if environment == 'development':
         app.config.from_object('config.DevelopmentConfig')
