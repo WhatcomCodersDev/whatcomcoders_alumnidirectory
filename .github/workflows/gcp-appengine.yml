@@ -1,0 +1,34 @@
+name: Deploy Backend to Google App Engine
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "backend/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "backend/**"
+
+jobs:
+  deploy_backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Setup gcloud CLI
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0
+        with:
+          project_id: your-gcp-project-id
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      # Deploy to Google App Engine (only for merges, not for PRs)
+      - name: Deploy to App Engine
+        if: github.event_name == 'push'
+        run: gcloud app deploy backend/app.yaml --project your-gcp-project-id
+        working-directory: ./backend

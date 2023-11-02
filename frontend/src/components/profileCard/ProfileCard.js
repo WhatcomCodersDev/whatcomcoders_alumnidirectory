@@ -83,7 +83,7 @@ const ProfileCard = ({ data }) => {
           <Photo data={data} isFullscreen={isFullscreen} />
           <GeneralInfo data={data} isFullscreen={isFullscreen} />
           <DescriptionCard data={data} isFullscreen={isFullscreen} />
-          <PersonalInfo data={data} isFullscreen={isFullscreen} />
+          {/* <PersonalInfo data={data} isFullscreen={isFullscreen} /> */}
         </Card>
       </Box>
     </ClickAwayListener>
