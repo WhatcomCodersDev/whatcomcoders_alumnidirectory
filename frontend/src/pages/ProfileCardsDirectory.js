@@ -55,8 +55,8 @@ const ProfileCardsDirectory = () => {
           display: "flex",
           flexDirection: "row",
           flexWrap: "wrap",
-          justifyContent: "flex-start",
-          gap: 2,
+          justifyContent: "center",
+          gap: 0,
           padding: "20px 0",
         }}
       >
@@ -64,11 +64,12 @@ const ProfileCardsDirectory = () => {
           <Box
             key={user.email}
             sx={{
-              flex: "0 0 275px",
-              height: "850px",
-              width: "850px",
+              flex: "0 0 550px",
+              height: "750px",
+              width: "1000px",
               overflow: "hidden",
-              // marginBottom: 1,
+              marginRight: -10,
+              marginBottom: -20,
             }}
           >
             <ProfileCard data={user} />

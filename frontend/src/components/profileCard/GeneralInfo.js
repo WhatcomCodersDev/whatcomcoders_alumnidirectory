@@ -4,10 +4,14 @@ const GeneralInfo = ({ data, isFullscreen }) => {
   return (
     <Box
       sx={{
+        marginTop: isFullscreen ? 0 : 15,
         textAlign: "center",
-        marginTop: 2,
         fontWeight: "bold",
-        height: "200px",
+        // border: "1px solid red", // For debugging
+        width: "300px",
+        height: "150px",
+        marginBottom: 1,
+        // height: "200px",
       }}
     >
       <Typography
@@ -36,7 +40,6 @@ const GeneralInfo = ({ data, isFullscreen }) => {
         <Button
           sx={{
             marginTop: 1,
-            // marginBottom: 2,
             backgroundColor: "#00a2ff",
             color: "white",
             "&:hover": {
@@ -44,10 +47,6 @@ const GeneralInfo = ({ data, isFullscreen }) => {
             },
             zIndex: 1100,
             position: "relative",
-            ...(isFullscreen &&
-              {
-                // marginTop: 20,
-              }),
           }}
           href={data.calendlyUrl}
           target="_blank"

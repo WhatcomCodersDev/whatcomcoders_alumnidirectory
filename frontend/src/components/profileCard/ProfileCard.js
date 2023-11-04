@@ -4,6 +4,7 @@ import Photo from "./Photo";
 import DescriptionCard from "./Description";
 import PersonalInfo from "./PersonalInfo";
 import GeneralInfo from "./GeneralInfo";
+import UserMedia from "./UserMedia";
 
 const ProfileCard = ({ data }) => {
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -28,16 +29,19 @@ const ProfileCard = ({ data }) => {
     <ClickAwayListener onClickAway={handleClickAway}>
       <Box
         sx={{
-          margin: "2px",
+          margin: "1px",
           transform: "scale(0.9)",
           position: "relative",
-          display: "inline-block",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          flex: 1,
           transition: "all 0.3s",
           alignItems: "center",
-          width: isFullscreen ? "90%" : "90%",
-          height: isFullscreen ? "90%" : "90%",
-          maxHeight: isFullscreen ? null : "525px",
-          maxWidth: isFullscreen ? null : "600px",
+          width: isFullscreen ? "50%" : "90%",
+          height: isFullscreen ? "80%" : "90%",
+          maxHeight: isFullscreen ? null : "1000px",
+          maxWidth: isFullscreen ? null : "1000px",
           overflow: "hidden",
           ...(isFullscreen && {
             position: "fixed",
@@ -45,14 +49,14 @@ const ProfileCard = ({ data }) => {
             left: 0,
             right: 0,
             bottom: 0,
-            width: "100vw",
+            // width: "10vw",
             height: "100vh",
             backgroundColor: "rgba(0, 0, 0, 0.5)",
             justifyContent: "center",
             alignItems: "center",
             display: "flex",
             zIndex: 1000,
-            // transform: "translate(90%, 30%)", // Centers the card
+            transform: "translate(50%, 0%)", // Centers the card
           }),
         }}
       >
@@ -82,7 +86,8 @@ const ProfileCard = ({ data }) => {
           <Photo data={data} isFullscreen={isFullscreen} />
           <GeneralInfo data={data} isFullscreen={isFullscreen} />
           <DescriptionCard data={data} isFullscreen={isFullscreen} />
-          <PersonalInfo data={data} isFullscreen={isFullscreen} />
+          {/* <PersonalInfo data={data} isFullscreen={isFullscreen} /> */}
+          <UserMedia data={data} isFullscreen={isFullscreen} />
         </Card>
       </Box>
     </ClickAwayListener>

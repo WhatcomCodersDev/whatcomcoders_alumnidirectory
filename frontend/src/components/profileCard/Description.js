@@ -20,9 +20,10 @@ const DescriptionCard = ({ data, isFullscreen }) => {
         whiteSpace: "wrap",
         overflow: "scroll",
         textOverflow: "ellipsis",
-        height: isFullscreen ? "auto" : "200px",
-        width: "800px",
+        height: isFullscreen ? "200px" : "200px",
+        width: "700px",
         margin: "auto",
+        marginBottom: 1,
         border: "1px solid red", // For debugging
 
         display: isFullscreen ? "block" : "none",
@@ -32,7 +33,7 @@ const DescriptionCard = ({ data, isFullscreen }) => {
       }}
     >
       <Typography
-        variant="body1"
+        variant="body2"
         sx={{
           // marginY: 2,
           textDecoration: "none",
