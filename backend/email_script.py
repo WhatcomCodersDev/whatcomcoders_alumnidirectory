@@ -10,14 +10,14 @@ data = {
     {
       "to": [
         {
-          "email": "guzmanjuan856@gmail.com "
+          "email": os.environ.get('TEST_RECEIVER_EMAIL')
         }
       ],
       "subject": "Sending with SendGrid is Fun"
     }
   ],
   "from": {
-    "email": "hanselguzmansoto@whatcomcoders.com"
+    "email": os.environ.get('SENDER_EMAIL')
   },
   "content": [
     {
