@@ -14,8 +14,11 @@ JWT_COOKIE_CSRF_PROTECT = True
 JWT_TOKEN_LOCATION = ["cookies"]
 CORS_ALLOW_ORIGIN = "*"
 CORS_ALLOW_HEADERS = "Content-Type"
-
 BUCKET_NAME = os.getenv('BUCKET_NAME')
+SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+SENDER_EMAIL = os.getenv('SENDER_EMAIL')
+TEST_RECEIVER_EMAIL = os.getenv('TEST_RECEIVER_EMAIL')
+
 
 class Config(object):
     DEBUG = False

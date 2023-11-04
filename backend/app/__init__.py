@@ -3,15 +3,13 @@ from flask_cors import CORS
 from config import *
 from app.routes import auth_routes, user_routes
 from app.handlers import error_handlers
-from app.services import firestore_db, flow_manager, jwt_manager, logger_manager
-
+from app.services import firestore_db, flow_manager, jwt_manager, logger_manager, sendgrid_wrapper
 
 
 
 def create_flask_app() -> Flask:
     app = Flask(__name__)
     environment = os.environ.get('FLASK_ENV')
-    
     if environment == 'development':
         app.config.from_object('config.DevelopmentConfig')
         allowed_origins = [
