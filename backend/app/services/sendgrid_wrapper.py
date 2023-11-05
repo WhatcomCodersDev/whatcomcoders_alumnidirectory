@@ -18,4 +18,4 @@ class SendGridWrapper:
             print(response.body)
             print(response.headers)
         except Exception as e:
-            print(e)
+            print(e) 
