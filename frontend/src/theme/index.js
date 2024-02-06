@@ -54,8 +54,8 @@ const themesOptions = [
         dark: '#5C6BC0',
       },
       text: {
-        primary: '#ffffff',
-        secondary: '#ffffff',
+        primary: '#000000',
+        secondary: '#000000',
       },
     },
     shadows: softShadows,
