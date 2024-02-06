@@ -1,46 +1,31 @@
-import "./styles/theme.css";
-import { Routes, Route } from "react-router-dom";
-import SignIn from "./components/SignIn"; //
-import React from "react";
-import Axios from "axios";
-import NavBar from "./components/NavBar";
-import UserInfo from "./components/UserInfo";
-import PrivateRoute from "./components/PrivateRoute";
-import ProfileCardsDirectory from "./pages/ProfileCardsDirectory";
-import LandingPage from "./pages/LandingPage";
-import ResourcesPage from "./pages/ResourcesPage";
-
-const apiUrl = process.env.REACT_APP_API_URL;
+import './styles/theme.css';
+import { Routes, Route } from 'react-router-dom';
+import SignIn from './views/auth/SignIn'; //
+import React from 'react';
+import Axios from 'axios';
+import NavBar from './components/NavBar';
+import UserInfo from './views/users/UserInfo';
+import PrivateRoute from './components/PrivateRoute';
+import ProfileCardsDirectory from './views/cards';
+import LandingPage from './views/landing';
+import ResourcesPage from './views/resources';
+import router from './routes';
+import { RouterProvider } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { THEMES } from './constants';
+import { createWebTheme } from './theme';
 
 function App() {
-  const handleClick = (e) => {
-    e.preventDefault();
-    Axios.get(`${apiUrl}/auth/google`, {})
-      .then((res) => {
-        window.location.assign(res.data.auth_url);
-      })
-      .catch((err) => console.log(err));
-  };
+  const theme = createWebTheme({
+    direction: 'ltr',
+    responsiveFontSizes: true,
+    theme: THEMES.LIGHT,
+  });
 
   return (
-    <div>
-      <NavBar />
-      <Routes>
-        <Route
-          exact
-          path="/login"
-          element={<SignIn login={handleClick}></SignIn>}
-        />
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/about" element={<ResourcesPage />} />
-        <Route
-          path="/userinfo"
-          element={<PrivateRoute component={UserInfo} />}
-        />
-
-        <Route path="/people" element={<ProfileCardsDirectory />} />
-      </Routes>
-    </div>
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   );
 }
 

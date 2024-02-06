@@ -1,12 +1,18 @@
-import { Link } from "react-router-dom";
-import logo from "../static/logo.png";
+import { Link } from 'react-router-dom';
+import logo from '../static/logo.png';
+
 const Logo = () => {
   return (
-    <Link to="/">
+    <Link to='/'>
       <img
         src={logo}
-        alt="whatcom coders logo"
-        style={{ width: 42, height: 42, backgroundColor: "white" }}
+        alt='whatcom coders logo'
+        style={{
+          width: 42,
+          height: 42,
+          backgroundColor: 'white',
+          borderRadius: '30%',
+        }}
       />
     </Link>
   );

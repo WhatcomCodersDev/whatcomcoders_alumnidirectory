@@ -1,60 +1,74 @@
-import "../styles/theme.css";
-import React, { useContext } from "react";
-import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../contexts/authContext";
-import Logo from "./Logo";
+import { styled } from '@mui/material/styles';
+import React, { useContext } from 'react';
+import { AppBar, Toolbar, Link, Typography, Button, Box } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+import { AuthContext } from '../contexts/authContext';
+import Logo from './Logo';
+
+// Styled AppBar component
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  backgroundColor: theme.palette.background.primary,
+  display: 'flex', // Using flexbox for the navbar layout
+}));
+
+// Styled Link component
+const StyledLink = styled(Link)(({ theme }) => ({
+  textDecoration: 'none',
+  color: theme.palette.text.secondary,
+  marginRight: '20px', // Consistent spacing between elements
+  verticalAlign: 'middle', // Aligning items in the middle vertically
+  '&:last-child': {
+    marginRight: 0, // Removing margin from the last item
+  },
+  '&:hover': {
+    color: '#ccc', // Lighter color on hover
+  },
+}));
 
 const NavBar = () => {
   const { isLoggedIn, userName, logout } = useContext(AuthContext);
 
   return (
-    <AppBar
-      style={{
-        background: "#000",
-      }}
-      className="appbar"
-      position="static"
-    >
+    <StyledAppBar position='static'>
       <Toolbar sx={{ minHeight: 64 }}>
         <Logo />
-        <Box display="flex" flexGrow={1}>
-          <Typography
-            variant="h6"
-            style={{ marginRight: "20px" }}
-            component={Link}
-            to="/"
-          ></Typography>
-          <Typography
-            variant="h6"
-            component={Link}
-            to="/about"
-            style={{ marginRight: "20px" }}
-          >
-            About
+        <Box display='flex' flexGrow={1}>
+          <Typography variant='h6' style={{ marginRight: '20px' }}>
+            <StyledLink component={RouterLink} to={'/'}></StyledLink>
           </Typography>
-          <Typography variant="h6" component={Link} to="/people">
-            People
+          <Typography variant='h6' style={{ marginRight: '20px' }}>
+            <StyledLink to={'/resources'} component={RouterLink}>
+              Resources
+            </StyledLink>
+          </Typography>
+          <Typography variant='h6'>
+            <StyledLink component={RouterLink} to={'/people'}>
+              People
+            </StyledLink>
           </Typography>
         </Box>
-        <Box display="flex">
+        <Box display='flex'>
           {isLoggedIn ? (
             <>
-              <Button color="inherit" component={Link} to="/userinfo">
-                {userName}
-              </Button>
-              <Button color="inherit" onClick={logout}>
+              <StyledLink>
+                <Button color='inherit' component={RouterLink} to='/userinfo'>
+                  {userName}
+                </Button>
+              </StyledLink>
+              <Button color='inherit' onClick={logout}>
                 Logout
               </Button>
             </>
           ) : (
-            <Button color="inherit" component={Link} to="/login">
-              Login
-            </Button>
+            <StyledLink>
+              <Button color='inherit' component={RouterLink} to='/login'>
+                Login
+              </Button>
+            </StyledLink>
           )}
         </Box>
       </Toolbar>
-    </AppBar>
+    </StyledAppBar>
   );
 };
 

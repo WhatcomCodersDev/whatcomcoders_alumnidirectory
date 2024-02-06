@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { AuthContext } from "../contexts/authContext";
+import React, { useState, useEffect } from 'react';
+import { AuthContext } from './authContext';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -10,8 +10,8 @@ const AuthProvider = ({ children }) => {
   const fetchCurrentUserAPI = async () => {
     try {
       const response = await fetch(`${apiUrl}/api/current_user`, {
-        method: "GET",
-        credentials: "include",
+        method: 'GET',
+        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
       console.log(responseBody);
       return responseBody;
     } catch (error) {
-      console.error("Request failed:", error.message);
+      console.error('Request failed:', error.message);
     }
   };
 
@@ -33,8 +33,8 @@ const AuthProvider = ({ children }) => {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/auth/logout`,
         {
-          method: "POST",
-          credentials: "include",
+          method: 'POST',
+          credentials: 'include',
         }
       );
       if (response.ok) {
@@ -45,7 +45,7 @@ const AuthProvider = ({ children }) => {
         console.error(`Logout Error: ${response.status} - ${errorText}`);
       }
     } catch (error) {
-      console.error("Logout failed:", error.message);
+      console.error('Logout failed:', error.message);
     }
   };
 
