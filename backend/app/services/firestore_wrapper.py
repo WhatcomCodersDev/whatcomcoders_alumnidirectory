@@ -21,6 +21,21 @@ class FirestoreDBWrapper:
             return user_data.to_dict()
         else:
             return None   
+    
+    def get_profile_by_name(self, fullname: str) -> dict:
+        """Retrieves user data from Firestore by fullname"""
+        print(fullname)
+        user_ref = self.firestore_client.collection('users').where('name', '==', fullname)
+        docs = user_ref.get()
+
+        # Iterate over the query results
+        for doc in docs:
+            if doc.exists:
+                # Return the whole document data
+                return doc.to_dict()
+
+        # Return None if no document matches the query
+        return None
 
     def get_all_users(self) -> list:
         """Retrieves all users from Firestore"""
