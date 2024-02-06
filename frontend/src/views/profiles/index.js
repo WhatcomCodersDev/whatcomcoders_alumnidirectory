@@ -108,19 +108,29 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import MailIcon from '@mui/icons-material/Mail';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 // import BackgroundBanner from '../../components/BackgroundBanner';
 
 const about = `I'm the certified coders pimp.\nAs my mentees, you'll be part of the CORE gang (Code-Whore). \nAfter receiving my wisdom, 11/10 of my COREs now work at FAANG companies.`;
 const skills = [
-  'Full-stack',
   'Deep Learning',
   'ML',
   'Python',
   'Go',
-  'Interview',
-  'Code Reviews',
   'Computer Systems',
+  'AI',
+  'Embedded Programming',
+];
+const services = [
+  'Mock Interview',
+  'Code Reviews',
+  'Career Growth',
+  'Break into Tech',
+  'Salary Negotiation',
+  'Promotion',
+  'Team Lead',
 ];
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
@@ -141,8 +151,8 @@ const StickyPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   ...theme.typography.body2,
   width: 400,
-  height: 200,
-
+  height: 350,
+  top:10,
 }));
 
 const BackgroundBanner = ({ imageUrl }) => {
@@ -191,10 +201,10 @@ const ProfileBanner = ({ name, role, avatarUrl }) => {
 
           {/* Buttons to meet */}
           <Stack direction="row" spacing={2} sx={{ height: 50 }}>
-            <Button variant="outlined" size="medium">
+            <Button variant="outlined" size="medium" startIcon={<MailIcon />}>
               Get intro
             </Button>
-            <Button variant="outlined" size="medium">
+            <Button variant="outlined" size="medium" startIcon={<CalendarMonthIcon/>}>
               Meet me!
             </Button>
           </Stack>
@@ -224,6 +234,28 @@ const TabPanel = ({ children, value, index, ...rest }) => {
   );
 };
 
+const SkillsSection = ({ sectionTitle, list }) => {
+  return (
+    <>
+      <Box sx={{ mt: 2, borderBottom: 1, borderColor: 'divider' }}>
+        <Typography variant="h5">{sectionTitle}</Typography>
+      </Box>
+      <Stack
+        direction="row"
+        spacing={1}
+        mt={3}
+        useFlexGap
+        flexWrap="wrap"
+        sx={{ width: '100%' }}
+      >
+        {list.map((item, index) => (
+          <Chip key={index} label={item} />
+        ))}
+      </Stack>
+    </>
+  );
+};
+
 export default function ProfileViews() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -249,32 +281,33 @@ export default function ProfileViews() {
             role={`blah blah blah I work @ Snap`}
             avatarUrl={`https://pbs.twimg.com/media/Eu8gjT3XIAAEqCA.jpg`}
           />
-          <Box paddingLeft={3}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleChange} textColor="inherit">
-                <Tab label="About Me" />
-                <Tab label="Compliments" />
-              </Tabs>
-            </Box>
-            <Box mt={3}>
-              <TabPanel index={0} value={value}>
-                {about}
-              </TabPanel>
-              <TabPanel index={1} value={value}>
-                list of compliments
-              </TabPanel>
+          <Stack
+            paddingLeft={3}
+            direction="row"
+            sx={{ width: '100%', justifyContent: 'space-between' }}
+          >
+            {/* Tabs */}
+            <Box sx={{ width: '60%' }}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={value} onChange={handleChange} textColor="inherit">
+                  <Tab label="About Me" />
+                  <Tab label="Compliments" />
+                </Tabs>
+              </Box>
+              <Box mt={3}>
+                <TabPanel index={0} value={value}>
+                  {about}
+                </TabPanel>
+                <TabPanel index={1} value={value}>
+                  list of compliments
+                </TabPanel>
+              </Box>
             </Box>
             <StickyPaper>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Typography variant="h5">Skills</Typography>
-              </Box>
-              <Stack direction="row" spacing={2} mt={3} sx={{width:'100%', bgcolor:'red'}}>
-                {skills.map((item, index) => (
-                  <Chip key={index} label={item}/>
-                ))}
-              </Stack>
+              <SkillsSection sectionTitle="Skills" list={skills} />
+              <SkillsSection sectionTitle="Meet me for" list={services} />
             </StickyPaper>
-          </Box>
+          </Stack>
         </Container>
       </Box>
     </>
