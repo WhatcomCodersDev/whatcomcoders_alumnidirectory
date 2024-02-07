@@ -7,7 +7,9 @@ const StyledBackgroundBanner = styled(Box)(({ imageUrl }) => ({
   left: 0,
   right: 0,
   bottom: 0,
-  backgroundImage: `url(${imageUrl})`,
+  backgroundImage: imageUrl
+    ? `url(${imageUrl})`
+    : `url(https://i.pinimg.com/originals/1a/5e/69/1a5e69e95c90693cdda00d158805ad49.jpg)`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   zIndex: -1,

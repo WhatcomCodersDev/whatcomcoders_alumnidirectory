@@ -108,4 +108,3 @@ class FirestoreDBWrapper:
             logging.info(f"User info updated successfully for: {email}")
         else:
             logging.warning(f"No user found with email: {email}. Unable to update user info.")
-

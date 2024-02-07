@@ -8,16 +8,8 @@ import UserMedia from './UserMedia';
 
 const ProfileCard = ({ data, onToggleFullscreen, isFullscreen }) => {
   const handleCardClick = (e) => {
-<<<<<<< HEAD
     console.log(data.user_slug);
     const userProfileUrl = `/profile/${data.user_slug}`;
-=======
-    const nameStandardized = data.name.toLowerCase().replace(/ /g, '-');
-
-    const slug = nameStandardized;
-
-    const userProfileUrl = `/profile/${slug}`;
->>>>>>> a94b700865eafa5b8ba0b9d8a08c03bc4ff7362f
     window.open(userProfileUrl, '_blank');
   };
 
