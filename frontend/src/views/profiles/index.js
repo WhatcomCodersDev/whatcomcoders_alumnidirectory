@@ -108,10 +108,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import MailIcon from '@mui/icons-material/Mail';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-
-// import BackgroundBanner from '../../components/BackgroundBanner';
+import ProfileBanner from './ProfileBanner';
 
 const about = `I'm the certified coders pimp.\nAs my mentees, you'll be part of the CORE gang (Code-Whore). \nAfter receiving my wisdom, 11/10 of my COREs now work at FAANG companies.`;
 const skills = [
@@ -134,7 +131,6 @@ const services = [
 ];
 
 const apiUrl = process.env.REACT_APP_API_URL;
-
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const ProfileAvatar = styled(Avatar)(({ theme }) => ({
@@ -155,6 +151,8 @@ const StickyPaper = styled(Paper)(({ theme }) => ({
   width: 400,
   height: 350,
   top: 10,
+
+  height: 200,
 }));
 
 const BackgroundBanner = ({ imageUrl }) => {
@@ -246,14 +244,14 @@ const SkillsSection = ({ sectionTitle, list }) => {
   return (
     <>
       <Box sx={{ mt: 2, borderBottom: 1, borderColor: 'divider' }}>
-        <Typography variant="h5">{sectionTitle}</Typography>
+        <Typography variant='h5'>{sectionTitle}</Typography>
       </Box>
       <Stack
-        direction="row"
+        direction='row'
         spacing={1}
         mt={3}
         useFlexGap
-        flexWrap="wrap"
+        flexWrap='wrap'
         sx={{ width: '100%' }}
       >
         {list.map((item, index) => (
@@ -266,6 +264,20 @@ const SkillsSection = ({ sectionTitle, list }) => {
 
 export default function ProfileViews() {
   const theme = useTheme();
+  const [value, setValue] = useState(0);
+  const [person, setPerson] = useState(null);
+  useEffect(() => {
+    const fetchPerson = async (nameSlug) => {
+      try {
+
+        nameSlug = nameSlug.replace(/-/, ' ');
+        console.log(nameSlug);
+        const response = await fetch(`${apiUrl}/profile/${nameSlug}`);
+        const data = await response.json();
+        console.log(data);
+        setPerson(data);
+      } catch (error) {
+        console.log('Failed to fetch person:', error);
   const [value, setValue] = useState(0); //for tabs
   const [user, setUser] = useState(null);
 
@@ -287,6 +299,14 @@ export default function ProfileViews() {
     const path = window.location.pathname;
     const username = path.split('/').pop();
     if (username) {
+      fetchPerson(username);
+    }
+  }, []);
+
+  if (!person) {
+    return <div>Loading...</div>;
+  }
+
       fetchuser(username);
     }
   }, []);
@@ -310,27 +330,41 @@ export default function ProfileViews() {
         <BackgroundBanner />
         <Container sx={{}}>
           <ProfileBanner
+            role={person.jobTitle}
+            company={person.company}
+            avatarUrl={person.picture}
+            data={person}
             name={user.name}
-            role={`blah blah blah I work @ Snap`}
+            role={user.company}
             avatarUrl={user.picture}
             alt={user.name}
           />
           <Stack
             paddingLeft={3}
-            direction="row"
+            direction='row'
             sx={{ width: '100%', justifyContent: 'space-between' }}
           >
             {/* Tabs */}
             <Box sx={{ width: '60%' }}>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} textColor="inherit">
-                  <Tab label="About Me" />
-                  <Tab label="Compliments" />
+                <Tabs value={value} onChange={handleChange} textColor='inherit'>
+                  <Tab label='About Me' />
+                  <Tab label='Compliments' />
                 </Tabs>
               </Box>
               <Box mt={3}>
-                <TabPanel index={0} value={value}>
-                  {about}
+                <TabPanel
+                  index={0}
+                  value={value}
+                  sx={{
+                    boxSizing: 'border-box', // Include padding and borders in the element's dimensions
+                    // border: '1px solid black', // For debugging
+                    overflowY: 'auto',
+                    maxHeight: '300px',
+                    marginBottom: 2, // Make sure the bottom margin is 0
+                  }}
+                >
+                  {person.description}
                 </TabPanel>
                 <TabPanel index={1} value={value}>
                   list of compliments
@@ -338,8 +372,40 @@ export default function ProfileViews() {
               </Box>
             </Box>
             <StickyPaper>
-              <SkillsSection sectionTitle="Skills" list={skills} />
-              <SkillsSection sectionTitle="Meet me for" list={services} />
+              <SkillsSection sectionTitle='Skills' list={skills} />
+              <SkillsSection sectionTitle='Meet me for' list={services} />
+            role={person.title}
+            avatarUrl={person.picture}
+          />
+          <Box paddingLeft={3}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={value} onChange={handleChange} textColor='inherit'>
+                <Tab label='About Me' />
+                <Tab label='Compliments' />
+              </Tabs>
+            </Box>
+            <Box mt={3}>
+              <TabPanel index={0} value={value}>
+                {about}
+              </TabPanel>
+              <TabPanel index={1} value={value}>
+                list of compliments
+              </TabPanel>
+            </Box>
+            <StickyPaper>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Typography variant='h5'>Skills</Typography>
+              </Box>
+              <Stack
+                direction='row'
+                spacing={2}
+                mt={3}
+                sx={{ width: '100%', bgcolor: 'red' }}
+              >
+                {skills.map((item, index) => (
+                  <Chip key={index} label={item} />
+                ))}
+              </Stack>
             </StickyPaper>
           </Stack>
         </Container>

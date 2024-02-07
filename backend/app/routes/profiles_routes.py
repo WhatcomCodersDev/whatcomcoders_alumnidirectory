@@ -9,10 +9,11 @@ from app.services import firestore_db
 
 bp = Blueprint("profiles", __name__)
 
-@bp.route("/profile/<username>", methods=["GET"])
-def get_profile_by_name(username):
-    print(username)
-    user_data = firestore_db.get_profile_by_name(username)
+@bp.route("/profile/<slug>", methods=["GET"])
+def get_profile_by_name(slug):
+    print(slug)
+    user_data = firestore_db.get_profile_by_slug(slug)
+    print("user_data:", user_data)
     if user_data:
         return jsonify(user_data)
     else:
