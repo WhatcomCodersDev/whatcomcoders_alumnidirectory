@@ -133,6 +133,8 @@ const services = [
   'Team Lead',
 ];
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const ProfileAvatar = styled(Avatar)(({ theme }) => ({
@@ -152,14 +154,16 @@ const StickyPaper = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   width: 400,
   height: 350,
-  top:10,
+  top: 10,
 }));
 
 const BackgroundBanner = ({ imageUrl }) => {
   return (
     <Box
       sx={{
-        backgroundImage: `url(${imageUrl})`,
+        backgroundImage: imageUrl
+          ? `url(${imageUrl})`
+          : `url(https://i.pinimg.com/originals/1a/5e/69/1a5e69e95c90693cdda00d158805ad49.jpg)`,
         backgroundSize: 'cover',
         width: '100%',
         height: 200,
@@ -204,7 +208,11 @@ const ProfileBanner = ({ name, role, avatarUrl }) => {
             <Button variant="outlined" size="medium" startIcon={<MailIcon />}>
               Get intro
             </Button>
-            <Button variant="outlined" size="medium" startIcon={<CalendarMonthIcon/>}>
+            <Button
+              variant="outlined"
+              size="medium"
+              startIcon={<CalendarMonthIcon />}
+            >
               Meet me!
             </Button>
           </Stack>
@@ -258,7 +266,34 @@ const SkillsSection = ({ sectionTitle, list }) => {
 
 export default function ProfileViews() {
   const theme = useTheme();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0); //for tabs
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchuser = async (username) => {
+      try {
+        username = username.replace(/-/, ' ');
+        console.log(username);
+
+        const response = await fetch(`${apiUrl}/profile/${username}`);
+        const data = await response.json();
+        console.log(data);
+        setUser(data);
+      } catch (error) {
+        console.log('Failed to fetch user:', error);
+      }
+    };
+
+    const path = window.location.pathname;
+    const username = path.split('/').pop();
+    if (username) {
+      fetchuser(username);
+    }
+  }, []);
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -272,14 +307,13 @@ export default function ProfileViews() {
           height: 'calc(100vh - 64px)',
         }}
       >
-        <BackgroundBanner
-          imageUrl={`https://i.pinimg.com/originals/1a/5e/69/1a5e69e95c90693cdda00d158805ad49.jpg`}
-        />
+        <BackgroundBanner />
         <Container sx={{}}>
           <ProfileBanner
-            name={`Hello`}
+            name={user.name}
             role={`blah blah blah I work @ Snap`}
-            avatarUrl={`https://pbs.twimg.com/media/Eu8gjT3XIAAEqCA.jpg`}
+            avatarUrl={user.picture}
+            alt={user.name}
           />
           <Stack
             paddingLeft={3}
