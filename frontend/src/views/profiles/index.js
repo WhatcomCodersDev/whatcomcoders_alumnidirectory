@@ -108,8 +108,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-
-// import BackgroundBanner from '../../components/BackgroundBanner';
+import ProfileBanner from './ProfileBanner';
 
 const about = `I'm the certified coders pimp.\nAs my mentees, you'll be part of the CORE gang (Code-Whore). \nAfter receiving my wisdom, 11/10 of my COREs now work at FAANG companies.`;
 const skills = [
@@ -122,6 +121,8 @@ const skills = [
   'Code Reviews',
   'Computer Systems',
 ];
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
@@ -142,7 +143,6 @@ const StickyPaper = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   width: 400,
   height: 200,
-
 }));
 
 const BackgroundBanner = ({ imageUrl }) => {
@@ -155,52 +155,6 @@ const BackgroundBanner = ({ imageUrl }) => {
         height: 200,
       }}
     ></Box>
-  );
-};
-
-const ProfileBanner = ({ name, role, avatarUrl }) => {
-  return (
-    <Stack
-      direction="row"
-      spacing={2}
-      sx={{
-        mt: -5,
-        mb: 10,
-      }}
-    >
-      <ProfileAvatar src={avatarUrl} />
-      <Stack sx={{ width: '100%' }}>
-        <Box sx={{ height: 70 }} />
-        <Stack
-          direction="row"
-          spacing={1}
-          sx={{
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            width: '100%',
-          }}
-        >
-          {/* Name, Roles and Socials*/}
-          <Stack>
-            <Typography variant="h1" fontWeight={'bold'}>
-              {name}
-            </Typography>
-            <Typography fontWeight={'medium'}>{role}</Typography>
-            <LinkedInIcon />
-          </Stack>
-
-          {/* Buttons to meet */}
-          <Stack direction="row" spacing={2} sx={{ height: 50 }}>
-            <Button variant="outlined" size="medium">
-              Get intro
-            </Button>
-            <Button variant="outlined" size="medium">
-              Meet me!
-            </Button>
-          </Stack>
-        </Stack>
-      </Stack>
-    </Stack>
   );
 };
 
@@ -227,6 +181,32 @@ const TabPanel = ({ children, value, index, ...rest }) => {
 export default function ProfileViews() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
+  const [person, setPerson] = useState(null);
+  useEffect(() => {
+    const fetchPerson = async (nameSlug) => {
+      try {
+        nameSlug = nameSlug.replace(/-/, ' ');
+        console.log(nameSlug);
+
+        const response = await fetch(`${apiUrl}/profile/${nameSlug}`);
+        const data = await response.json();
+        console.log(data);
+        setPerson(data);
+      } catch (error) {
+        console.log('Failed to fetch person:', error);
+      }
+    };
+
+    const path = window.location.pathname;
+    const username = path.split('/').pop();
+    if (username) {
+      fetchPerson(username);
+    }
+  }, []);
+
+  if (!person) {
+    return <div>Loading...</div>;
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -245,15 +225,15 @@ export default function ProfileViews() {
         />
         <Container sx={{}}>
           <ProfileBanner
-            name={`Hello`}
-            role={`blah blah blah I work @ Snap`}
-            avatarUrl={`https://pbs.twimg.com/media/Eu8gjT3XIAAEqCA.jpg`}
+            name={person.name}
+            role={person.title}
+            avatarUrl={person.picture}
           />
           <Box paddingLeft={3}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleChange} textColor="inherit">
-                <Tab label="About Me" />
-                <Tab label="Compliments" />
+              <Tabs value={value} onChange={handleChange} textColor='inherit'>
+                <Tab label='About Me' />
+                <Tab label='Compliments' />
               </Tabs>
             </Box>
             <Box mt={3}>
@@ -266,11 +246,16 @@ export default function ProfileViews() {
             </Box>
             <StickyPaper>
               <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Typography variant="h5">Skills</Typography>
+                <Typography variant='h5'>Skills</Typography>
               </Box>
-              <Stack direction="row" spacing={2} mt={3} sx={{width:'100%', bgcolor:'red'}}>
+              <Stack
+                direction='row'
+                spacing={2}
+                mt={3}
+                sx={{ width: '100%', bgcolor: 'red' }}
+              >
                 {skills.map((item, index) => (
-                  <Chip key={index} label={item}/>
+                  <Chip key={index} label={item} />
                 ))}
               </Stack>
             </StickyPaper>
