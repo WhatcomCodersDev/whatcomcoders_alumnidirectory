@@ -107,10 +107,6 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
-<<<<<<< HEAD
-=======
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
->>>>>>> a94b700865eafa5b8ba0b9d8a08c03bc4ff7362f
 import ProfileBanner from './ProfileBanner';
 
 const about = `I'm the certified coders pimp.\nAs my mentees, you'll be part of the CORE gang (Code-Whore). \nAfter receiving my wisdom, 11/10 of my COREs now work at FAANG companies.`;
@@ -134,9 +130,6 @@ const services = [
 ];
 
 const apiUrl = process.env.REACT_APP_API_URL;
-
-const apiUrl = process.env.REACT_APP_API_URL;
-
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const ProfileAvatar = styled(Avatar)(({ theme }) => ({
@@ -155,12 +148,8 @@ const StickyPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
   ...theme.typography.body2,
   width: 400,
-<<<<<<< HEAD
   height: 350,
   top: 10,
-=======
-  height: 200,
->>>>>>> a94b700865eafa5b8ba0b9d8a08c03bc4ff7362f
 }));
 
 const BackgroundBanner = ({ imageUrl }) => {
@@ -225,12 +214,6 @@ export default function ProfileViews() {
   useEffect(() => {
     const fetchPerson = async (nameSlug) => {
       try {
-<<<<<<< HEAD
-=======
-        nameSlug = nameSlug.replace(/-/, ' ');
-        console.log(nameSlug);
-
->>>>>>> a94b700865eafa5b8ba0b9d8a08c03bc4ff7362f
         const response = await fetch(`${apiUrl}/profile/${nameSlug}`);
         const data = await response.json();
         console.log(data);
@@ -250,11 +233,8 @@ export default function ProfileViews() {
   if (!person) {
     return <div>Loading...</div>;
   }
-<<<<<<< HEAD
 
   console.log(person);
-=======
->>>>>>> a94b700865eafa5b8ba0b9d8a08c03bc4ff7362f
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -274,7 +254,6 @@ export default function ProfileViews() {
         <Container sx={{}}>
           <ProfileBanner
             name={person.name}
-<<<<<<< HEAD
             role={person.jobTitle}
             company={person.company}
             avatarUrl={person.picture}
@@ -315,40 +294,6 @@ export default function ProfileViews() {
             <StickyPaper>
               <SkillsSection sectionTitle='Skills' list={skills} />
               <SkillsSection sectionTitle='Meet me for' list={services} />
-=======
-            role={person.title}
-            avatarUrl={person.picture}
-          />
-          <Box paddingLeft={3}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleChange} textColor='inherit'>
-                <Tab label='About Me' />
-                <Tab label='Compliments' />
-              </Tabs>
-            </Box>
-            <Box mt={3}>
-              <TabPanel index={0} value={value}>
-                {about}
-              </TabPanel>
-              <TabPanel index={1} value={value}>
-                list of compliments
-              </TabPanel>
-            </Box>
-            <StickyPaper>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Typography variant='h5'>Skills</Typography>
-              </Box>
-              <Stack
-                direction='row'
-                spacing={2}
-                mt={3}
-                sx={{ width: '100%', bgcolor: 'red' }}
-              >
-                {skills.map((item, index) => (
-                  <Chip key={index} label={item} />
-                ))}
-              </Stack>
->>>>>>> a94b700865eafa5b8ba0b9d8a08c03bc4ff7362f
             </StickyPaper>
           </Stack>
         </Container>
