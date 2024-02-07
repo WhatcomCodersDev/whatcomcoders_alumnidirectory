@@ -1,4 +1,6 @@
 import collections
+import logging
+import uuid
 
 collections.Iterable = collections.abc.Iterable
  
@@ -7,25 +9,58 @@ class FirestoreDBWrapper:
     def __init__(self, firestore_client):
         self.firestore_client = firestore_client 
 
-    def store_user_in_db(self, user_info: dict) -> None:
+    def store_user_in_db(self, user_info: dict, uuid) -> None:
         """Stores the user info in Firestore"""
-        user_ref = self.firestore_client.collection('users').document(user_info.get('email'))
+        user_ref = self.firestore_client.collection('users').document(uuid)
         user_ref.set(user_info)
 
-    def get_user_data_by_email(self, email: str) -> dict:
-        """Retrieves user data from Firestore by email"""
-        user_ref = self.firestore_client.collection('users').document(email)
+    
+    def get_user_uuid_by_email(self, email: str) -> str:
+        """Retrieves user uuid from Firestore by email"""
+        user_ref = self.firestore_client.collection('users').where('email', '==', email)
+        docs = user_ref.get()
+
+        for doc in docs:
+            if doc.exists:
+                return doc.id
+
+        return None
+    
+    def get_user_data_by_slug(self, slug: str) -> dict:
+        """Retrieves user data from Firestore by slug"""
+        user_ref = self.firestore_client.collection('users').document(slug)
         user_data = user_ref.get()
 
         if user_data.exists:
             return user_data.to_dict()
         else:
             return None   
+        
+    def get_user_doc_by_email(self, email: str) -> dict:
+        """Retrieves user data from Firestore by email."""
+        # Query the 'users' collection for documents where the 'email' field matches the provided email
+        user_query = self.firestore_client.collection('users').where('email', '==', email)
+        docs = user_query.get()
+
+        for doc in docs:
+            if doc.exists:
+                return doc
+
+        return None
     
-    def get_profile_by_name(self, fullname: str) -> dict:
-        """Retrieves user data from Firestore by fullname"""
-        print(fullname)
-        user_ref = self.firestore_client.collection('users').where('name', '==', fullname)
+    def get_user_data_by_uuid(self, uuid: str) -> dict:
+        """Retrieves user data from Firestore by uuid"""
+        user_ref = self.firestore_client.collection('users').document(uuid)
+        user_data = user_ref.get()
+
+        if user_data.exists:
+            return user_data.to_dict()
+        else:
+            return None
+    
+    def get_profile_by_slug(self, user_slug: str) -> dict:
+        """Retrieves user data from Firestore by slug"""
+        user_ref = self.firestore_client.collection('users').where('user_slug', '==', user_slug)
         docs = user_ref.get()
 
         # Iterate over the query results
@@ -46,7 +81,29 @@ class FirestoreDBWrapper:
         return users_list
     
     def update_user_info(self, data: dict) -> None:
-        """Updates user info in Firestore"""
+        """Updates user info in Firestore based on email."""
+        email = data.get('email')
+        
+        # Check if email is provided
+        if email is None:
+            logging.error("Failed to update user info: 'email' is missing.")
+            return
+
         users_ref = self.firestore_client.collection('users')
-        user_document = users_ref.document(data.get('email'))
-        user_document.update(data)
+        
+        # Query for the user document by email
+        query_ref = users_ref.where('email', '==', email).limit(1)
+        docs = query_ref.stream()
+
+        doc_found = None
+        for doc in docs:
+            doc_found = doc
+            break
+
+        if doc_found:
+            # Update the document with new data
+            users_ref.document(doc_found.id).update(data)
+            logging.info(f"User info updated successfully for: {email}")
+        else:
+            logging.warning(f"No user found with email: {email}. Unable to update user info.")
+

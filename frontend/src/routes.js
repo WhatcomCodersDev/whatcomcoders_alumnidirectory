@@ -79,7 +79,7 @@ const otherPages = [
     element: MentorLayout,
     children: [
       {
-        path: '/people/:name?',
+        path: '/profile/:name?',
         element: lazy(() => import('./views/profiles')),
       },
     ],

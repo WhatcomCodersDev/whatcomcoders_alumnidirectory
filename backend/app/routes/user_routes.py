@@ -17,16 +17,17 @@ bp = Blueprint("user", __name__)
 def protected():
     return jsonify({"message": "This is a protected route"})
 
-# @bp.route('/current_user', methods=['GET'])
-# @jwt_required()
-# def get_current_user():
-#     current_user = get_jwt_identity()
-#     return jsonify(logged_in_as=current_user)
+@bp.route('/current_user', methods=['GET'])
+@jwt_required()
+def get_current_user():
+    current_user = get_jwt_identity()
+    return jsonify(logged_in_as=current_user)
 
 
-@bp.route("/api/user/<email>", methods=["GET"])
-def get_user_data(email):
-    user_data = firestore_db.get_user_data_by_email(email)
+@bp.route("/api/user/<slug>", methods=["GET"])
+def get_user_data(slug):
+    user_data = firestore_db.get_user_data_by_slug(slug)
+    print(user_data)
     if user_data.exists:
         return jsonify(user_data.to_dict())
     else:
@@ -48,16 +49,16 @@ def update_user_info():
 @bp.route("/api/current_user", methods=["GET"])
 @jwt_required()
 def current_user():
-    current_user_email = get_jwt_identity()
-    user_data = firestore_db.get_user_data_by_email(current_user_email) 
+    current_user_uuid = get_jwt_identity()
+    user_data = firestore_db.get_user_data_by_uuid(current_user_uuid) 
     return jsonify(name=user_data['name'])
 
 @bp.route("/api/user", methods=["GET"])
 @jwt_required()
 def get_user():
-    current_user_email = get_jwt_identity()
-    logger_manager.logger.debug("current_user_email", current_user_email)
-    user_data = firestore_db.get_user_data_by_email(current_user_email) 
+    current_user_uuid = get_jwt_identity()
+    logger_manager.logger.debug("current_user_uuid", current_user_uuid)
+    user_data = firestore_db.get_user_data_by_uuid(current_user_uuid) 
     return jsonify(user_data)
 
 @jwt_manager.invalid_token_loader

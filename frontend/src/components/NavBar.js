@@ -37,12 +37,20 @@ const NavBar = () => {
             <StyledLink component={RouterLink} to={'/'}></StyledLink>
           </Typography>
           <Typography variant='h6' style={{ marginRight: '20px' }}>
-            <StyledLink to={'/resources'} component={RouterLink}>
+            <StyledLink
+              to={'/resources'}
+              component={RouterLink}
+              sx={{ color: 'white' }} //temp
+            >
               Resources
             </StyledLink>
           </Typography>
           <Typography variant='h6'>
-            <StyledLink component={RouterLink} to={'/people'}>
+            <StyledLink
+              component={RouterLink}
+              to={'/people'}
+              sx={{ color: 'white' }}
+            >
               People
             </StyledLink>
           </Typography>
@@ -51,7 +59,12 @@ const NavBar = () => {
           {isLoggedIn ? (
             <>
               <StyledLink>
-                <Button color='inherit' component={RouterLink} to='/userinfo'>
+                <Button
+                  color='inherit'
+                  component={RouterLink}
+                  to='/userinfo'
+                  sx={{ color: 'white' }}
+                >
                   {userName}
                 </Button>
               </StyledLink>

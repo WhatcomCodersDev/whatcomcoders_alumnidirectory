@@ -186,7 +186,7 @@ const UserInfo = ({ defaultEmail = '', defaultPicture = '' }) => {
           onChange={(e) => setDescription(e.target.value)}
         />
       </div>
-      <ProjectTagsField name='tags' options={[]} />
+      {/* <ProjectTagsField name='tags' options={[]} /> */}
 
       <div className='checkbox-group'>
         {[

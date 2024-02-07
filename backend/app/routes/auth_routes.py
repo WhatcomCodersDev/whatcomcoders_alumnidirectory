@@ -1,5 +1,6 @@
 import json
 import collections
+import uuid
 
 collections.Iterable = collections.abc.Iterable
 
@@ -20,13 +21,19 @@ def callback():
     credentials = flow_manager.get_credentials_from_flow()
     id_info = flow_manager.get_id_info(credentials)
     user_info = flow_manager.get_user_info(credentials)
+    user_doc = firestore_db.get_user_doc_by_email(user_info.get("email"))
     
-    if not firestore_db.get_user_data_by_email(user_info.get("email")):
+    if not user_doc:
+        user_uuid = str(uuid.uuid4())
+        access_token = create_access_token(identity=user_uuid)
+
+        user_slug = user_info.get("name").replace(" ", "-").lower() + "-" + str(user_uuid)[-6:]
+        user_info["user_slug"] = user_slug
         if user_info.get("picture"):
             upload_photo_to_bucket(user_info.get("picture"), id_info.get("sub"))
-        firestore_db.store_user_in_db(user_info)
-
-    access_token = create_access_token(identity=user_info.get("email"))
+        firestore_db.store_user_in_db(user_info, user_uuid)
+    else:
+        access_token = create_access_token(identity=user_doc.id)
     # redirect_url = "http://localhost:3000"
     redirect_url = f'{current_app.config["BASE_URL"]}'
 
