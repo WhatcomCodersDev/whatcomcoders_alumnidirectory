@@ -66,8 +66,10 @@ class FirestoreDBWrapper:
         # Iterate over the query results
         for doc in docs:
             if doc.exists:
+                print(doc.to_dict())
                 # Return the whole document data
                 return doc.to_dict()
+        
 
         # Return None if no document matches the query
         return None
