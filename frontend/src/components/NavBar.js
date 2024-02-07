@@ -14,7 +14,7 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
 // Styled Link component
 const StyledLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',
-  color: theme.palette.text.secondary,
+  color: "inherit",
   marginRight: '20px', // Consistent spacing between elements
   verticalAlign: 'middle', // Aligning items in the middle vertically
   '&:last-child': {
@@ -33,7 +33,7 @@ const NavBar = () => {
       <Toolbar sx={{ minHeight: 64 }}>
         <Logo />
         <Box display='flex' flexGrow={1}>
-          <Typography variant='h6' style={{ marginRight: '20px' }}>
+          <Typography variant='h6' sx={{ marginRight: '20px'}}>
             <StyledLink component={RouterLink} to={'/'}></StyledLink>
           </Typography>
           <Typography variant='h6' style={{ marginRight: '20px' }}>
@@ -42,6 +42,8 @@ const NavBar = () => {
               component={RouterLink}
               sx={{ color: 'white' }} //temp
             >
+          <Typography variant='h6' sx={{ marginRight: '20px'}}>
+            <StyledLink to={'/resources'} component={RouterLink}>
               Resources
             </StyledLink>
           </Typography>
