@@ -6,6 +6,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState(null);
+  const [userSlug, setUserSlug] = useState(null);
 
   const fetchCurrentUserAPI = async () => {
     try {
@@ -40,6 +41,7 @@ const AuthProvider = ({ children }) => {
       if (response.ok) {
         setIsLoggedIn(false);
         setUserName(null);
+        setUserSlug(null);
       } else {
         const errorText = await response.text();
         console.error(`Logout Error: ${response.status} - ${errorText}`);
@@ -53,9 +55,11 @@ const AuthProvider = ({ children }) => {
     const fetchCurrentUser = async () => {
       try {
         let response = await fetchCurrentUserAPI();
+        console.log(response.name);
         if (response && response.name) {
           setIsLoggedIn(true);
           setUserName(response.name);
+          setUserSlug(response.user_slug);
         } else {
           setIsLoggedIn(false);
         }
@@ -68,7 +72,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userName, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userName, userSlug, logout }}>
       {children}
     </AuthContext.Provider>
   );
