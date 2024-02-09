@@ -6,27 +6,27 @@ import MailIcon from '@mui/icons-material/Mail';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import UserMedia from './UserMedia';
 
-const ProfileAvatar = styled(Avatar)(({ theme }) => ({
-  width: theme.spacing(22),
-  height: theme.spacing(22),
-  border: `6px solid ${theme.palette.background.paper}`,
+const ProfileAvatar = styled(Avatar)(({ theme, spacing, hasBorder = true }) => ({
+  width: theme.spacing(spacing),
+  height: theme.spacing(spacing),
+  border: hasBorder ? `6px solid ${theme.palette.background.paper}` : 'none',
 }));
 
 const ProfileBanner = ({ name, role, company, avatarUrl, data }) => {
   return (
     <Stack
-      direction='row'
+      direction="row"
       spacing={2}
       sx={{
         mt: -5,
         mb: 10,
       }}
     >
-      <ProfileAvatar src={avatarUrl} />
+      <ProfileAvatar src={avatarUrl} spacing={22} />
       <Stack sx={{ width: '100%' }}>
         <Box sx={{ height: 70 }} />
         <Stack
-          direction='row'
+          direction="row"
           spacing={1}
           sx={{
             justifyContent: 'space-between',
@@ -36,7 +36,7 @@ const ProfileBanner = ({ name, role, company, avatarUrl, data }) => {
         >
           {/* Name, Roles and Socials*/}
           <Stack>
-            <Typography variant='h1' fontWeight={'bold'}>
+            <Typography variant="h1" fontWeight={'bold'}>
               {name}
             </Typography>
             <Typography fontWeight={'medium'}>
@@ -46,18 +46,18 @@ const ProfileBanner = ({ name, role, company, avatarUrl, data }) => {
           </Stack>
 
           {/* Buttons to meet */}
-          <Stack direction='row' spacing={2} sx={{ height: 50 }}>
-            <Button variant='outlined' size='medium' startIcon={<MailIcon />}>
+          <Stack direction="row" spacing={2} sx={{ height: 50 }}>
+            <Button variant="outlined" size="medium" startIcon={<MailIcon />}>
               Get intro
             </Button>
             {data.calendlyUrl && (
               <Button
-                variant='outlined'
-                size='medium'
+                variant="outlined"
+                size="medium"
                 startIcon={<CalendarMonthIcon />}
                 href={data.calendlyUrl}
-                target='_blank'
-                rel='noopener noreferrer'
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 Meet me!
               </Button>
@@ -69,4 +69,5 @@ const ProfileBanner = ({ name, role, company, avatarUrl, data }) => {
   );
 };
 
+export { ProfileAvatar };
 export default ProfileBanner;

@@ -6,9 +6,15 @@ import FootBar from 'components/FootBar';
 // import useAuth from 'hooks/useAuth';
 
 const Root = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
   backgroundColor: theme.palette.primary.default,
-  minHeight: '100%',
-  flex: '1 1 auto',
+  minHeight: '100vh', // Ensure at least full viewport height
+}));
+
+const Content = styled('div')(({ theme }) => ({
+  flex: '1', // This makes the content grow and fill available space, pushing the FootBar down
+  marginBottom: '64px'
 }));
 
 const MentorLayout = () => {
@@ -23,9 +29,9 @@ const MentorLayout = () => {
   return (
     <Root>
       <NavBar />
-      <div style={{ top: 64 }}>
+      <Content>
         <Outlet />
-      </div>
+      </Content>
       <FootBar />
     </Root>
   );
