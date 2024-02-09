@@ -208,7 +208,7 @@ const SkillsSection = ({ sectionTitle, list }) => {
   );
 };
 
-export default function ProfileViews() {
+const ProfileViews = () => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [person, setPerson] = useState(null);
@@ -242,63 +242,63 @@ export default function ProfileViews() {
   };
 
   return (
-    <>
-      <Box
-        sx={{
-          bgcolor: theme.palette.background.paper,
-          height: 'calc(100vh - 64px)',
-        }}
-      >
-        <BackgroundBanner
-          imageUrl={`https://i.pinimg.com/originals/1a/5e/69/1a5e69e95c90693cdda00d158805ad49.jpg`}
+    <Box
+      sx={{
+        bgcolor: theme.palette.background.paper,
+        height: 'calc(100vh - 64px)',
+      }}
+    >
+      <BackgroundBanner
+        imageUrl={`https://i.pinimg.com/originals/1a/5e/69/1a5e69e95c90693cdda00d158805ad49.jpg`}
+      />
+      <Container sx={{}}>
+        <ProfileBanner
+          name={person.name}
+          role={person.jobTitle}
+          company={person.company}
+          avatarUrl={person.picture}
+          data={person}
         />
-        <Container sx={{}}>
-          <ProfileBanner
-            name={person.name}
-            role={person.jobTitle}
-            company={person.company}
-            avatarUrl={person.picture}
-            data={person}
-          />
-          <Stack
-            paddingLeft={3}
-            direction='row'
-            sx={{ width: '100%', justifyContent: 'space-between' }}
-          >
-            {/* Tabs */}
-            <Box sx={{ width: '60%' }}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs value={value} onChange={handleChange} textColor='inherit'>
-                  <Tab label='About Me' />
-                  <Tab label='Compliments' />
-                </Tabs>
-              </Box>
-              <Box mt={3}>
-                <TabPanel
-                  index={0}
-                  value={value}
-                  sx={{
-                    boxSizing: 'border-box', // Include padding and borders in the element's dimensions
-                    // border: '1px solid black', // For debugging
-                    overflowY: 'auto',
-                    maxHeight: '300px',
-                    marginBottom: 2, // Make sure the bottom margin is 0
-                  }}
-                >
-                  {person.description}
-                </TabPanel>
-                <TabPanel index={1} value={value}>
-                  list of compliments
-                </TabPanel>
-              </Box>
+        <Stack
+          paddingLeft={3}
+          direction='row'
+          sx={{ width: '100%', justifyContent: 'space-between' }}
+        >
+          {/* Tabs */}
+          <Box sx={{ width: '60%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={value} onChange={handleChange} textColor='inherit'>
+                <Tab label='About Me' />
+                <Tab label='Compliments' />
+              </Tabs>
             </Box>
-            <StickyPaper>
-              <SkillsSection sectionTitle='Skills' list={skills} />
-              <SkillsSection sectionTitle='Meet me for' list={services} />
-            </StickyPaper>
-          </Stack>
-        </Container>
-      </Box>
-    </>
+            <Box mt={3}>
+              <TabPanel
+                index={0}
+                value={value}
+                sx={{
+                  boxSizing: 'border-box', // Include padding and borders in the element's dimensions
+                  // border: '1px solid black', // For debugging
+                  overflowY: 'auto',
+                  maxHeight: '300px',
+                  marginBottom: 2, // Make sure the bottom margin is 0
+                }}
+              >
+                {person.description}
+              </TabPanel>
+              <TabPanel index={1} value={value}>
+                list of compliments
+              </TabPanel>
+            </Box>
+          </Box>
+          <StickyPaper>
+            <SkillsSection sectionTitle='Skills' list={skills} />
+            <SkillsSection sectionTitle='Meet me for' list={services} />
+          </StickyPaper>
+        </Stack>
+      </Container>
+    </Box>
   );
-}
+};
+
+export default ProfileViews;

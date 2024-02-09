@@ -68,7 +68,7 @@ const landingPages = [
       },
       {
         path: '/userinfo',
-        element: lazy(() => import('./views/users/UserInfo')),
+        element: lazy(() => import('./views/users')),
       },
     ],
   },
