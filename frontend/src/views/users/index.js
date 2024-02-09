@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   AppBar,
   Box,
@@ -16,8 +16,8 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
-import ProfileBanner from './ProfileBanner';
-import Compliment from './Compliment';
+import UserBanner from './UserBanner';
+import { AuthContext } from 'contexts/authContext';
 
 const about = `I'm the certified coders pimp.\nAs my mentees, you'll be part of the CORE gang (Code-Whore). \nAfter receiving my wisdom, 11/10 of my COREs now work at FAANG companies.`;
 const skills = [
@@ -39,11 +39,15 @@ const services = [
   'Team Lead',
 ];
 
-const compliment = `Very friendly mentor. Listen to my concern and give good advice. Very realistic, not too overly pessimistic nor optimistic`;
-
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+
+const ProfileAvatar = styled(Avatar)(({ theme }) => ({
+  width: theme.spacing(22),
+  height: theme.spacing(22),
+  border: `6px solid ${theme.palette.background.paper}`,
+}));
 
 const ProfilePaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -74,17 +78,14 @@ const BackgroundBanner = ({ imageUrl }) => {
 
 const TabPanel = ({ children, value, index, ...rest }) => {
   return (
-    <Box hidden={value !== index} id={`simple-tab-panel-${index}`} {...rest}>
-      {children}
-    </Box>
-  );
-};
-
-const TabPanelPaper = ({ children, value, index, ...rest }) => {
-  return (
-    <ProfilePaper elevation={2} padding={10} {...rest}>
+    <ProfilePaper
+      elevation={2}
+      padding={10}
+      hidden={value !== index}
+      id={`simple-tab-panel-${index}`}
+      {...rest}
+    >
       <Typography
-        variant='body1'
         sx={{
           whiteSpace: 'pre-wrap',
         }}
@@ -117,14 +118,16 @@ const SkillsSection = ({ sectionTitle, list }) => {
   );
 };
 
-const ProfileViews = () => {
+const UserView = () => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
+  const { userSlug } = useContext(AuthContext);
   const [person, setPerson] = useState(null);
+
   useEffect(() => {
-    const fetchPerson = async (nameSlug) => {
+    const fetchPerson = async (userSlug) => {
       try {
-        const response = await fetch(`${apiUrl}/profile/${nameSlug}`);
+        const response = await fetch(`${apiUrl}/profile/${userSlug}`);
         const data = await response.json();
         console.log(data);
         setPerson(data);
@@ -133,12 +136,10 @@ const ProfileViews = () => {
       }
     };
 
-    const path = window.location.pathname;
-    const username = path.split('/').pop();
-    if (username) {
-      fetchPerson(username);
+    if (userSlug) {
+      fetchPerson(userSlug);
     }
-  }, []);
+  }, [userSlug]);
 
   if (!person) {
     return <div>Loading...</div>;
@@ -155,13 +156,14 @@ const ProfileViews = () => {
       <Box
         sx={{
           bgcolor: theme.palette.background.paper,
+          height: 'calc(100vh - 64px)',
         }}
       >
         <BackgroundBanner
           imageUrl={`https://i.pinimg.com/originals/1a/5e/69/1a5e69e95c90693cdda00d158805ad49.jpg`}
         />
         <Container sx={{}}>
-          <ProfileBanner
+          <UserBanner
             name={person.name}
             role={person.jobTitle}
             company={person.company}
@@ -182,66 +184,33 @@ const ProfileViews = () => {
                 </Tabs>
               </Box>
               <Box mt={3}>
-                <TabPanel index={0} value={value}>
-                  <TabPanelPaper
-                    sx={{
-                      boxSizing: 'border-box', // Include padding and borders in the element's dimensions
-                      // border: '1px solid black', // For debugging
-                      overflowY: 'auto',
-                      maxHeight: '300px',
-                      marginBottom: 2, // Make sure the bottom margin is 0
-                    }}
-                  >
-                    {person.description}
-                  </TabPanelPaper>
+                <TabPanel
+                  index={0}
+                  value={value}
+                  sx={{
+                    boxSizing: 'border-box', // Include padding and borders in the element's dimensions
+                    // border: '1px solid black', // For debugging
+                    overflowY: 'auto',
+                    maxHeight: '300px',
+                    marginBottom: 2, // Make sure the bottom margin is 0
+                  }}
+                >
+                  {person.description}
                 </TabPanel>
                 <TabPanel index={1} value={value}>
-                  <TabPanelPaper sx={{ mb: 2 }}>
-                    <Compliment
-                      name={'Min'}
-                      role={'Dilly dallier'}
-                      date='02/04/2021'
-                      compliment={compliment}
-                    />
-                  </TabPanelPaper>
-                  <TabPanelPaper sx={{ mb: 2 }}>
-                    <Compliment
-                      name={'Min'}
-                      role={'Dilly dallier'}
-                      date='02/04/2021'
-                      compliment={compliment}
-                    />
-                  </TabPanelPaper>
+                  list of compliments
                 </TabPanel>
               </Box>
             </Box>
-            <Box mt={3}>
-              <TabPanel
-                index={0}
-                value={value}
-                sx={{
-                  boxSizing: 'border-box', // Include padding and borders in the element's dimensions
-                  // border: '1px solid black', // For debugging
-                  overflowY: 'auto',
-                  maxHeight: '300px',
-                  marginBottom: 2, // Make sure the bottom margin is 0
-                }}
-              >
-                {person.description}
-              </TabPanel>
-              <TabPanel index={1} value={value}>
-                list of compliments
-              </TabPanel>
-            </Box>
-          </Box>
-          <StickyPaper>
-            <SkillsSection sectionTitle='Skills' list={skills} />
-            <SkillsSection sectionTitle='Meet me for' list={services} />
-          </StickyPaper>
-        </Stack>
-      </Container>
-    </Box>
+            <StickyPaper>
+              <SkillsSection sectionTitle='Skills' list={skills} />
+              <SkillsSection sectionTitle='Meet me for' list={services} />
+            </StickyPaper>
+          </Stack>
+        </Container>
+      </Box>
+    </>
   );
 };
 
-export default ProfileViews;
+export default UserView;
