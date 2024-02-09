@@ -215,14 +215,32 @@ const ProfileViews = () => {
                 </TabPanel>
               </Box>
             </Box>
-            <StickyPaper>
-              <SkillsSection sectionTitle='Skills' list={skills} />
-              <SkillsSection sectionTitle='Meet me for' list={services} />
-            </StickyPaper>
-          </Stack>
-        </Container>
-      </Box>
-    </>
+            <Box mt={3}>
+              <TabPanel
+                index={0}
+                value={value}
+                sx={{
+                  boxSizing: 'border-box', // Include padding and borders in the element's dimensions
+                  // border: '1px solid black', // For debugging
+                  overflowY: 'auto',
+                  maxHeight: '300px',
+                  marginBottom: 2, // Make sure the bottom margin is 0
+                }}
+              >
+                {person.description}
+              </TabPanel>
+              <TabPanel index={1} value={value}>
+                list of compliments
+              </TabPanel>
+            </Box>
+          </Box>
+          <StickyPaper>
+            <SkillsSection sectionTitle='Skills' list={skills} />
+            <SkillsSection sectionTitle='Meet me for' list={services} />
+          </StickyPaper>
+        </Stack>
+      </Container>
+    </Box>
   );
 };
 
