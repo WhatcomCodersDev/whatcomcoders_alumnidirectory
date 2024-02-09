@@ -105,7 +105,7 @@ const SignIn = (props) => {
             variant='outlined'
             sx={{ mb: 2 }}
           />
-          <Button variant='contained' color='secondary' fullWidth>
+          <Button variant='contained' color='primary' fullWidth>
             Continue with email
           </Button>
           <Typography
