@@ -6,20 +6,31 @@ import {
   Container,
   Typography,
   Grid,
-  ClickAwayListener,
+  TextField,
+  InputAdornment,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search'; // Importing the search icon
+import FilterListIcon from '@mui/icons-material/FilterList'; // Importing the filter icon
+import RoleSelector from './Directory/RoleSelector';
+import DropDownFilters from './Directory/DropDownFilters';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 console.log(apiUrl);
 
 const ProfileCardsDirectoryView = () => {
   const [users, setUsers] = useState([]);
-  const [, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const handleSearch = (term) => {
+  const handleSearch = (event) => {
+    const term = event.target.value;
     setSearchTerm(term);
     filterUsers(term);
   };
@@ -42,6 +53,7 @@ const ProfileCardsDirectoryView = () => {
         const data = await response.json();
         console.log(data);
         setUsers(data);
+        setFilteredUsers(data);
       } catch (error) {
         console.log('Failed to fetch users:', error);
       }
@@ -78,42 +90,60 @@ const ProfileCardsDirectoryView = () => {
         component='h1'
         gutterBottom
         align='center'
-        sx={{ my: 4 }}
+        sx={{ mt: 4, mb: 2 }}
       >
         Meet WWU Alumni
       </Typography>
 
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
-        <SearchBar onSearch={handleSearch} />
+      {/* Navigation Links
+      <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center', gap: 2 }}>
+        <Button color='inherit'>Students</Button>
+        <Button color='inherit'>Alumni</Button>
+        <Button color='inherit'>Mentors</Button>
+      </Box> */}
+      <RoleSelector setFilteredUsers={setFilteredUsers} />
+
+      <Box
+        sx={{
+          mb: 4,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
+        {/* Search Bar */}
+        <TextField
+          variant='outlined'
+          placeholder='Search by name, company, role'
+          size='medium'
+          value={searchTerm}
+          onChange={handleSearch}
+          sx={{
+            width: '100%',
+            maxWidth: '500px',
+            '& .MuiOutlinedInput-root': {
+              borderRadius: '20px',
+            },
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position='start'>
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+        {/* Filters Icon */}
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <FilterListIcon sx={{ mr: 1, cursor: 'pointer' }} />
+          <Typography sx={{ cursor: 'pointer' }}>Filters</Typography>
+        </Box>
       </Box>
 
-      {isFullscreen && selectedUser && (
-        <Box
-          sx={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            width: '100vw',
-            height: '100vh',
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            zIndex: 1080,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            transition: 'all 0.3s',
-          }}
-          onClick={handleBackgroundClick} // Click handler for the background
-        >
-          <ProfileCard
-            data={selectedUser}
-            onToggleFullscreen={() => toggleFullscreen(selectedUser)}
-            isFullscreen={true}
-          />
-        </Box>
-      )}
+      {/* Dropdown Filters */}
+      <DropDownFilters setFilteredUsers={setFilteredUsers} />
 
+      {/* Profile Cards Grid */}
       <Grid container spacing={4} justifyContent='flex-start'>
         {filteredUsers.map((user) => (
           <Grid item key={user.email} xs={12} sm={6} md={4} lg={3}>

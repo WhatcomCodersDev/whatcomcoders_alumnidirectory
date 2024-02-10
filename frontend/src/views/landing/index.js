@@ -1,25 +1,27 @@
 import React from 'react';
-import { Button, Container, Typography, Box, Grid } from '@mui/material';
+import { Button, Container, Typography, Box, Grid, Paper } from '@mui/material';
 import styled from '@emotion/styled';
+
+// Assuming these imports are correct and used elsewhere
 import profileCardIcon from '../../static/profilecards_layout.jpeg';
 import networkingIcon from '../../static/networkingicon_layout.png';
 import resourcesIcon from '../../static/educationicon_layout.png';
 import logo from '../../static/logo.png';
+import wwuBackground from '../../static/wwu.webp';
+import DiscordIcon from '../../static/discord.png'; // Assuming you have this logo
 
-const HeroImage = styled(Box)`
-  height: 500px;
-
-  // border: 3px solid black; // For debugging
-  //   background-color: blue; // For debugging
-  height: 500px;
-  background-image: url('./stock_photo.jpeg');
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #333333;
-`;
+const HeroImage = styled(Box)(({ theme }) => ({
+  height: '500px',
+  backgroundImage: 'url(./stock_photo.jpeg)',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  display: 'flex',
+  color: '#333333',
+  [theme.breakpoints.down('md')]: {
+    flexDirection: 'column',
+    textAlign: 'center',
+  },
+}));
 
 const FeatureIcon = styled(Box)`
   height: 100px;
@@ -32,36 +34,74 @@ const FeatureIcon = styled(Box)`
 const LandingView = () => {
   return (
     <Container>
-      {/* Header */}
-      <Box
-        display='flex'
-        justifyContent='space-between'
-        alignItems='center'
-        marginBottom={4}
-      >
-        {/* <Typography variant='h2' flexGrow={1} textAlign='center'>
-          Whatcom Coders Alumni Network
-        </Typography> */}
-      </Box>
-
-      {/* Hero Section */}
       <HeroImage>
-        <Box textAlign='center'>
-          <Typography variant='h2' gutterBottom color='primary.main'>
-            Connect With WWU Tech Alumni
-          </Typography>
-          <Typography variant='h5' marginBottom={3}>
-            Discover, Engage & Grow Together
-          </Typography>
-          <Button
-            href='https://forms.gle/tuCZ3amPND88St3w6'
-            variant='contained'
-            size='large'
-            color='secondary'
+        <Grid
+          container
+          spacing={2}
+          alignItems='center'
+          justifyContent='center'
+          style={{ height: '100%' }}
+        >
+          <Grid item xs={12} md={6}>
+            <Typography variant='h2' gutterBottom color='primary.main'>
+              Connect With WWU Tech Alumni
+            </Typography>
+            <Typography variant='h5' marginBottom={3}>
+              Discover, Engage & Grow Together
+            </Typography>
+            <Box display='flex' flexDirection='row' alignItems='center' gap={2}>
+              <Button
+                href={'/people'}
+                variant='contained'
+                size='large'
+                color='primary'
+                sx={{ borderRadius: 28 }} // Making the button round
+              >
+                Meet People
+              </Button>
+              <Button
+                component='a'
+                href='https://discord.gg/r6ShrR73Jx'
+                target='_blank'
+                rel='noopener noreferrer'
+                variant='contained'
+                size='large'
+                sx={{
+                  backgroundColor: '#5865F2',
+                  borderRadius: 28, // Making the button round
+                  '&:hover': {
+                    backgroundColor: '#4752c4', // Slightly darker shade on hover
+                  },
+                }}
+                startIcon={
+                  <img
+                    src={DiscordIcon}
+                    alt='Discord'
+                    style={{ width: 24, height: 24 }}
+                  />
+                }
+              >
+                Join Our Discord
+              </Button>
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            display='flex'
+            justifyContent='center'
+            alignItems='center'
           >
-            Join our Waitlist
-          </Button>
-        </Box>
+            <Paper elevation={4} sx={{ borderRadius: 2 }}>
+              <img
+                src={wwuBackground}
+                alt='WWU'
+                style={{ maxWidth: '100%', borderRadius: '4px' }}
+              />
+            </Paper>
+          </Grid>
+        </Grid>
       </HeroImage>
 
       {/* Features Section */}
@@ -103,21 +143,6 @@ const LandingView = () => {
         {/* <Button href='/resources' variant='outlined' color='primary'>
           Explore Resources
         </Button> */}
-      </Box>
-
-      {/* Footer */}
-      <Box py={5} textAlign='center'>
-        <Button
-          component='a'
-          href='https://discord.gg/r6ShrR73Jx'
-          target='_blank'
-          rel='noopener noreferrer'
-          variant='contained'
-          color='secondary'
-          marginTop={2}
-        >
-          Join Discord
-        </Button>
       </Box>
     </Container>
   );
