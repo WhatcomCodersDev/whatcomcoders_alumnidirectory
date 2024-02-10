@@ -51,7 +51,7 @@ def update_user_info():
 def current_user():
     current_user_uuid = get_jwt_identity()
     user_data = firestore_db.get_user_data_by_uuid(current_user_uuid) 
-    return jsonify(name=user_data['name'])
+    return jsonify(user_data)
 
 @bp.route("/api/user", methods=["GET"])
 @jwt_required()

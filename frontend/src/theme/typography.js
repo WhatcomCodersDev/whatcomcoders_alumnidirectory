@@ -6,7 +6,7 @@ const theme = {
   },
   h2: {
     fontWeight: 600,
-    fontSize: 62,
+    fontSize: 48,
     letterSpacing: '-0.24px',
   },
   h3: {
