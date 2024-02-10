@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from config import *
-from app.routes import auth_routes, user_routes, profiles_routes
+from app.routes import auth_routes, user_routes, profiles_routes, directory_routes
 from app.handlers import error_handlers
 from app.services import firestore_db, flow_manager, jwt_manager, logger_manager, sendgrid_wrapper
 
@@ -31,6 +31,7 @@ def create_flask_app() -> Flask:
     app.register_blueprint(auth_routes.bp)
     app.register_blueprint(user_routes.bp)
     app.register_blueprint(profiles_routes.bp)
+    app.register_blueprint(directory_routes.bp)
 
     error_handlers.register_error_handlers(app)
 
