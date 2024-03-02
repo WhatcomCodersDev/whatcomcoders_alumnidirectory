@@ -14,7 +14,25 @@ const ProfileAvatar = styled(Avatar)(({ theme }) => ({
   border: `6px solid ${theme.palette.background.paper}`,
 }));
 
-const UserBanner = ({ name, role, company, avatarUrl, data }) => {
+const UserInfoSection = ({ name, role, company }) => (
+  <Stack>
+    <Typography variant='h1' fontWeight={'bold'}>
+      {name}
+    </Typography>
+    <Typography fontWeight={'medium'}>
+      {role} at {company}
+    </Typography>
+  </Stack>
+);
+
+const UserBanner = ({
+  name,
+  role,
+  company,
+  avatarUrl,
+  data,
+  emailReachOutCount,
+}) => {
   return (
     <Stack
       direction='row'
@@ -45,6 +63,7 @@ const UserBanner = ({ name, role, company, avatarUrl, data }) => {
               {role} at {company}
             </Typography>
             <UserMedia data={data} />
+            Number of email reach outs left: {emailReachOutCount}
           </Stack>
 
           {/* Buttons to meet */}

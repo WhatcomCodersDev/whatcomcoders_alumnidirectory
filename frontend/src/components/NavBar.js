@@ -1,6 +1,14 @@
 import { styled } from '@mui/material/styles';
 import React, { useContext } from 'react';
-import { AppBar, Toolbar, Link, Typography, Button, Box } from '@mui/material';
+import {
+  Avatar,
+  AppBar,
+  Toolbar,
+  Link,
+  Typography,
+  Button,
+  Box,
+} from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { AuthContext } from '../contexts/authContext';
 import Logo from './Logo';
@@ -26,7 +34,8 @@ const StyledLink = styled(Link)(({ theme }) => ({
 }));
 
 const NavBar = () => {
-  const { isLoggedIn, userName, logout } = useContext(AuthContext);
+  const { isLoggedIn, userName, logout, userProfilePic } =
+    useContext(AuthContext);
 
   return (
     <StyledAppBar position='static'>
@@ -63,9 +72,15 @@ const NavBar = () => {
                   color='inherit'
                   component={RouterLink}
                   to='/userinfo'
-                  sx={{ color: 'white' }}
+                  sx={{ color: 'white', display: 'flex', alignItems: 'center' }}
                 >
-                  {userName}
+                  {userProfilePic && (
+                    <Avatar
+                      src={userProfilePic}
+                      sx={{ width: 24, height: 24, marginRight: 1 }}
+                    />
+                  )}
+                  {userName}{' '}
                 </Button>
               </StyledLink>
               <Button color='inherit' onClick={logout}>

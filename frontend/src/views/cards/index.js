@@ -51,9 +51,13 @@ const ProfileCardsDirectoryView = () => {
       try {
         const response = await fetch(`${apiUrl}/api/people`);
         const data = await response.json();
-        console.log(data);
-        setUsers(data);
-        setFilteredUsers(data);
+        const completedProfileUsers = data.filter(
+          (people) => people.completed_profile === true
+        );
+
+        console.log(completedProfileUsers);
+        setUsers(completedProfileUsers);
+        setFilteredUsers(completedProfileUsers);
       } catch (error) {
         console.log('Failed to fetch users:', error);
       }

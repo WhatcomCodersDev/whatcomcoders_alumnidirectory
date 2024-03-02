@@ -70,6 +70,10 @@ const landingPages = [
         path: '/userinfo',
         element: lazy(() => import('./views/users')),
       },
+      {
+        path: '/signup',
+        element: lazy(() => import('./views/signupFlow')),
+      },
     ],
   },
 ];
