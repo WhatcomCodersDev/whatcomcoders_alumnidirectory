@@ -29,20 +29,22 @@ def callback():
 
         user_slug = user_info.get("name").replace(" ", "-").lower() + "-" + str(user_uuid)[-6:]
         user_info["user_slug"] = user_slug
+        user_info["completed_profile"] = False
+        user_info["emailReachOutCount"] = 3
         if user_info.get("picture"):
             upload_photo_to_bucket(user_info.get("picture"), id_info.get("sub"))
         firestore_db.store_user_in_db(user_info, user_uuid)
+        redirect_url = f'{current_app.config["BASE_URL"]}/signup'
     else:
         access_token = create_access_token(identity=user_doc.id)
-    # redirect_url = "http://localhost:3000"
-    redirect_url = f'{current_app.config["BASE_URL"]}'
+        redirect_url = f'{current_app.config["BASE_URL"]}/people'
 
     response = make_response(redirect(redirect_url))
     response.set_cookie('access_token_cookie', 
                         access_token, 
                         httponly=False, 
                         samesite=current_app.config["SAMESITE_COOKIE_SETTING"], 
-                        secure=True, 
+                        # secure=True, enable during prod
                         # domain=".whatcomcoders.com", 
                         path='/')
     print(response)

@@ -35,8 +35,6 @@ const LinkedInButton = styled(Button)(({ theme }) => ({
 }));
 
 const SignIn = (props) => {
-  const history = useNavigate();
-
   const handleGoogleOAuth = (e) => {
     e.preventDefault();
     Axios.get(`${apiUrl}/auth/google`, {})
@@ -44,12 +42,6 @@ const SignIn = (props) => {
         window.location.assign(res.data.auth_url);
       })
       .catch((err) => console.log(err));
-  };
-
-  const handleGoogleLogin = (e) => {
-    handleGoogleOAuth(e);
-    props.login(e);
-    history.push('/userinfo');
   };
 
   return (

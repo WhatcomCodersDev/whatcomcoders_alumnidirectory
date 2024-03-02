@@ -169,6 +169,7 @@ const UserView = () => {
             company={person.company}
             avatarUrl={person.picture}
             data={person}
+            emailReachOutCount={person.emailReachOutCount}
           />
           <Stack
             paddingLeft={3}

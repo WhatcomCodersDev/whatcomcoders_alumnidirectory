@@ -7,6 +7,7 @@ const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState(null);
   const [userSlug, setUserSlug] = useState(null);
+  const [userProfilePic, setUserProfilePic] = useState('');
 
   const fetchCurrentUserAPI = async () => {
     try {
@@ -42,6 +43,7 @@ const AuthProvider = ({ children }) => {
         setIsLoggedIn(false);
         setUserName(null);
         setUserSlug(null);
+        setUserProfilePic('');
       } else {
         const errorText = await response.text();
         console.error(`Logout Error: ${response.status} - ${errorText}`);
@@ -60,6 +62,7 @@ const AuthProvider = ({ children }) => {
           setIsLoggedIn(true);
           setUserName(response.name);
           setUserSlug(response.user_slug);
+          setUserProfilePic(response.picture);
         } else {
           setIsLoggedIn(false);
         }
@@ -72,7 +75,9 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userName, userSlug, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, userName, userSlug, logout, userProfilePic }}
+    >
       {children}
     </AuthContext.Provider>
   );
