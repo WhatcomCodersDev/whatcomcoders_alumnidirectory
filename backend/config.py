@@ -34,6 +34,15 @@ class DevelopmentConfig(Config):
     DOMAIN = "localhost"
     SAMESITE_COOKIE_SETTING = "Lax"
 
+class StagingConfig(Config):
+    HOST = "0.0.0.0"
+    PORT = 8080
+    REDIRECT_URI = "https://www.whatcomcoders.com/callback" 
+    BASE_URL = "https://www.whatcomcoders.com"
+    DOMAIN = ".whatcomcoders.com"
+    SAMESITE_COOKIE_SETTING = "None"
+    DEBUG = False
+
 class ProductionConfig(Config):
     HOST = "0.0.0.0"
     PORT = 8080
