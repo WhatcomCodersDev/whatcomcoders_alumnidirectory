@@ -1,10 +1,10 @@
 import React from 'react';
-import { useField, useFormikContext } from 'formik';
-import { Autocomplete, Chip, Paper, TextField } from '@mui/material';
+import { useField } from 'formik';
+import { Autocomplete, Chip, TextField } from '@mui/material';
 import theme from 'theme/typography';
 
 const ProjectTagsField = ({ name, options, ...otherProps }) => {
-  const { setFieldValue } = useFormikContext();
+  // const { setFieldValue } = useFormikContext();
   const [field] = useField(name);
 
   const handleChange = (event, newValue) => {

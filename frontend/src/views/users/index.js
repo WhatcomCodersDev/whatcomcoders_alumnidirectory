@@ -1,14 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-  AppBar,
   Box,
   Avatar,
   Typography,
   Chip,
   Container,
-  Button,
-  Card,
-  CardContent,
   Stack,
   Paper,
   Tab,
@@ -19,7 +15,7 @@ import { styled } from '@mui/material/styles';
 import UserBanner from './UserBanner';
 import { AuthContext } from 'contexts/authContext';
 
-const about = `I'm the certified coders pimp.\nAs my mentees, you'll be part of the CORE gang (Code-Whore). \nAfter receiving my wisdom, 11/10 of my COREs now work at FAANG companies.`;
+// const about = `I'm the certified coders pimp.\nAs my mentees, you'll be part of the CORE gang (Code-Whore). \nAfter receiving my wisdom, 11/10 of my COREs now work at FAANG companies.`;
 const skills = [
   'Deep Learning',
   'ML',
@@ -41,13 +37,13 @@ const services = [
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+// const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
-const ProfileAvatar = styled(Avatar)(({ theme }) => ({
-  width: theme.spacing(22),
-  height: theme.spacing(22),
-  border: `6px solid ${theme.palette.background.paper}`,
-}));
+// const ProfileAvatar = styled(Avatar)(({ theme }) => ({
+//   width: theme.spacing(22),
+//   height: theme.spacing(22),
+//   border: `6px solid ${theme.palette.background.paper}`,
+// }));
 
 const ProfilePaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),

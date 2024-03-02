@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ProfileCard from './ProfileCard';
-import SearchBar from '../../components/SearchBar';
 import {
   Box,
   Container,
@@ -8,11 +7,6 @@ import {
   Grid,
   TextField,
   InputAdornment,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search'; // Importing the search icon
 import FilterListIcon from '@mui/icons-material/FilterList'; // Importing the filter icon
