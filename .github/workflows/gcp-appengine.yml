@@ -42,7 +42,7 @@ jobs:
         if: github.event_name == 'push'
         run: |
           if [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
-            gcloud app deploy --project=whatcomcoders-staging --version=$(echo $GITHUB_REF | sed 's/refs\/heads\///') --no-promote
+            gcloud app deploy --project=whatcomcoders-staging --version=$(echo $GITHUB_REF | sed 's/refs\/heads\///') --promote
           else
-            gcloud app deploy backend/app.yaml --project gothic-sled-375305 --version=$(echo $GITHUB_REF | sed 's/refs\/heads\///') --promote
+            gcloud app deploy backend/app.yaml --project gothic-sled-375305 --version=$(echo $GITHUB_REF | sed 's/refs\/heads\///') --no-promote
           fi
