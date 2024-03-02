@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "gothic-sled-375305"
+    "default": "gothic-sled-375305",
+    "staging": "whatcomcoders-prod",
+    "production": "gothic-sled-375305"
   }
 }
