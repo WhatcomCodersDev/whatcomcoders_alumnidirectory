@@ -7,7 +7,6 @@ collections.Iterable = collections.abc.Iterable
 from flask import Blueprint, make_response, redirect, current_app
 from flask_jwt_extended import create_access_token
 from flask.wrappers import Response
-from flask.globals import request, session
 
 from app.utils import upload_photo_to_bucket
 from app.services import flow_manager, firestore_db
