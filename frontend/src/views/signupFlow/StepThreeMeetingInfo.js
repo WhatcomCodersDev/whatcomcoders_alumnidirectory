@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field } from 'formik';
-import { Checkbox, FormControlLabel, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { TextField as FormikTextField } from 'formik-mui';
 import { CheckboxWithLabel } from 'formik-mui';
 

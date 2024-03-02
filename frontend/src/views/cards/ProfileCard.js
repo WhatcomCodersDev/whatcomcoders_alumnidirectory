@@ -1,10 +1,9 @@
 import React from 'react';
-import { ClickAwayListener, Card, Container } from '@mui/material';
 import Photo from './Photo';
 import DescriptionCard from './Description';
-import PersonalInfo from './PersonalInfo';
 import GeneralInfo from './GeneralInfo';
 import UserMedia from './UserMedia';
+import { Card, Container } from '@mui/material';
 
 const ProfileCard = ({ data, onToggleFullscreen, isFullscreen }) => {
   const handleCardClick = (e) => {
@@ -13,18 +12,18 @@ const ProfileCard = ({ data, onToggleFullscreen, isFullscreen }) => {
     window.open(userProfileUrl, '_blank');
   };
 
-  const handleToggleFullscreen = (e) => {
-    e.stopPropagation();
-    if (!isFullscreen) {
-      const cardMediaElement = document.querySelector(
-        '.MuiCard-root.profile-card'
-      );
-      if (cardMediaElement && cardMediaElement.contains(e.target)) {
-        return;
-      }
-      onToggleFullscreen();
-    }
-  };
+  // const handleToggleFullscreen = (e) => {
+  //   e.stopPropagation();
+  //   if (!isFullscreen) {
+  //     const cardMediaElement = document.querySelector(
+  //       '.MuiCard-root.profile-card'
+  //     );
+  //     if (cardMediaElement && cardMediaElement.contains(e.target)) {
+  //       return;
+  //     }
+  //     onToggleFullscreen();
+  //   }
+  // };
 
   return (
     <Container

@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AppBar,
   Box,
-  Avatar,
   Typography,
   Chip,
   Container,
-  Button,
-  Card,
-  CardContent,
   Stack,
   Paper,
   Tab,
@@ -19,7 +14,7 @@ import { styled } from '@mui/material/styles';
 import ProfileBanner from './ProfileBanner';
 import Compliment from './Compliment';
 
-const about = `I'm the certified coders pimp.\nAs my mentees, you'll be part of the CORE gang (Code-Whore). \nAfter receiving my wisdom, 11/10 of my COREs now work at FAANG companies.`;
+// const about = `I'm the certified coders pimp.\nAs my mentees, you'll be part of the CORE gang (Code-Whore). \nAfter receiving my wisdom, 11/10 of my COREs now work at FAANG companies.`;
 const skills = [
   'Deep Learning',
   'ML',
@@ -43,7 +38,7 @@ const compliment = `Very friendly mentor. Listen to my concern and give good adv
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+// const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const ProfilePaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),

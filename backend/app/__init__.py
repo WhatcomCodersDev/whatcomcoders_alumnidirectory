@@ -4,12 +4,23 @@ from config import *
 from app.routes import auth_routes, user_routes, profiles_routes, directory_routes
 from app.handlers import error_handlers
 from app.services import firestore_db, flow_manager, jwt_manager, logger_manager, sendgrid_wrapper
-
+from dotenv import load_dotenv
 
 
 def create_flask_app() -> Flask:
-    app = Flask(__name__)
+    load_dotenv()
     environment = os.environ.get('FLASK_ENV')
+    if environment == 'production':
+        dotenv_path = '.env.prod'
+    elif environment == 'staging':
+        dotenv_path = '.env.staging'
+    else:
+        dotenv_path = '.env'  # Default to the main .env for development
+
+    load_dotenv(dotenv_path=dotenv_path)
+
+    app = Flask(__name__)
+    
     if environment == 'development':
         app.config.from_object('config.DevelopmentConfig')
         allowed_origins = [
@@ -19,6 +30,13 @@ def create_flask_app() -> Flask:
             "http://localhost:4000",
             "http://localhost:8080",
         ]
+    elif environment == 'staging':
+        app.config.from_object('config.StagingConfig')
+        allowed_origins = [
+            "https://staging.whatcomcoders.com",
+            "https://staging.whatcomcoders.com",
+        ]
+
     elif environment == 'production':
         app.config.from_object('config.ProductionConfig')
         allowed_origins = [

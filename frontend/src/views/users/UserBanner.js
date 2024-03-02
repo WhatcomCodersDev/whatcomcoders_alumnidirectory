@@ -1,9 +1,9 @@
 import React from 'react';
-import { Avatar, Box, Typography, Link, Button, Stack } from '@mui/material';
+import { Avatar, Box, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import MailIcon from '@mui/icons-material/Mail';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+// import LinkedInIcon from '@mui/icons-material/LinkedIn';
+// import MailIcon from '@mui/icons-material/Mail';
+// import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import UserMedia from 'views/profiles/UserMedia';
 import UserInfoDialog from './UserInfoDialogWrapper';
 // import UserMedia from './UserMedia';
@@ -14,16 +14,16 @@ const ProfileAvatar = styled(Avatar)(({ theme }) => ({
   border: `6px solid ${theme.palette.background.paper}`,
 }));
 
-const UserInfoSection = ({ name, role, company }) => (
-  <Stack>
-    <Typography variant='h1' fontWeight={'bold'}>
-      {name}
-    </Typography>
-    <Typography fontWeight={'medium'}>
-      {role} at {company}
-    </Typography>
-  </Stack>
-);
+// const UserInfoSection = ({ name, role, company }) => (
+//   <Stack>
+//     <Typography variant='h1' fontWeight={'bold'}>
+//       {name}
+//     </Typography>
+//     <Typography fontWeight={'medium'}>
+//       {role} at {company}
+//     </Typography>
+//   </Stack>
+// );
 
 const UserBanner = ({
   name,

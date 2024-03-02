@@ -1,17 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  Typography,
-  Box,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-  List,
-  Divider,
-  ListItem,
-  Link,
-} from '@mui/material';
+import { Typography, Box, Grid, Card, Link } from '@mui/material';
 import styled from '@emotion/styled';
 
 // Styled component for logos

@@ -30,19 +30,14 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2.1.0
         with:
-          project_id: gothic-sled-375305
-          # service_account_key: ${{ secrets.GCP_SA_KEY }}
-
-        # run: |
-        #   gcloud config set project gothic-sled-375305
-        #   gcloud config set app/cloud_build_timeout 1000
+          project_id: ${{ secrets.GCP_STAGING_PROJECT_ID }}
 
       # Deploy to Google App Engine (only for merges, not for PRs)
       - name: Deploy to App Engine
         if: github.event_name == 'push'
         run: |
           if [[ $GITHUB_REF == 'refs/heads/staging' ]]; then
-            gcloud app deploy --project=whatcomcoders-staging --version=$(echo $GITHUB_REF | sed 's/refs\/heads\///') --promote
+            gcloud app deploy backend/app.yaml --project ${{ secrets.GCP_STAGING_PROJECT_ID }} --version=$(echo $GITHUB_REF | sed 's/refs\/heads\///') --no-promote
           else
-            gcloud app deploy backend/app.yaml --project gothic-sled-375305 --version=$(echo $GITHUB_REF | sed 's/refs\/heads\///') --no-promote
+            gcloud app deploy backend/staging.yaml --project ${{ secrets.GCP_PROD_PROJECT_ID}} --version=$(echo $GITHUB_REF | sed 's/refs\/heads\///') --promote
           fi

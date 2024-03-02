@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Card,
   CardContent,
@@ -10,8 +9,6 @@ import {
   Divider,
 } from '@mui/material';
 import Axios from 'axios';
-import GoogleIcon from '@mui/icons-material/Google'; // If available, or use <img> for logos
-import LinkedInIcon from '@mui/icons-material/LinkedIn'; // If available, or use <img> for logos
 import { styled } from '@mui/material/styles';
 
 const apiUrl = process.env.REACT_APP_API_URL;

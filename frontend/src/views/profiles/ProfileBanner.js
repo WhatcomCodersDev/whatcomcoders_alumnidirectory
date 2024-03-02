@@ -1,7 +1,6 @@
 import React from 'react';
-import { Avatar, Box, Typography, Link, Button, Stack } from '@mui/material';
+import { Avatar, Box, Typography, Button, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import MailIcon from '@mui/icons-material/Mail';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import UserMedia from './UserMedia';
@@ -24,6 +23,7 @@ const ProfileBanner = ({ name, role, company, avatarUrl, data }) => {
     try {
       const response = await fetch(`${apiUrl}/profile/${nameSlug}/email`);
       const data = await response.json();
+      console.log('Email sent:', data);
     } catch (error) {
       console.log('Failed to send an intro email:', error);
     }

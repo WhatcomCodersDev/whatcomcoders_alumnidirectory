@@ -6,7 +6,6 @@ import styled from '@emotion/styled';
 import profileCardIcon from '../../static/profilecards_layout.jpeg';
 import networkingIcon from '../../static/networkingicon_layout.png';
 import resourcesIcon from '../../static/educationicon_layout.png';
-import logo from '../../static/logo.png';
 import wwuBackground from '../../static/wwu.webp';
 import DiscordIcon from '../../static/discord.png'; // Assuming you have this logo
 
