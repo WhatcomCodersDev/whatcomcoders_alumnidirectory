@@ -30,7 +30,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2.1.0
         with:
-          project_id: ${{ secrets.GCP_PROD_PROJECT_ID }}
+          project_id: ${{ secrets.GCP_STAGING_PROJECT_ID }}
 
       # Deploy to Google App Engine (only for merges, not for PRs)
       - name: Deploy to App Engine
