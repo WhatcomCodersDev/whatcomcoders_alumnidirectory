@@ -13,7 +13,7 @@ const StyledBackgroundBanner = styled(Box)(({ imageUrl }) => ({
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   zIndex: -1,
-  // Default style when no image is provided
+  // Default style when no image is provided.
   ...(imageUrl
     ? {}
     : {

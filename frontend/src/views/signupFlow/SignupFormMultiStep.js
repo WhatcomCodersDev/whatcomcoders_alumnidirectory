@@ -56,7 +56,7 @@ const initialValues = {
 
 const SignUpFormMultiStep = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const [formValues, setFormValues] = useState(initialValues);
+  const [, setFormValues] = useState(initialValues);
 
   const currentValidationSchema = validationSchemas[currentStep];
 

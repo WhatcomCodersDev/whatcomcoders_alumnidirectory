@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import NavBar from 'components/NavBar';
 import FootBar from 'components/FootBar';
@@ -14,17 +13,17 @@ const Root = styled('div')(({ theme }) => ({
 
 const Content = styled('div')(({ theme }) => ({
   flex: '1', // This makes the content grow and fill available space, pushing the FootBar down
-  marginBottom: '64px'
+  marginBottom: '64px',
 }));
 
 const MentorLayout = () => {
   //   const { user, logout } = useAuth();
 
   // top bar open state & function
-  const [isMobileNavOpen, setMobileNavOpen] = useState(false);
-  const onMobileNavOpen = () => {
-    setMobileNavOpen(true);
-  };
+  // const [isMobileNavOpen, setMobileNavOpen] = useState(false);
+  // const onMobileNavOpen = () => {
+  //   setMobileNavOpen(true);
+  // };
 
   return (
     <Root>

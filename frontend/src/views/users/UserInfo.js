@@ -2,7 +2,6 @@ import '../../styles/theme.css';
 import '../../styles/userInfo.css';
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../../contexts/authContext';
-import ProjectTagsField from './projectTags';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 

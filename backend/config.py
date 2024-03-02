@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 GOOGLE_APPLICATION_CREDENTIALS = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
@@ -33,6 +34,15 @@ class DevelopmentConfig(Config):
     BASE_URL = "http://localhost:3000"
     DOMAIN = "localhost"
     SAMESITE_COOKIE_SETTING = "Lax"
+
+class StagingConfig(Config):
+    HOST = "0.0.0.0"
+    PORT = 8080
+    REDIRECT_URI = "https://www.whatcomcoders.com/callback" 
+    BASE_URL = "https://www.whatcomcoders.com"
+    DOMAIN = ".whatcomcoders.com"
+    SAMESITE_COOKIE_SETTING = "None"
+    DEBUG = False
 
 class ProductionConfig(Config):
     HOST = "0.0.0.0"

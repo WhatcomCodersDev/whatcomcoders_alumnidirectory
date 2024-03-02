@@ -3,10 +3,6 @@ import {
   Container,
   Typography,
   Box,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
   List,
   Divider,
   ListItem,
@@ -14,7 +10,6 @@ import {
 } from '@mui/material';
 
 import ResourceCategories from './ResourceCategories';
-import ResourceItem from './ResourceItem';
 import ColorStackLogo from '../../static/dei/colorstack.jpeg';
 import CodePathLogo from '../../static/programs/codepath.jpeg';
 import OutInTechLogo from '../../static/dei/outintech.jpeg';

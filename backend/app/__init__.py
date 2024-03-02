@@ -19,6 +19,13 @@ def create_flask_app() -> Flask:
             "http://localhost:4000",
             "http://localhost:8080",
         ]
+    elif environment == 'staging':
+        app.config.from_object('config.StagingConfig')
+        allowed_origins = [
+            "https://staging.whatcomcoders.com",
+            "https://staging.whatcomcoders.com",
+        ]
+        
     elif environment == 'production':
         app.config.from_object('config.ProductionConfig')
         allowed_origins = [
