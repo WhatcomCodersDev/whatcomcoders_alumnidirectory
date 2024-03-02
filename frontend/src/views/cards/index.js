@@ -68,18 +68,18 @@ const ProfileCardsDirectoryView = () => {
     setSelectedUser(isFullscreen ? null : user);
   };
 
-  const handleClickAway = (e) => {
-    console.log(e.target);
-    if (isFullscreen) {
-      toggleFullscreen(selectedUser);
-    }
-  };
+  // const handleClickAway = (e) => {
+  //   console.log(e.target);
+  //   if (isFullscreen) {
+  //     toggleFullscreen(selectedUser);
+  //   }
+  // };
 
-  const handleBackgroundClick = () => {
-    if (isFullscreen) {
-      toggleFullscreen(selectedUser);
-    }
-  };
+  // const handleBackgroundClick = () => {
+  //   if (isFullscreen) {
+  //     toggleFullscreen(selectedUser);
+  //   }
+  // };
 
   return (
     <Container maxWidth='lg'>

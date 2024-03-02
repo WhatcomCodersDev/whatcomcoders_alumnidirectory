@@ -1,6 +1,6 @@
 import { Box, Typography, Stack } from '@mui/material';
 import { ProfileAvatar } from './ProfileBanner';
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 
 const Compliment = ({ key, name, role, avatarUrl, date, compliment }) => {
   // const theme = useTheme();

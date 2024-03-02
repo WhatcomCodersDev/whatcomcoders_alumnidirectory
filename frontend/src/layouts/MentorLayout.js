@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import NavBar from 'components/NavBar';
 import FootBar from 'components/FootBar';

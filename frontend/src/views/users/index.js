@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
   Box,
-  Avatar,
   Typography,
   Chip,
   Container,
