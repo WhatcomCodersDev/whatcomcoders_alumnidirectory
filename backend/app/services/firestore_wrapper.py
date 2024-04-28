@@ -76,9 +76,15 @@ class FirestoreDBWrapper:
 
     def get_all_users(self) -> list:
         """Retrieves all users from Firestore"""
+        print("attempting to get all users")
         users = self.firestore_client.collection('users').stream()
+        print("users:", users)
+        print("all collections:", self.firestore_client.collections())
+        for collection in self.firestore_client.collections():
+            print(collection.id)
         users_list = []
         for user in users:
+            print("user:", user.to_dict())
             users_list.append(user.to_dict())
         return users_list
     

@@ -9,6 +9,8 @@ const AuthProvider = ({ children }) => {
   const [userSlug, setUserSlug] = useState(null);
   const [userProfilePic, setUserProfilePic] = useState('');
 
+  console.log(apiUrl);
+
   const fetchCurrentUserAPI = async () => {
     try {
       const response = await fetch(`${apiUrl}/api/current_user`, {

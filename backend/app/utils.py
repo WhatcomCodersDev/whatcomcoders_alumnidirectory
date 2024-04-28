@@ -14,6 +14,7 @@ def setup_google_auth_flow()-> Flow:
     pathlib.Path(__file__).parent, "../client_secret.json")
     
     flask_env = os.environ.get('FLASK_ENV')
+    print(f"FLASK_ENV: {flask_env}")
     if flask_env == 'development':
         redirect_uri = "http://localhost:4000/callback"
     elif flask_env == 'production':
