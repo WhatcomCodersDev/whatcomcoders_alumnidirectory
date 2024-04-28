@@ -18,14 +18,14 @@ This is `gcloud set project INSERT_PROJECT_ID_HERE`
 
 ### Deploy to Prod
 
-GCP Project: (gothic-sled-375305)[https://console.firebase.google.com/u/0/project/gothic-sled-375305/overview]
+GCP Project: [gothic-sled-375305](https://console.firebase.google.com/u/0/project/gothic-sled-375305/overview)
 
 1. Run `npm run build`
 2. Run `firebase deploy`
 
 ### Deploy to Staging
 
-GCP Project: (whatcomcoders-prod)[https://console.firebase.google.com/u/0/project/whatcomcoders-prod/overview] (yes I know thats confusing, we can't change it now...)
+GCP Project: [whatcomcoders-prod](https://console.firebase.google.com/u/0/project/whatcomcoders-prod/overview) (yes I know thats confusing, we can't change it now...)
 
 1. Run `build:staging": "env-cmd -f .env.staging react-scripts build`
 2. Run `firebase deploy`
