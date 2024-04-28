@@ -35,9 +35,9 @@ def get_user_data(slug):
     
 @bp.route("/api/people", methods=["GET"])
 def get_all_users():
+    print("calling /api/people endpoint")
     users_list = firestore_db.get_all_users()
-
-    print(jsonify(users_list))
+    print("calling /api/people endpoint results:", jsonify(users_list))
     return jsonify(users_list)
 
 @bp.route("/api/people/update", methods=["POST"])

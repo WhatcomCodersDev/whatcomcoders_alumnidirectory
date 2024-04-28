@@ -2,6 +2,34 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Call-outs
+
+Please reach out to devs for environment variable files. That is 3 files
+
+- .env
+- .env.production
+- .env.staging
+
+## Deployments
+
+Reach out to Whatcom Coders Dev for permission issues and access to the GCP project. Ensure you've set your gcloud cli tool to the right project id when making deployments.
+
+This is `gcloud set project INSERT_PROJECT_ID_HERE`
+
+### Deploy to Prod
+
+GCP Project: (gothic-sled-375305)[https://console.firebase.google.com/u/0/project/gothic-sled-375305/overview]
+
+1. Run `npm run build`
+2. Run `firebase deploy`
+
+### Deploy to Staging
+
+GCP Project: (whatcomcoders-prod)[https://console.firebase.google.com/u/0/project/whatcomcoders-prod/overview] (yes I know thats confusing, we can't change it now...)
+
+1. Run `build:staging": "env-cmd -f .env.staging react-scripts build`
+2. Run `firebase deploy`
+
 ## Available Scripts
 
 In the project directory, you can run:

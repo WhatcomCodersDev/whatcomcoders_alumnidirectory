@@ -44,6 +44,7 @@ const ProfileCardsDirectoryView = () => {
     async function fetchUsers() {
       try {
         const response = await fetch(`${apiUrl}/api/people`);
+        console.log(response);
         const data = await response.json();
         const completedProfileUsers = data.filter(
           (people) => people.completed_profile === true
