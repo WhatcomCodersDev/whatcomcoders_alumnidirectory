@@ -63,6 +63,14 @@ const landingPages = [
         element: lazy(() => import('./views/cards')),
       },
       {
+        path: '/leetcode',
+        element: lazy(() => import('./views/leetcode')),
+      },
+      {
+        path: '/bootstrap',
+        element: lazy(() => import('./views/bootstrap')),
+      },
+      {
         path: '/login',
         element: lazy(() => import('./views/auth/SignIn')),
       },
