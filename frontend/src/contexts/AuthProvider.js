@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { AuthContext } from './authContext';
+import { set } from 'date-fns';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState(null);
+  const [uuid, setUuid] = useState(null);
   const [userSlug, setUserSlug] = useState(null);
   const [userProfilePic, setUserProfilePic] = useState('');
 
@@ -43,6 +45,7 @@ const AuthProvider = ({ children }) => {
       );
       if (response.ok) {
         setIsLoggedIn(false);
+        setUuid(null);
         setUserName(null);
         setUserSlug(null);
         setUserProfilePic('');
@@ -59,10 +62,12 @@ const AuthProvider = ({ children }) => {
     const fetchCurrentUser = async () => {
       try {
         let response = await fetchCurrentUserAPI();
+        console.log(response);
         console.log(response.name);
         if (response && response.name) {
           setIsLoggedIn(true);
           setUserName(response.name);
+          setUuid(response.uuid);
           setUserSlug(response.user_slug);
           setUserProfilePic(response.picture);
         } else {
@@ -78,7 +83,7 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, userName, userSlug, logout, userProfilePic }}
+      value={{ isLoggedIn, userName, uuid, userSlug, logout, userProfilePic }}
     >
       {children}
     </AuthContext.Provider>

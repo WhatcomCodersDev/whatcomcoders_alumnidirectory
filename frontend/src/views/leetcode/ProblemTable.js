@@ -41,13 +41,17 @@ const ProblemsTable = ({ data, filter }) => {
     setProblems((prevProblems) =>
       prevProblems.map((problem) =>
         problem.id === id
-          ? { ...problem, lastCompleted: newDate.toISOString().split('T')[0] }
+          ? {
+              ...problem,
+              last_attempt_timestamp: newDate.toISOString().split('T')[0],
+            }
           : problem
       )
     );
     setEditableRow(null);
     setEditingField(null);
   };
+  console.log(problems);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -58,7 +62,8 @@ const ProblemsTable = ({ data, filter }) => {
               <TableCell>Id</TableCell>
               <TableCell>Problem Name</TableCell>
               <TableCell>Difficulty</TableCell>
-              <TableCell>Last Completed</TableCell>
+              <TableCell>Last Attempted</TableCell>
+              {/* <TableCell>Last Completed</TableCell> */}
               <TableCell>Next Review</TableCell>
             </TableRow>
           </TableHead>
@@ -94,7 +99,7 @@ const ProblemsTable = ({ data, filter }) => {
                   {editableRow === problem.id &&
                   editingField === 'lastCompleted' ? (
                     <DatePicker
-                      value={new Date(problem.lastCompleted)}
+                      value={new Date(problem.last_attempt_timestamp)}
                       onChange={(newDate) =>
                         handleDateChange(problem.id, newDate)
                       }
@@ -107,11 +112,11 @@ const ProblemsTable = ({ data, filter }) => {
                         setEditingField('lastCompleted');
                       }}
                     >
-                      {problem.lastCompleted}
+                      {problem.last_attempt_timestamp}
                     </div>
                   )}
                 </TableCell>
-                <TableCell>{problem.nextReview}</TableCell>
+                <TableCell>{problem.next_review_timestamp}</TableCell>
               </TableRow>
             ))}
           </TableBody>
