@@ -3,6 +3,8 @@ import { createBrowserRouter } from 'react-router-dom';
 import SplashScreen from './components/SplashScreen';
 import LandingLayout from './layouts/LandingLayout';
 import MentorLayout from 'layouts/MentorLayout';
+import { Dashboard } from '@mui/icons-material';
+import DashboardLayout from 'layouts/DashboardLayout';
 
 const renderRoutes = (routes = []) => {
   return routes.map((route) => {
@@ -62,10 +64,10 @@ const landingPages = [
         path: '/people',
         element: lazy(() => import('./views/cards')),
       },
-      {
-        path: '/leetcode',
-        element: lazy(() => import('./views/leetcode')),
-      },
+      // {
+      //   path: '/leetcode',
+      //   element: lazy(() => import('./views/leetcode')),
+      // },
       {
         path: '/bootstrap',
         element: lazy(() => import('./views/bootstrap')),
@@ -98,7 +100,27 @@ const otherPages = [
   },
 ];
 
-const routes = [...landingPages, ...otherPages];
+const dashBoardPages = [
+  {
+    element: DashboardLayout,
+    children: [
+      {
+        path: '/leetcode',
+        element: lazy(() => import('./views/leetcode/Review')),
+      },
+      {
+        path: '/leetcode/all',
+        element: lazy(() => import('./views/leetcode/AllProblems')),
+      },
+      {
+        path: '/leetcode/review',
+        element: lazy(() => import('./views/leetcode/Review')),
+      },
+    ],
+  },
+];
+
+const routes = [...landingPages, ...otherPages, ...dashBoardPages];
 
 const router = createBrowserRouter(renderRoutes(routes));
 
