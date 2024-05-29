@@ -54,7 +54,7 @@ const NavBar = () => {
               Resources
             </StyledLink>
           </Typography>
-          <Typography variant='h6'>
+          <Typography variant='h6' sx={{ marginRight: '20px' }}>
             <StyledLink
               component={RouterLink}
               to={'/people'}
@@ -63,7 +63,28 @@ const NavBar = () => {
               People
             </StyledLink>
           </Typography>
+
+          <Typography variant='h6' sx={{ marginRight: '20px' }}>
+            <StyledLink
+              component={RouterLink}
+              to={'/leetcode'}
+              sx={{ color: 'white' }}
+            >
+              Leetcode
+            </StyledLink>
+          </Typography>
+
+          <Typography variant='h6'>
+            <StyledLink
+              component={RouterLink}
+              to={'/bootstrap'}
+              sx={{ color: 'white' }}
+            >
+              Bootstrap
+            </StyledLink>
+          </Typography>
         </Box>
+
         <Box display='flex'>
           {isLoggedIn ? (
             <>

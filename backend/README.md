@@ -79,7 +79,6 @@ GCP Project: [gothic-sled-375305](https://console.cloud.google.com/appengine/ver
 
 1. Run `gcloud app deploy`
 
-
 ### Deploy to Staging
 
 GCP Project: [whatcomcoders-prod](https://console.cloud.google.com/appengine/versions?serviceId=default&versionId=20240206t212035&hl=en&project=whatcomcoders-prod) (yes I know thats confusing, we can't change it now...)
