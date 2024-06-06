@@ -1,16 +1,14 @@
-// src/App.js
 import React, { useContext, useState, useEffect } from 'react';
 import ProblemsTable from './ProblemTable';
 import ProblemTypesTable from './ProblemTypesTable';
 import Filter from '../ProblemTypeFilter';
 import { AuthContext } from 'contexts/authContext';
+import { Button, Box } from '@mui/material';
 
 const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
-console.log(leetcodeAPIURL);
 
 const predefinedProblemTypes = [
   { name: 'Arrays & Hashing', count: 0 },
-  // { name: 'String', count: 0 },
   { name: 'Linked List', count: 0 },
   { name: 'Tree', count: 0 },
   { name: 'Graph', count: 0 },
@@ -32,25 +30,25 @@ const predefinedProblemTypes = [
 const LeetcodeView = () => {
   const { uuid } = useContext(AuthContext);
   const [filter, setFilter] = useState('All');
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
   const [problemsData, setProblemsData] = useState([]);
-  const [view, setView] = useState('types'); // 'types' or 'problems'
+  const [view, setView] = useState('types');
   const [selectedType, setSelectedType] = useState(null);
-  const [selectedTypes, setSelectedTypes] = useState([]); // State to manage selected problem types
+  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   useEffect(() => {
     const fetchUsersLeetcodeQuestions = async (uuid) => {
-      setLoading(true); // Start loading
+      setLoading(true);
 
       try {
         const response = await fetch(`${leetcodeAPIURL}/users/${uuid}`);
         const data = await response.json();
-        console.log(data);
         setProblemsData(data);
       } catch (error) {
         console.error('Request failed:', error.message);
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false);
       }
     };
 
@@ -59,19 +57,16 @@ const LeetcodeView = () => {
     }
   }, [uuid]);
 
-  // Update the predefined problem types with the actual count
   const problemTypes = predefinedProblemTypes.map((type) => {
     const count = problemsData.filter(
-      (problem) => problem.type === type.name
+      (problem) => problem.problem_type === type.name
     ).length;
     return { ...type, count };
   });
 
-  console.log(problemTypes);
-
   const handleTypeClick = (type) => {
     setSelectedType(type);
-    // setFilter(type); #todo - Filter properly when clicking type of problems
+    setFilter(type);
     setView('problems');
   };
 
@@ -89,23 +84,39 @@ const LeetcodeView = () => {
     setFilter('All');
   };
 
-  console.log(problemsData);
   return (
     <div>
       <h1>Problems Table</h1>
       {loading && <p>Loading...</p>}
+      <Box
+        display='flex'
+        justifyContent='space-between'
+        alignItems='center'
+        mb={2}
+      >
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={() => setEditMode((prev) => !prev)}
+          sx={{ borderRadius: '50px' }}
+        >
+          Edit
+        </Button>
+      </Box>
       {view === 'types' && !loading && (
         <ProblemTypesTable
           problemTypes={problemTypes}
           selectedTypes={selectedTypes}
           onTypeClick={handleTypeClick}
           onCheckboxChange={handleCheckboxChange}
+          editMode={editMode}
         />
       )}
       {view === 'problems' && !loading && (
         <div>
-          <button onClick={handleBackClick}>Back to Types</button>
-          {/* <Filter filter={filter} setFilter={setFilter} /> */}
+          <Button variant='contained' onClick={handleBackClick}>
+            Back to Types
+          </Button>
           <ProblemsTable data={problemsData} filter={filter} />
         </div>
       )}
