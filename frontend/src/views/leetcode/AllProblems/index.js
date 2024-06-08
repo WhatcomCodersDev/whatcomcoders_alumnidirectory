@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import AllProblemTable from './AllProblemTable';
 import { AuthContext } from 'contexts/authContext';
-import Filter from '../ProblemTypeFilter';
+import Filter from '../ProblemCategoriesFilter';
 import { Button, Box } from '@mui/material';
 
 const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;

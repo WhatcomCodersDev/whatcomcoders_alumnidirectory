@@ -46,7 +46,7 @@ const AllProblemTable = ({
     try {
       for (const problem of selectedProblems) {
         const payload = {
-          difficulty: 2,
+          problem_difficulty: 2,
           id: problem.id,
           isInBlind50: problem.isInBlind50,
           isInBlind75: problem.isInBlind75,
@@ -131,11 +131,11 @@ const AllProblemTable = ({
                   <TableCell>{problem.name}</TableCell>
                   <TableCell
                     sx={{
-                      color: getDifficultyColor(problem.difficulty),
+                      color: getDifficultyColor(problem.problem_difficulty),
                       textTransform: 'uppercase',
                     }}
                   >
-                    {problem.difficulty}
+                    {problem.problem_difficulty}
                   </TableCell>
                 </TableRow>
               ))}

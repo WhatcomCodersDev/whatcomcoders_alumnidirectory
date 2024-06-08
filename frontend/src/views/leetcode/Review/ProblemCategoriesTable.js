@@ -18,13 +18,12 @@ import {
   Typography,
 } from '@mui/material';
 import { AuthContext } from 'contexts/authContext';
-import ProblemsTable from './ProblemTable';
 
 const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
 
-const ProblemTypesTable = ({
-  problemTypes,
-  selectedTypes,
+const ProblemCategoriesTable = ({
+  problemCategories,
+  selectedCategories,
   onTypeClick,
   onCheckboxChange,
   editMode,
@@ -50,12 +49,12 @@ const ProblemTypesTable = ({
 
   const handleSubmit = async () => {
     try {
-      let problemTypeSet = [];
-      for (const type of selectedTypes) {
-        problemTypeSet.push(type);
+      let problemCategorySet = [];
+      for (const category of selectedCategories) {
+        problemCategorySet.push(category);
       }
 
-      const payload = { type: problemTypeSet };
+      const payload = { category: problemCategorySet };
       await fetch(`${leetcodeAPIURL}/users/${uuid}/mark_type_for_review`, {
         method: 'POST',
         headers: {
@@ -70,14 +69,16 @@ const ProblemTypesTable = ({
     }
   };
 
-  const filteredProblemTypes =
+  const filteredProblemCategories =
     filter === 'All'
-      ? problemTypes
-      : problemTypes.filter((type) => selectedTypes.includes(type.name));
+      ? problemCategories
+      : problemCategories.filter((category) =>
+          problemCategories.includes(category.name)
+        );
 
-  const calculateProgress = (type) => {
+  const calculateProgress = (category) => {
     const problems = problemData.filter(
-      (problem) => problem.problem_type === type.name
+      (problem) => problem.category === category.name
     );
 
     const completed = problems.filter(
@@ -118,7 +119,7 @@ const ProblemTypesTable = ({
                 </TableCell>
               )}
               <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
-                Type
+                Category
               </TableCell>
               <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
                 Progress
@@ -126,13 +127,14 @@ const ProblemTypesTable = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredProblemTypes.map((type) => {
-              const { completed, total, progress } = calculateProgress(type);
+            {filteredProblemCategories.map((category) => {
+              const { completed, total, progress } =
+                calculateProgress(category);
               return (
                 <TableRow
-                  key={type.name}
+                  key={category.name}
                   sx={{
-                    backgroundColor: selectedTypes.includes(type.name)
+                    backgroundColor: selectedCategories.includes(category.name)
                       ? 'rgba(0, 0, 0, 0.2)'
                       : 'inherit',
                   }}
@@ -140,13 +142,13 @@ const ProblemTypesTable = ({
                   {editMode && (
                     <TableCell padding='checkbox'>
                       <Checkbox
-                        checked={selectedTypes.includes(type.name)}
-                        onChange={() => onCheckboxChange(type.name)}
+                        checked={selectedCategories.includes(category.name)}
+                        onChange={() => onCheckboxChange(category.name)}
                       />
                     </TableCell>
                   )}
-                  <TableCell onClick={() => onTypeClick(type.name)}>
-                    {type.name}
+                  <TableCell onClick={() => onTypeClick(category.name)}>
+                    {category.name}
                   </TableCell>
                   <TableCell>
                     <Box display='flex' alignItems='center'>
@@ -184,4 +186,4 @@ const ProblemTypesTable = ({
   );
 };
 
-export default ProblemTypesTable;
+export default ProblemCategoriesTable;

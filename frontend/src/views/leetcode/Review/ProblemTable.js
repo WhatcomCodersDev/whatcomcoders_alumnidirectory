@@ -27,15 +27,15 @@ const ProblemsTable = ({ data, filter }) => {
   console.log(data);
 
   const filteredData = problems.filter(
-    (problem) => problem.problem_type === filter
+    (problem) => problem.category === filter
   );
 
   console.log(filteredData);
 
-  const handleDifficultyChange = (id, newDifficulty) => {
+  const handleUserRatingChange = (id, newUserRating) => {
     setProblems((prevProblems) =>
       prevProblems.map((problem) =>
-        problem.id === id ? { ...problem, difficulty: newDifficulty } : problem
+        problem.id === id ? { ...problem, userRating: newUserRating } : problem
       )
     );
     setEditableRow(null);
@@ -79,7 +79,7 @@ const ProblemsTable = ({ data, filter }) => {
                 Problem Name
               </TableCell>
               <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
-                Difficulty
+                User Rating (1-5)
               </TableCell>
               <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
                 Last Reviewed
@@ -103,9 +103,9 @@ const ProblemsTable = ({ data, filter }) => {
                     {editableRow === problem.id ? (
                       <FormControl variant='outlined' fullWidth>
                         <Select
-                          value={problem.difficulty}
+                          value={problem.user_rating}
                           onChange={(e) =>
-                            handleDifficultyChange(problem.id, e.target.value)
+                            handleUserRatingChange(problem.id, e.target.value)
                           }
                           autoWidth
                         >
@@ -118,7 +118,7 @@ const ProblemsTable = ({ data, filter }) => {
                       </FormControl>
                     ) : (
                       <div onClick={() => setEditableRow(problem.id)}>
-                        {problem.difficulty}
+                        {problem.user_rating}
                       </div>
                     )}
                   </TableCell>
