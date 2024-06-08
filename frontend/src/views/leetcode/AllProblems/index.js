@@ -10,7 +10,7 @@ const LeetcodeView = () => {
   const [filter, setFilter] = useState('All');
   const [loading, setLoading] = useState(true);
   const [problemsData, setProblemsData] = useState([]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   useEffect(() => {
@@ -31,11 +31,11 @@ const LeetcodeView = () => {
     fetchAllLeetcodeQuestions();
   }, []);
 
-  const handleCheckboxChange = (type) => {
-    setSelectedTypes((prevSelectedTypes) =>
-      prevSelectedTypes.includes(type)
-        ? prevSelectedTypes.filter((t) => t !== type)
-        : [...prevSelectedTypes, type]
+  const handleCheckboxChange = (category) => {
+    setSelectedCategories((prevSelectedCategories) =>
+      prevSelectedCategories.includes(category)
+        ? prevSelectedCategories.filter((c) => c !== category)
+        : [...prevSelectedCategories, category]
     );
   };
 
@@ -63,7 +63,7 @@ const LeetcodeView = () => {
         <AllProblemTable
           data={problemsData}
           filter={filter}
-          selectedTypes={selectedTypes}
+          selectedCategories={selectedCategories}
           onCheckboxChange={handleCheckboxChange}
           editMode={editMode}
         />

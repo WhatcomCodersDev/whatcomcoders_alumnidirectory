@@ -35,7 +35,7 @@ const ProblemsTable = ({ data, filter }) => {
   const handleUserRatingChange = (id, newUserRating) => {
     setProblems((prevProblems) =>
       prevProblems.map((problem) =>
-        problem.id === id ? { ...problem, userRating: newUserRating } : problem
+        problem.id === id ? { ...problem, user_rating: newUserRating } : problem
       )
     );
     setEditableRow(null);
@@ -126,7 +126,7 @@ const ProblemsTable = ({ data, filter }) => {
                     {editableRow === problem.id &&
                     editingField === 'lastCompleted' ? (
                       <DatePicker
-                        value={new Date(problem.attempted_timestamp)}
+                        value={new Date(problem.last_review_timestamp)}
                         onChange={(newDate) =>
                           handleDateChange(problem.id, newDate)
                         }
@@ -139,11 +139,11 @@ const ProblemsTable = ({ data, filter }) => {
                           setEditingField('lastCompleted');
                         }}
                       >
-                        {problem.attempted_timestamp}
+                        {problem.last_review_timestamp}
                       </div>
                     )}
                   </TableCell>
-                  <TableCell>{problem.next_review_date}</TableCell>
+                  <TableCell>{problem.next_review_timestamp}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
