@@ -1,4 +1,3 @@
-// src/ProblemsTable.js
 import React, { useState } from 'react';
 import {
   Table,
@@ -12,6 +11,7 @@ import {
   Select,
   MenuItem,
   FormControl,
+  TablePagination,
 } from '@mui/material';
 
 import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
@@ -21,11 +21,16 @@ const ProblemsTable = ({ data, filter }) => {
   const [editableRow, setEditableRow] = useState(null);
   const [editingField, setEditingField] = useState(null);
   const [problems, setProblems] = useState(data);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const filteredData =
-    filter === 'All'
-      ? problems
-      : problems.filter((problem) => problem.type === filter);
+  console.log(data);
+
+  const filteredData = problems.filter(
+    (problem) => problem.problem_type === filter
+  );
+
+  console.log(filteredData);
 
   const handleDifficultyChange = (id, newDifficulty) => {
     setProblems((prevProblems) =>
@@ -51,77 +56,108 @@ const ProblemsTable = ({ data, filter }) => {
     setEditableRow(null);
     setEditingField(null);
   };
-  console.log(problems);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ backgroundColor: 'white' }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
-              <TableCell>Problem Name</TableCell>
-              <TableCell>Difficulty</TableCell>
-              <TableCell>Last Attempted</TableCell>
-              {/* <TableCell>Last Completed</TableCell> */}
-              <TableCell>Next Review</TableCell>
+              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+                Id
+              </TableCell>
+              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+                Problem Name
+              </TableCell>
+              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+                Difficulty
+              </TableCell>
+              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+                Last Reviewed
+              </TableCell>
+              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+                Next Review
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredData.map((problem) => (
-              <TableRow key={problem.id}>
-                <TableCell>{problem.id}</TableCell>
-                <TableCell>{problem.name}</TableCell>
-                <TableCell>
-                  {editableRow === problem.id ? (
-                    <FormControl variant='outlined' fullWidth>
-                      <Select
-                        value={problem.difficulty}
-                        onChange={(e) =>
-                          handleDifficultyChange(problem.id, e.target.value)
+            {filteredData
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((problem) => (
+                <TableRow
+                  key={problem.id}
+                  sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' } }}
+                >
+                  <TableCell>{problem.id}</TableCell>
+                  <TableCell>{problem.name}</TableCell>
+                  <TableCell>
+                    {editableRow === problem.id ? (
+                      <FormControl variant='outlined' fullWidth>
+                        <Select
+                          value={problem.difficulty}
+                          onChange={(e) =>
+                            handleDifficultyChange(problem.id, e.target.value)
+                          }
+                          autoWidth
+                        >
+                          <MenuItem value='1'>1 (Easy)</MenuItem>
+                          <MenuItem value='2'>2</MenuItem>
+                          <MenuItem value='3'>3</MenuItem>
+                          <MenuItem value='4'>4</MenuItem>
+                          <MenuItem value='5'>5 (Super Hard)</MenuItem>
+                        </Select>
+                      </FormControl>
+                    ) : (
+                      <div onClick={() => setEditableRow(problem.id)}>
+                        {problem.difficulty}
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    {editableRow === problem.id &&
+                    editingField === 'lastCompleted' ? (
+                      <DatePicker
+                        value={new Date(problem.attempted_timestamp)}
+                        onChange={(newDate) =>
+                          handleDateChange(problem.id, newDate)
                         }
-                        autoWidth
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    ) : (
+                      <div
+                        onClick={() => {
+                          setEditableRow(problem.id);
+                          setEditingField('lastCompleted');
+                        }}
                       >
-                        <MenuItem value='1'>1 (Easy)</MenuItem>
-                        <MenuItem value='2'>2</MenuItem>
-                        <MenuItem value='3'>3</MenuItem>
-                        <MenuItem value='4'>4</MenuItem>
-                        <MenuItem value='5'>5 (Super Hard)</MenuItem>
-                      </Select>
-                    </FormControl>
-                  ) : (
-                    <div onClick={() => setEditableRow(problem.id)}>
-                      {problem.difficulty}
-                    </div>
-                  )}
-                </TableCell>
-                <TableCell>
-                  {editableRow === problem.id &&
-                  editingField === 'lastCompleted' ? (
-                    <DatePicker
-                      value={new Date(problem.last_attempt_timestamp)}
-                      onChange={(newDate) =>
-                        handleDateChange(problem.id, newDate)
-                      }
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  ) : (
-                    <div
-                      onClick={() => {
-                        setEditableRow(problem.id);
-                        setEditingField('lastCompleted');
-                      }}
-                    >
-                      {problem.last_attempt_timestamp}
-                    </div>
-                  )}
-                </TableCell>
-                <TableCell>{problem.next_review_timestamp}</TableCell>
-              </TableRow>
-            ))}
+                        {problem.attempted_timestamp}
+                      </div>
+                    )}
+                  </TableCell>
+                  <TableCell>{problem.next_review_date}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 20, 50]}
+        component='div'
+        count={filteredData.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </LocalizationProvider>
   );
 };

@@ -13,50 +13,48 @@ import {
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
-import SubscriptionIcon from '@mui/icons-material/Subscriptions';
-import DiscordIcon from '@mui/icons-material/Chat';
 import ProfileIcon from '@mui/icons-material/Person';
-import { Dashboard } from '@mui/icons-material';
 
 const Root = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
+  minHeight: '100vh',
   backgroundColor: theme.palette.background.default,
-  minHeight: '80vh', // Ensure at least full viewport height
 }));
 
 const Sidebar = styled(Drawer)(({ theme }) => ({
-  width: 240, // Set the width of the sidebar
+  width: 240,
   flexShrink: 0,
   '& .MuiDrawer-paper': {
     width: 240,
     boxSizing: 'border-box',
-    top: '64px', // Offset to account for NavBar height
-    bottom: '64px', // Offset to account for FootBar height
+    top: '64px',
+    bottom: 0,
   },
 }));
 
 const SidebarContent = styled('div')(({ theme }) => ({
   padding: theme.spacing(2),
-  backgroundColor: '#ffffff', // Set sidebar background color to white
+  backgroundColor: '#ffffff',
   height: '100%',
 }));
 
-const Content = styled(Box)(({ theme }) => ({
-  flex: '1', // This makes the content grow and fill available space, pushing the FootBar down
-  marginTop: '64px', // Adjust based on NavBar height to prevent overlap
-  marginBottom: '64px', // Adjust based on FootBar height to prevent overlap
-  backgroundColor: '#ffffff', // Set content background color to white
-  padding: theme.spacing(3),
+const MainContent = styled('main')(({ theme }) => ({
+  flex: 1,
   display: 'flex',
   flexDirection: 'column',
+  marginTop: '64px', // Adjust based on NavBar height to prevent overlap
+  paddingBottom: '64px', // Add padding to account for FootBar height
+  backgroundColor: '#ffffff',
+  padding: theme.spacing(3),
+  overflowY: 'auto',
 }));
 
 const DashboardLayout = () => {
   return (
     <Root>
       <NavBar />
-      <Box sx={{ display: 'flex', flexDirection: 'row', flex: '1' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
         <Sidebar variant='permanent' anchor='left'>
           <SidebarContent>
             <Typography variant='h6' noWrap>
@@ -81,12 +79,6 @@ const DashboardLayout = () => {
                 </ListItemIcon>
                 <ListItemText primary='Analytics' />
               </ListItem>
-              {/* <ListItem button>
-                <ListItemIcon>
-                  <DiscordIcon />
-                </ListItemIcon>
-                <ListItemText primary='Join the discord' />
-              </ListItem> */}
               <ListItem button>
                 <ListItemIcon>
                   <ProfileIcon />
@@ -96,9 +88,9 @@ const DashboardLayout = () => {
             </List>
           </SidebarContent>
         </Sidebar>
-        <Content>
+        <MainContent>
           <Outlet />
-        </Content>
+        </MainContent>
       </Box>
       <FootBar />
     </Root>
