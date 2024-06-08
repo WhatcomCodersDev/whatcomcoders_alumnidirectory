@@ -1,13 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import ProblemsTable from './ProblemTable';
-import ProblemTypesTable from './ProblemTypesTable';
-import Filter from '../ProblemTypeFilter';
+import ProblemCategoriesTable from './ProblemCategoriesTable';
 import { AuthContext } from 'contexts/authContext';
 import { Button, Box } from '@mui/material';
 
 const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
 
-const predefinedProblemTypes = [
+const predefinedProblemCategories = [
   { name: 'Arrays & Hashing', count: 0 },
   { name: 'Linked List', count: 0 },
   { name: 'Tree', count: 0 },
@@ -33,8 +32,8 @@ const LeetcodeView = () => {
   const [loading, setLoading] = useState(true);
   const [problemsData, setProblemsData] = useState([]);
   const [view, setView] = useState('types');
-  const [selectedType, setSelectedType] = useState(null);
-  const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   useEffect(() => {
@@ -58,23 +57,21 @@ const LeetcodeView = () => {
     }
   }, [uuid]);
 
-  const problemTypes = predefinedProblemTypes.map((type) => {
-    // const count = 0;
-    // return { ...type, count };
+  const problemCategories = predefinedProblemCategories.map((category) => {
     const count = problemsData.filter(
-      (problem) => problem.problem_type === type.name
+      (problem) => problem.problem_category === category.name
     ).length;
-    return { ...type, count };
+    return { ...category, count };
   });
 
-  const handleTypeClick = (type) => {
-    setSelectedType(type);
-    setFilter(type);
+  const handleTypeClick = (category) => {
+    setSelectedCategory(category);
+    setFilter(category);
     setView('problems');
   };
 
   const handleCheckboxChange = (type) => {
-    setSelectedTypes((prevSelectedTypes) =>
+    setSelectedCategories((prevSelectedTypes) =>
       prevSelectedTypes.includes(type)
         ? prevSelectedTypes.filter((t) => t !== type)
         : [...prevSelectedTypes, type]
@@ -83,7 +80,7 @@ const LeetcodeView = () => {
 
   const handleBackClick = () => {
     setView('types');
-    setSelectedType(null);
+    setSelectedCategory(null);
     setFilter('All');
   };
 
@@ -107,9 +104,9 @@ const LeetcodeView = () => {
         </Button>
       </Box>
       {view === 'types' && !loading && (
-        <ProblemTypesTable
-          problemTypes={problemTypes}
-          selectedTypes={selectedTypes}
+        <ProblemCategoriesTable
+          problemCategories={problemCategories}
+          selectedCategories={selectedCategories}
           onTypeClick={handleTypeClick}
           onCheckboxChange={handleCheckboxChange}
           editMode={editMode}

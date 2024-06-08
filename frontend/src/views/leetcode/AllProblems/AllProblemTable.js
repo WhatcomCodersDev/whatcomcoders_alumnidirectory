@@ -19,7 +19,7 @@ const AllProblemTable = ({
   data,
   filter,
   onCheckboxChange,
-  selectedTypes,
+  selectedCategories,
   editMode,
 }) => {
   const { uuid } = useContext(AuthContext);
@@ -27,7 +27,9 @@ const AllProblemTable = ({
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const filteredData =
-    filter === 'All' ? data : data.filter((problem) => problem.type === filter);
+    filter === 'All'
+      ? data
+      : data.filter((problem) => problem.category === filter);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -40,13 +42,13 @@ const AllProblemTable = ({
 
   const handleSubmit = async () => {
     const selectedProblems = filteredData.filter((problem) =>
-      selectedTypes.includes(problem.name)
+      selectedCategories.includes(problem.name)
     );
 
     try {
       for (const problem of selectedProblems) {
         const payload = {
-          difficulty: 2,
+          problem_difficulty: 3,
           id: problem.id,
           isInBlind50: problem.isInBlind50,
           isInBlind75: problem.isInBlind75,
@@ -56,7 +58,7 @@ const AllProblemTable = ({
           link: problem.link,
           name: problem.name,
           tag: problem.tag,
-          type: problem.type,
+          category: problem.category,
           user_id: uuid,
           attempted: true,
         };
@@ -122,7 +124,7 @@ const AllProblemTable = ({
                   {editMode && (
                     <TableCell padding='checkbox'>
                       <Checkbox
-                        checked={selectedTypes.includes(problem.name)}
+                        checked={selectedCategories.includes(problem.name)}
                         onChange={() => onCheckboxChange(problem.name)}
                       />
                     </TableCell>
@@ -131,11 +133,11 @@ const AllProblemTable = ({
                   <TableCell>{problem.name}</TableCell>
                   <TableCell
                     sx={{
-                      color: getDifficultyColor(problem.difficulty),
+                      color: getDifficultyColor(problem.problem_difficulty),
                       textTransform: 'uppercase',
                     }}
                   >
-                    {problem.difficulty}
+                    {problem.problem_difficulty}
                   </TableCell>
                 </TableRow>
               ))}
