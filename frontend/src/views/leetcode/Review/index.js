@@ -44,6 +44,7 @@ const LeetcodeView = () => {
       try {
         const response = await fetch(`${leetcodeAPIURL}/users/${uuid}`);
         const data = await response.json();
+        console.log(data);
         setProblemsData(data);
       } catch (error) {
         console.error('Request failed:', error.message);
@@ -58,6 +59,8 @@ const LeetcodeView = () => {
   }, [uuid]);
 
   const problemTypes = predefinedProblemTypes.map((type) => {
+    // const count = 0;
+    // return { ...type, count };
     const count = problemsData.filter(
       (problem) => problem.problem_type === type.name
     ).length;

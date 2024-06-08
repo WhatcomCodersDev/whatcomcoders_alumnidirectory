@@ -24,9 +24,13 @@ const ProblemsTable = ({ data, filter }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  console.log(data);
+
   const filteredData = problems.filter(
     (problem) => problem.problem_type === filter
   );
+
+  console.log(filteredData);
 
   const handleDifficultyChange = (id, newDifficulty) => {
     setProblems((prevProblems) =>
@@ -122,7 +126,7 @@ const ProblemsTable = ({ data, filter }) => {
                     {editableRow === problem.id &&
                     editingField === 'lastCompleted' ? (
                       <DatePicker
-                        value={new Date(problem.last_attempt_timestamp)}
+                        value={new Date(problem.attempted_timestamp)}
                         onChange={(newDate) =>
                           handleDateChange(problem.id, newDate)
                         }
@@ -135,11 +139,11 @@ const ProblemsTable = ({ data, filter }) => {
                           setEditingField('lastCompleted');
                         }}
                       >
-                        {problem.last_attempt_timestamp}
+                        {problem.attempted_timestamp}
                       </div>
                     )}
                   </TableCell>
-                  <TableCell>{problem.next_review_timestamp}</TableCell>
+                  <TableCell>{problem.next_review_date}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
