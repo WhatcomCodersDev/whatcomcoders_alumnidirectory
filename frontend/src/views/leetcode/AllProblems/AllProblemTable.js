@@ -21,10 +21,14 @@ const AllProblemTable = ({
   onCheckboxChange,
   selectedCategories,
   editMode,
+  submittedProblems,
 }) => {
   const { uuid } = useContext(AuthContext);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  console.log('submitted', submittedProblems);
+  console.log('problem', data);
 
   const filteredData =
     filter === 'All'
@@ -124,8 +128,8 @@ const AllProblemTable = ({
                   {editMode && (
                     <TableCell padding='checkbox'>
                       <Checkbox
-                        checked={selectedCategories.includes(problem.name)}
-                        onChange={() => onCheckboxChange(problem.name)}
+                        checked={submittedProblems.includes(problem.id)}
+                        onChange={() => onCheckboxChange(problem.id)}
                       />
                     </TableCell>
                   )}

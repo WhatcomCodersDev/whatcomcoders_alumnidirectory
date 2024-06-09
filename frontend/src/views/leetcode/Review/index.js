@@ -32,11 +32,28 @@ const LeetcodeView = () => {
   const [loading, setLoading] = useState(true);
   const [problemsData, setProblemsData] = useState([]);
   const [view, setView] = useState('types');
+  const [selectedReviewCategories, setSelectedReviewCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   useEffect(() => {
+    const fetchSelectedReviewCategories = async (uuid) => {
+      setLoading(true);
+      try {
+        const response = await fetch(
+          `${leetcodeAPIURL}/users/${uuid}/problem/categories/review`
+        );
+        const data = await response.json();
+        console.log('Review Categories', data);
+        setSelectedReviewCategories(data);
+      } catch (error) {
+        console.error('Request failed:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     const fetchUsersLeetcodeQuestions = async (uuid) => {
       setLoading(true);
 
@@ -54,6 +71,7 @@ const LeetcodeView = () => {
 
     if (uuid) {
       fetchUsersLeetcodeQuestions(uuid);
+      fetchSelectedReviewCategories(uuid);
     }
   }, [uuid]);
 
@@ -70,11 +88,11 @@ const LeetcodeView = () => {
     setView('problems');
   };
 
-  const handleCheckboxChange = (type) => {
-    setSelectedCategories((prevSelectedTypes) =>
-      prevSelectedTypes.includes(type)
-        ? prevSelectedTypes.filter((t) => t !== type)
-        : [...prevSelectedTypes, type]
+  const handleCheckboxChange = (category) => {
+    setSelectedReviewCategories((prevSelectedCategories) =>
+      prevSelectedCategories.includes(category)
+        ? prevSelectedCategories.filter((c) => c !== category)
+        : [...prevSelectedCategories, category]
     );
   };
 
@@ -106,7 +124,8 @@ const LeetcodeView = () => {
       {view === 'types' && !loading && (
         <ProblemCategoriesTable
           problemCategories={problemCategories}
-          selectedCategories={selectedCategories}
+          selectedCategories={selectedReviewCategories}
+          // selectedReviewCategories={selectedReviewCategories}
           onTypeClick={handleTypeClick}
           onCheckboxChange={handleCheckboxChange}
           editMode={editMode}

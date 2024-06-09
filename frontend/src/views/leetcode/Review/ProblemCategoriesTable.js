@@ -55,13 +55,16 @@ const ProblemCategoriesTable = ({
       }
 
       const payload = { category: problemCategorySet };
-      await fetch(`${leetcodeAPIURL}/users/${uuid}/mark_type_for_review`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
+      await fetch(
+        `${leetcodeAPIURL}/users/${uuid}/problem/categories/review/submit`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        }
+      );
       alert('Submitted successfully');
     } catch (error) {
       console.error('Error submitting data', error);
