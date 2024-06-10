@@ -10,10 +10,28 @@ const LeetcodeView = () => {
   const [filter, setFilter] = useState('All');
   const [loading, setLoading] = useState(true);
   const [problemsData, setProblemsData] = useState([]);
+  const [submittedProblems, setSubmittedProblems] = useState([]); // State to hold user's submitted problems
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
+  const { uuid } = useContext(AuthContext);
+
   useEffect(() => {
+    const fetchUserSubmissions = async () => {
+      setLoading(true);
+
+      try {
+        const response = await fetch(`${leetcodeAPIURL}/users/${uuid}`);
+        const data = await response.json();
+        console.log('data:', data);
+        setSubmittedProblems(data.map((submission) => Number(submission.id)));
+      } catch (error) {
+        console.error('Request failed:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     const fetchAllLeetcodeQuestions = async () => {
       setLoading(true);
 
@@ -28,14 +46,31 @@ const LeetcodeView = () => {
       }
     };
 
-    fetchAllLeetcodeQuestions();
-  }, []);
+    const fetchData = async () => {
+      if (!uuid) return;
 
-  const handleCheckboxChange = (category) => {
-    setSelectedCategories((prevSelectedCategories) =>
-      prevSelectedCategories.includes(category)
-        ? prevSelectedCategories.filter((c) => c !== category)
-        : [...prevSelectedCategories, category]
+      setLoading(true);
+
+      try {
+        await Promise.all([
+          fetchUserSubmissions(),
+          fetchAllLeetcodeQuestions(),
+        ]);
+      } catch (error) {
+        console.error('Failed to fetch data:', error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [uuid]);
+
+  const handleCheckboxChange = (problemId) => {
+    setSubmittedProblems((prevSubmittedProblems) =>
+      prevSubmittedProblems.includes(problemId)
+        ? prevSubmittedProblems.filter((id) => id !== problemId)
+        : [...prevSubmittedProblems, problemId]
     );
   };
 
@@ -66,6 +101,7 @@ const LeetcodeView = () => {
           selectedCategories={selectedCategories}
           onCheckboxChange={handleCheckboxChange}
           editMode={editMode}
+          submittedProblems={submittedProblems} // Pass submitted problems to the table
         />
       )}
     </div>
