@@ -76,9 +76,12 @@ const LeetcodeView = () => {
   }, [uuid]);
 
   const problemCategories = predefinedProblemCategories.map((category) => {
-    const count = problemsData.filter(
-      (problem) => problem.problem_category === category.name
-    ).length;
+    const count =
+      problemsData.length > 0
+        ? problemsData.filter(
+            (problem) => problem.problem_category === category.name
+          ).length
+        : 0;
     return { ...category, count };
   });
 
@@ -118,7 +121,7 @@ const LeetcodeView = () => {
           onClick={() => setEditMode((prev) => !prev)}
           sx={{ borderRadius: '50px' }}
         >
-          Edit
+          {editMode ? 'Cancel' : 'Edit'}
         </Button>
       </Box>
       {view === 'types' && !loading && (
@@ -136,7 +139,11 @@ const LeetcodeView = () => {
           <Button variant='contained' onClick={handleBackClick}>
             Back to Types
           </Button>
-          <ProblemsTable data={problemsData} filter={filter} />
+          <ProblemsTable
+            data={problemsData}
+            filter={filter}
+            editMode={editMode}
+          />
         </div>
       )}
     </div>

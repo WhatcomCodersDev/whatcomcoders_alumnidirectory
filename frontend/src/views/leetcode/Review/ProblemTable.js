@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
+  Button,
   Table,
   TableBody,
   TableCell,
@@ -13,16 +14,19 @@ import {
   FormControl,
   TablePagination,
 } from '@mui/material';
-
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
+import { AuthContext } from 'contexts/authContext';
+import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 
-const ProblemsTable = ({ data, filter }) => {
+const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
+
+const ProblemsTable = ({ data, filter, editMode }) => {
   const [editableRow, setEditableRow] = useState(null);
   const [editingField, setEditingField] = useState(null);
   const [problems, setProblems] = useState(data);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const { uuid } = useContext(AuthContext);
 
   console.log(data);
 
@@ -48,13 +52,52 @@ const ProblemsTable = ({ data, filter }) => {
         problem.id === id
           ? {
               ...problem,
-              last_attempt_timestamp: newDate.toISOString().split('T')[0],
+              last_reviewed_timestamp: newDate.toISOString(),
             }
           : problem
       )
     );
     setEditableRow(null);
     setEditingField(null);
+  };
+
+  const formatDate = (timestamp) => {
+    if (!timestamp) return 'Not Reviewed';
+    const date = new Date(timestamp);
+    return date.toLocaleDateString('en-US', {
+      weekday: 'short',
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZoneName: 'short',
+    });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(
+        `${leetcodeAPIURL}/users/${uuid}/review_problems/submit`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(problems),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to submit changes');
+      }
+
+      alert('Changes submitted successfully');
+    } catch (error) {
+      console.error('Error submitting changes:', error);
+      alert('Failed to submit changes');
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -92,63 +135,90 @@ const ProblemsTable = ({ data, filter }) => {
           <TableBody>
             {filteredData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((problem) => (
-                <TableRow
-                  key={problem.id}
-                  sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' } }}
-                >
-                  <TableCell>{problem.id}</TableCell>
-                  <TableCell>{problem.name}</TableCell>
-                  <TableCell>
-                    {editableRow === problem.id ? (
-                      <FormControl variant='outlined' fullWidth>
-                        <Select
-                          value={problem.user_rating}
-                          onChange={(e) =>
-                            handleUserRatingChange(problem.id, e.target.value)
+              .map((problem) => {
+                // Initialize default values if fields are missing
+                const {
+                  id,
+                  name,
+                  user_rating = '',
+                  last_reviewed_timestamp = '',
+                  next_review_timestamp = '',
+                } = problem;
+
+                return (
+                  <TableRow
+                    key={id}
+                    sx={{
+                      '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' },
+                    }}
+                  >
+                    <TableCell>{id}</TableCell>
+                    <TableCell>{name}</TableCell>
+                    <TableCell>
+                      {editableRow === id ? (
+                        <FormControl variant='outlined' fullWidth>
+                          <Select
+                            value={user_rating}
+                            onChange={(e) =>
+                              handleUserRatingChange(id, e.target.value)
+                            }
+                            autoWidth
+                          >
+                            <MenuItem value='1'>1 (Easy)</MenuItem>
+                            <MenuItem value='2'>2</MenuItem>
+                            <MenuItem value='3'>3</MenuItem>
+                            <MenuItem value='4'>4</MenuItem>
+                            <MenuItem value='5'>5 (Super Hard)</MenuItem>
+                          </Select>
+                        </FormControl>
+                      ) : (
+                        <div onClick={() => setEditableRow(id)}>
+                          {user_rating || 'Not Rated'}
+                        </div>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      {editableRow === id &&
+                      editingField === 'lastCompleted' ? (
+                        <DateTimePicker
+                          value={
+                            last_reviewed_timestamp
+                              ? new Date(last_reviewed_timestamp)
+                              : null
                           }
-                          autoWidth
+                          onChange={(newDate) => handleDateChange(id, newDate)}
+                          renderInput={(params) => <TextField {...params} />}
+                        />
+                      ) : (
+                        <div
+                          onClick={() => {
+                            setEditableRow(id);
+                            setEditingField('lastCompleted');
+                          }}
                         >
-                          <MenuItem value='1'>1 (Easy)</MenuItem>
-                          <MenuItem value='2'>2</MenuItem>
-                          <MenuItem value='3'>3</MenuItem>
-                          <MenuItem value='4'>4</MenuItem>
-                          <MenuItem value='5'>5 (Super Hard)</MenuItem>
-                        </Select>
-                      </FormControl>
-                    ) : (
-                      <div onClick={() => setEditableRow(problem.id)}>
-                        {problem.user_rating}
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    {editableRow === problem.id &&
-                    editingField === 'lastCompleted' ? (
-                      <DatePicker
-                        value={new Date(problem.last_review_timestamp)}
-                        onChange={(newDate) =>
-                          handleDateChange(problem.id, newDate)
-                        }
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    ) : (
-                      <div
-                        onClick={() => {
-                          setEditableRow(problem.id);
-                          setEditingField('lastCompleted');
-                        }}
-                      >
-                        {problem.last_review_timestamp}
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell>{problem.next_review_timestamp}</TableCell>
-                </TableRow>
-              ))}
+                          {formatDate(last_reviewed_timestamp)}
+                        </div>
+                      )}
+                    </TableCell>
+                    <TableCell>{formatDate(next_review_timestamp)}</TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
+      {editMode && (
+        <Button
+          id='submit-button'
+          variant='contained'
+          color='secondary'
+          onClick={handleSubmit}
+          sx={{ marginTop: '16px' }}
+        >
+          Submit Changes
+        </Button>
+      )}
+
       <TablePagination
         rowsPerPageOptions={[10, 20, 50]}
         component='div'

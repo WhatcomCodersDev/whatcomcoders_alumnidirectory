@@ -15,6 +15,7 @@ const LeetcodeView = () => {
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   const { uuid } = useContext(AuthContext);
+  console.log('uuid:', uuid);
 
   useEffect(() => {
     const fetchUserSubmissions = async () => {

@@ -45,12 +45,18 @@ const AllProblemTable = ({
   };
 
   const handleSubmit = async () => {
-    const selectedProblems = filteredData.filter((problem) =>
-      selectedCategories.includes(problem.name)
+    console.log('selectedCategories', selectedCategories);
+    console.log('All problems', data);
+    console.log('submittedProblems', submittedProblems);
+    const selectedProblems = data.filter((problem) =>
+      submittedProblems.includes(problem.id)
     );
+
+    console.log('selectedProblems', selectedProblems);
 
     try {
       for (const problem of selectedProblems) {
+        console.log('problem', problem);
         const payload = {
           problem_difficulty: 3,
           id: problem.id,
