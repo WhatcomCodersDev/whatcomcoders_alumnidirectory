@@ -125,8 +125,10 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                     <TableCell>
                       {editableRow === id ? (
                         <EditUserRatingSelection
-                          id={id}
-                          handleUserRatingChange={handleUserRatingChange}
+                          value={user_rating}
+                          onChange={(e) =>
+                            handleUserRatingChange(id, e.target.value)
+                          }
                         />
                       ) : (
                         <div onClick={() => setEditableRow(id)}>
