@@ -1,70 +1,29 @@
 import React, { useContext, useState, useEffect } from 'react';
 import AllProblemTable from './AllProblemTable';
 import { AuthContext } from 'contexts/authContext';
-import Filter from '../ProblemCategoriesFilter';
-import { Button, Box } from '@mui/material';
-
-const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
+import ProblemCategoriesFilter from '../ProblemCategoriesFilter';
+import { fetchUserSubmissionsOnlyProblemIds } from 'services/leetcode_review/apiFetchUserSubmissions';
+import { fetchAllLeetcodeQuestionsBlocking } from 'services/leetcode_review/apiFetchAllLeetcodeQuestions';
+import EditButton from '../common/EditButton';
+import { fetchAllUserData } from 'services/leetcode_review/apiFetchAllUserData';
 
 const LeetcodeView = () => {
   const [filter, setFilter] = useState('All');
   const [loading, setLoading] = useState(true);
   const [problemsData, setProblemsData] = useState([]);
   const [submittedProblems, setSubmittedProblems] = useState([]); // State to hold user's submitted problems
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedCategories] = useState([]);
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   const { uuid } = useContext(AuthContext);
   console.log('uuid:', uuid);
 
   useEffect(() => {
-    const fetchUserSubmissions = async () => {
-      setLoading(true);
+    fetchUserSubmissionsOnlyProblemIds(uuid, setLoading, setSubmittedProblems);
+    fetchAllLeetcodeQuestionsBlocking(setLoading, setProblemsData);
 
-      try {
-        const response = await fetch(`${leetcodeAPIURL}/users/${uuid}`);
-        const data = await response.json();
-        console.log('data:', data);
-        setSubmittedProblems(data.map((submission) => Number(submission.id)));
-      } catch (error) {
-        console.error('Request failed:', error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchAllLeetcodeQuestions = async () => {
-      setLoading(true);
-
-      try {
-        const response = await fetch(`${leetcodeAPIURL}/problems/all`);
-        const data = await response.json();
-        setProblemsData(data);
-      } catch (error) {
-        console.error('Request failed:', error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchData = async () => {
-      if (!uuid) return;
-
-      setLoading(true);
-
-      try {
-        await Promise.all([
-          fetchUserSubmissions(),
-          fetchAllLeetcodeQuestions(),
-        ]);
-      } catch (error) {
-        console.error('Failed to fetch data:', error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
+    // Wraps promise around fetchUserSubmissions and fetchAllLeetcodeQuestions
+    fetchAllUserData(uuid, setLoading);
   }, [uuid]);
 
   const handleCheckboxChange = (problemId) => {
@@ -77,24 +36,10 @@ const LeetcodeView = () => {
 
   return (
     <div>
-      <h1>Problems Table</h1>
       {loading && <p>Loading...</p>}
-      <Box
-        display='flex'
-        justifyContent='space-between'
-        alignItems='center'
-        mb={2}
-      >
-        <Filter filter={filter} setFilter={setFilter} />
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => setEditMode((prev) => !prev)}
-          sx={{ borderRadius: '50px' }}
-        >
-          Edit
-        </Button>
-      </Box>
+      <ProblemCategoriesFilter filter={filter} setFilter={setFilter} />
+      <EditButton editMode={editMode} setEditMode={setEditMode} />
+
       {!loading && (
         <AllProblemTable
           data={problemsData}

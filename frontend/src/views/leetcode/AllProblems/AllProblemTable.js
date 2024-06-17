@@ -1,7 +1,5 @@
 import React, { useContext, useState } from 'react';
 import {
-  Button,
-  Checkbox,
   Table,
   TableBody,
   TableCell,
@@ -12,8 +10,10 @@ import {
   TablePagination,
 } from '@mui/material';
 import { AuthContext } from 'contexts/authContext';
-
-const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
+import Difficulty from '../common/Difficulty';
+import { addAllProblemsToSubmission } from 'services/leetcode_review/apiAddAllProblemsToSubmission';
+import CustomCheckbox from '../common/CustomCheckbox';
+import SubmitButton from '../common/SubmitButton';
 
 const AllProblemTable = ({
   data,
@@ -25,7 +25,7 @@ const AllProblemTable = ({
 }) => {
   const { uuid } = useContext(AuthContext);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   console.log('submitted', submittedProblems);
   console.log('problem', data);
@@ -45,69 +45,10 @@ const AllProblemTable = ({
   };
 
   const handleSubmit = async () => {
-    console.log('selectedCategories', selectedCategories);
-    console.log('All problems', data);
-    console.log('submittedProblems', submittedProblems);
     const selectedProblems = data.filter((problem) =>
       submittedProblems.includes(problem.id)
     );
-
-    console.log('selectedProblems', selectedProblems);
-
-    try {
-      for (const problem of selectedProblems) {
-        console.log('problem', problem);
-        const payload = {
-          problem_difficulty: 3,
-          id: problem.id,
-          isInBlind50: problem.isInBlind50,
-          isInBlind75: problem.isInBlind75,
-          isInGrind75: problem.isInGrind75,
-          isInNeetcode: problem.isInNeetcode,
-          isInSeanPrasadList: problem.isInSeanPrasadList,
-          link: problem.link,
-          name: problem.name,
-          tag: problem.tag,
-          category: problem.category,
-          user_id: uuid,
-          user_rating: problem.user_rating ? problem.user_rating : '',
-          last_reviewed_timestamp: problem.last_reviewed_timestamp
-            ? problem.last_reviewed_timestamp
-            : '',
-          next_review_timestamp: problem.next_review_timestamp
-            ? problem.next_review_timestamp
-            : '',
-          attempted: true,
-        };
-
-        console.log('payload', payload);
-
-        await fetch(`${leetcodeAPIURL}/space_repetition/${problem.id}/submit`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        });
-      }
-      alert('Submitted successfully');
-    } catch (error) {
-      console.error('Error submitting data', error);
-      alert('Failed to submit');
-    }
-  };
-
-  const getDifficultyColor = (difficulty) => {
-    switch (difficulty) {
-      case 'easy':
-        return 'green';
-      case 'medium':
-        return 'orange';
-      case 'hard':
-        return 'red';
-      default:
-        return 'black';
-    }
+    addAllProblemsToSubmission(uuid, selectedProblems);
   };
 
   return (
@@ -141,40 +82,22 @@ const AllProblemTable = ({
                   sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' } }}
                 >
                   {editMode && (
-                    <TableCell padding='checkbox'>
-                      <Checkbox
-                        checked={submittedProblems.includes(problem.id)}
-                        onChange={() => onCheckboxChange(problem.id)}
-                      />
-                    </TableCell>
+                    <CustomCheckbox
+                      checked={submittedProblems.includes(problem.id)}
+                      onChange={() => onCheckboxChange(problem.id)}
+                    />
                   )}
                   <TableCell>{problem.id}</TableCell>
                   <TableCell>{problem.name}</TableCell>
-                  <TableCell
-                    sx={{
-                      color: getDifficultyColor(problem.problem_difficulty),
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    {problem.problem_difficulty}
-                  </TableCell>
+                  <Difficulty problem_difficulty={problem.problem_difficulty} />
                 </TableRow>
               ))}
           </TableBody>
         </Table>
       </TableContainer>
-      {editMode && (
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={handleSubmit}
-          sx={{ marginTop: '16px' }}
-        >
-          Submit
-        </Button>
-      )}
+      {editMode && <SubmitButton handleSubmit={handleSubmit} />}
       <TablePagination
-        rowsPerPageOptions={[5, 10, 20, 50]}
+        rowsPerPageOptions={[10, 20, 50]}
         component='div'
         count={filteredData.length}
         rowsPerPage={rowsPerPage}

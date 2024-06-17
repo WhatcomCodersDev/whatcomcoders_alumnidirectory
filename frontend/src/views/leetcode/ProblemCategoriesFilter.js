@@ -2,7 +2,7 @@
 import React from 'react';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-const Filter = ({ filter, setFilter }) => {
+const ProblemCategoriesFilter = ({ filter, setFilter }) => {
   return (
     <FormControl
       variant='outlined'
@@ -47,4 +47,4 @@ const Filter = ({ filter, setFilter }) => {
   );
 };
 
-export default Filter;
+export default ProblemCategoriesFilter;
