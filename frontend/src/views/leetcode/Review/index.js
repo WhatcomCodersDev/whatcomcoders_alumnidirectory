@@ -4,10 +4,7 @@ import ProblemCategoriesTable from './ProblemCategoriesTable';
 import { AuthContext } from 'contexts/authContext';
 import { Button } from '@mui/material';
 import EditButton from '../common/EditButton';
-import {
-  LEETCODE_API_URL,
-  PREDEFINED_PROBLEM_CATEGORIES,
-} from 'services/leetcode_review/constants';
+import { PREDEFINED_PROBLEM_CATEGORIES } from 'services/leetcode_review/constants';
 import { fetchProblemCategoriesMarkedForReviewByUser } from 'services/leetcode_review/apiFetchProblemCategoriesMarkedForReview';
 import { fetchUserSubmissions } from 'services/leetcode_review/apiFetchUserSubmissions';
 

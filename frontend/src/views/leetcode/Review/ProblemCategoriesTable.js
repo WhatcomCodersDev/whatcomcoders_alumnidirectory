@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import {
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -12,9 +11,6 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  LinearProgress,
-  Box,
-  Typography,
 } from '@mui/material';
 import { AuthContext } from 'contexts/authContext';
 import CustomCheckbox from '../common/CustomCheckbox';
