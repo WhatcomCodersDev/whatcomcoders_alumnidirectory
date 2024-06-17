@@ -37,7 +37,6 @@ const LeetcodeView = () => {
     setProblemCategoriesMarkedForReview,
   ] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedCategories, setSelectedCategories] = useState([]);
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   useEffect(() => {
@@ -114,7 +113,6 @@ const LeetcodeView = () => {
 
   return (
     <div>
-      <h1>Problems Table</h1>
       {loading && <p>Loading...</p>}
       <Box
         display='flex'

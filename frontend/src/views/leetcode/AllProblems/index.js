@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import AllProblemTable from './AllProblemTable';
 import { AuthContext } from 'contexts/authContext';
-import Filter from '../ProblemCategoriesFilter';
+import ProblemCategoriesFilter from '../ProblemCategoriesFilter';
 import { Button, Box } from '@mui/material';
 
 const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
@@ -77,7 +77,6 @@ const LeetcodeView = () => {
 
   return (
     <div>
-      <h1>Problems Table</h1>
       {loading && <p>Loading...</p>}
       <Box
         display='flex'
@@ -85,7 +84,7 @@ const LeetcodeView = () => {
         alignItems='center'
         mb={2}
       >
-        <Filter filter={filter} setFilter={setFilter} />
+        <ProblemCategoriesFilter filter={filter} setFilter={setFilter} />
         <Button
           variant='contained'
           color='primary'

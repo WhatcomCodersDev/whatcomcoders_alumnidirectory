@@ -77,7 +77,7 @@ const ProblemCategoriesTable = ({
     filter === 'All'
       ? userSubmissionsByReviewCategory
       : userSubmissionsByReviewCategory.filter((category) =>
-          userSubmissionsByReviewCategory.includes(category.name)
+          problemCategoriesMarkedForReview.includes(category.name)
         );
 
   console.log('filteredProblemCategories:', filteredProblemCategories);
@@ -106,13 +106,25 @@ const ProblemCategoriesTable = ({
 
   return (
     <div>
-      <FormControl variant='outlined' fullWidth margin='normal'>
+      <FormControl
+        variant='outlined'
+        fullWidth
+        margin='normal'
+        sx={{
+          maxWidth: 180,
+          borderRadius: '50px',
+          // overflow: 'hidden',
+        }}
+      >
         <InputLabel id='problem-type-filter-label'>Filter</InputLabel>
         <Select
           labelId='problem-type-filter-label'
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           label='Filter'
+          sx={{
+            borderRadius: '50px',
+          }}
         >
           <MenuItem value='All'>All</MenuItem>
           <MenuItem value='Marked for Review'>Marked for Review</MenuItem>

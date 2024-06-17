@@ -25,7 +25,7 @@ const AllProblemTable = ({
 }) => {
   const { uuid } = useContext(AuthContext);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   console.log('submitted', submittedProblems);
   console.log('problem', data);
@@ -174,7 +174,7 @@ const AllProblemTable = ({
         </Button>
       )}
       <TablePagination
-        rowsPerPageOptions={[5, 10, 20, 50]}
+        rowsPerPageOptions={[10, 20, 50]}
         component='div'
         count={filteredData.length}
         rowsPerPage={rowsPerPage}
