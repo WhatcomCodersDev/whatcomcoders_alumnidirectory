@@ -17,10 +17,13 @@ import {
 import { AuthContext } from 'contexts/authContext';
 import { LocalizationProvider, DateTimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import SubmitButton from '../common/SubmitButton';
+import { submitUserReviewProblems } from 'services/leetcode_review/apiSubmitAllReviewProblems';
+import { formatDate } from 'services/leetcode_review/utils';
+import EditUserRatingSelection from './EditUserRatingSelection';
+import EditableDatePicker from './EditableDatePicker';
 
-const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
-
-const ProblemsTable = ({ data, filter, editMode }) => {
+const ReviewProblemsTable = ({ data, filter, editMode }) => {
   const [editableRow, setEditableRow] = useState(null);
   const [editingField, setEditingField] = useState(null);
   const [problems, setProblems] = useState(data);
@@ -61,44 +64,8 @@ const ProblemsTable = ({ data, filter, editMode }) => {
     setEditingField(null);
   };
 
-  const formatDate = (timestamp) => {
-    if (!timestamp) return 'Not Reviewed';
-    const date = new Date(timestamp);
-    return date.toLocaleDateString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      timeZoneName: 'short',
-    });
-  };
-
   const handleSubmit = async () => {
-    console.log('filteredData', filteredData);
-    try {
-      const response = await fetch(
-        `${leetcodeAPIURL}/users/${uuid}/review_problems/submit`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(filteredData),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error('Failed to submit changes');
-      }
-
-      alert('Changes submitted successfully');
-    } catch (error) {
-      console.error('Error submitting changes:', error);
-      alert('Failed to submit changes');
-    }
+    submitUserReviewProblems(uuid, filteredData);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -162,21 +129,10 @@ const ProblemsTable = ({ data, filter, editMode }) => {
                     <TableCell>{name}</TableCell>
                     <TableCell>
                       {editableRow === id ? (
-                        <FormControl variant='outlined' fullWidth>
-                          <Select
-                            value={user_rating}
-                            onChange={(e) =>
-                              handleUserRatingChange(id, e.target.value)
-                            }
-                            autoWidth
-                          >
-                            <MenuItem value='1'>1 (Easy)</MenuItem>
-                            <MenuItem value='2'>2</MenuItem>
-                            <MenuItem value='3'>3</MenuItem>
-                            <MenuItem value='4'>4</MenuItem>
-                            <MenuItem value='5'>5 (Super Hard)</MenuItem>
-                          </Select>
-                        </FormControl>
+                        <EditUserRatingSelection
+                          id={id}
+                          handleUserRatingChange={handleUserRatingChange}
+                        />
                       ) : (
                         <div onClick={() => setEditableRow(id)}>
                           {user_rating || 'Not Rated'}
@@ -186,14 +142,13 @@ const ProblemsTable = ({ data, filter, editMode }) => {
                     <TableCell>
                       {editableRow === id &&
                       editingField === 'lastCompleted' ? (
-                        <DateTimePicker
+                        <EditableDatePicker
                           value={
                             last_reviewed_timestamp
                               ? new Date(last_reviewed_timestamp)
                               : null
                           }
                           onChange={(newDate) => handleDateChange(id, newDate)}
-                          renderInput={(params) => <TextField {...params} />}
                         />
                       ) : (
                         <div
@@ -213,17 +168,7 @@ const ProblemsTable = ({ data, filter, editMode }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      {editMode && (
-        <Button
-          id='submit-button'
-          variant='contained'
-          color='secondary'
-          onClick={handleSubmit}
-          sx={{ marginTop: '16px' }}
-        >
-          Submit Changes
-        </Button>
-      )}
+      {editMode && <SubmitButton handleSubmit={handleSubmit} />}
 
       <TablePagination
         rowsPerPageOptions={[10, 20, 50]}
@@ -238,4 +183,4 @@ const ProblemsTable = ({ data, filter, editMode }) => {
   );
 };
 
-export default ProblemsTable;
+export default ReviewProblemsTable;

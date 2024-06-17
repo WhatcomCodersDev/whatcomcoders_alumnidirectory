@@ -1,83 +1,42 @@
 import React, { useContext, useState, useEffect } from 'react';
-import ProblemsTable from './ProblemTable';
+import ReviewProblemsTable from './ReviewProblemTable';
 import ProblemCategoriesTable from './ProblemCategoriesTable';
 import { AuthContext } from 'contexts/authContext';
-import { Button, Box } from '@mui/material';
-
-const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
-
-const predefinedProblemCategories = [
-  { name: 'Arrays & Hashing', count: 0 },
-  { name: 'Linked List', count: 0 },
-  { name: 'Tree', count: 0 },
-  { name: 'Graph', count: 0 },
-  { name: '1D DP', count: 0 },
-  { name: 'Binary Search', count: 0 },
-  { name: 'Stack', count: 0 },
-  { name: '2D DP', count: 0 },
-  { name: 'Bit Manipulation', count: 0 },
-  { name: 'Two Pointers', count: 0 },
-  { name: 'Sliding Window', count: 0 },
-  { name: 'Math', count: 0 },
-  { name: 'Matrix', count: 0 },
-  { name: 'Intervals', count: 0 },
-  { name: 'Heap', count: 0 },
-  { name: 'Advanced Graph', count: 0 },
-  { name: 'Backtracking', count: 0 },
-];
+import { Button } from '@mui/material';
+import EditButton from '../common/EditButton';
+import {
+  LEETCODE_API_URL,
+  PREDEFINED_PROBLEM_CATEGORIES,
+} from 'services/leetcode_review/constants';
+import { fetchProblemCategoriesMarkedForReviewByUser } from 'services/leetcode_review/apiFetchProblemCategoriesMarkedForReview';
+import { fetchUserSubmissions } from 'services/leetcode_review/apiFetchUserSubmissions';
 
 const LeetcodeView = () => {
   const { uuid } = useContext(AuthContext);
   const [filter, setFilter] = useState('All');
+  const [view, setView] = useState('categories');
   const [loading, setLoading] = useState(true);
   const [userProblemSubmissions, setUserProblemSubmissions] = useState([]);
-  const [view, setView] = useState('types');
   const [
     problemCategoriesMarkedForReview,
     setProblemCategoriesMarkedForReview,
   ] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [, setSelectedCategory] = useState(null);
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   useEffect(() => {
-    const fetchProblemCategoriesMarkedForReviewByUser = async (uuid) => {
-      setLoading(true);
-      try {
-        const response = await fetch(
-          `${leetcodeAPIURL}/users/${uuid}/problem/categories/review`
-        );
-        const data = await response.json();
-        console.log('Review Categories', data);
-        setProblemCategoriesMarkedForReview(data);
-      } catch (error) {
-        console.error('Request failed:', error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const fetchUsersLeetcodeQuestionsSubmissions = async (uuid) => {
-      setLoading(true);
-
-      try {
-        const response = await fetch(`${leetcodeAPIURL}/users/${uuid}`);
-        const data = await response.json();
-        console.log('user leetcode submissions:', data);
-        setUserProblemSubmissions(data);
-      } catch (error) {
-        console.error('Request failed:', error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     if (uuid) {
-      fetchUsersLeetcodeQuestionsSubmissions(uuid);
-      fetchProblemCategoriesMarkedForReviewByUser(uuid);
+      fetchUserSubmissions(uuid, setLoading, setUserProblemSubmissions);
+
+      fetchProblemCategoriesMarkedForReviewByUser(
+        uuid,
+        setLoading,
+        setProblemCategoriesMarkedForReview
+      );
     }
   }, [uuid]);
 
-  const userSubmissionsByReviewCategory = predefinedProblemCategories.map(
+  const userSubmissionsByReviewCategory = PREDEFINED_PROBLEM_CATEGORIES.map(
     (category) => {
       const count =
         userProblemSubmissions.length > 0
@@ -106,7 +65,7 @@ const LeetcodeView = () => {
   };
 
   const handleBackClick = () => {
-    setView('types');
+    setView('categories');
     setSelectedCategory(null);
     setFilter('All');
   };
@@ -114,22 +73,9 @@ const LeetcodeView = () => {
   return (
     <div>
       {loading && <p>Loading...</p>}
-      <Box
-        display='flex'
-        justifyContent='space-between'
-        alignItems='center'
-        mb={2}
-      >
-        <Button
-          variant='contained'
-          color='primary'
-          onClick={() => setEditMode((prev) => !prev)}
-          sx={{ borderRadius: '50px' }}
-        >
-          {editMode ? 'Cancel' : 'Edit'}
-        </Button>
-      </Box>
-      {view === 'types' && !loading && (
+
+      <EditButton editMode={editMode} setEditMode={setEditMode} />
+      {view === 'categories' && !loading && (
         <ProblemCategoriesTable
           userSubmissionsByReviewCategory={userSubmissionsByReviewCategory}
           problemCategoriesMarkedForReview={problemCategoriesMarkedForReview}
@@ -142,9 +88,9 @@ const LeetcodeView = () => {
       {view === 'problems' && !loading && (
         <div>
           <Button variant='contained' onClick={handleBackClick}>
-            Back to Types
+            Back to Categories
           </Button>
-          <ProblemsTable
+          <ReviewProblemsTable
             data={userProblemSubmissions}
             filter={filter}
             editMode={editMode}
