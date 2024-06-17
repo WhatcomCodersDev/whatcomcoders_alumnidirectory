@@ -70,8 +70,17 @@ const AllProblemTable = ({
           tag: problem.tag,
           category: problem.category,
           user_id: uuid,
+          user_rating: problem.user_rating ? problem.user_rating : '',
+          last_reviewed_timestamp: problem.last_reviewed_timestamp
+            ? problem.last_reviewed_timestamp
+            : '',
+          next_review_timestamp: problem.next_review_timestamp
+            ? problem.next_review_timestamp
+            : '',
           attempted: true,
         };
+
+        console.log('payload', payload);
 
         await fetch(`${leetcodeAPIURL}/space_repetition/${problem.id}/submit`, {
           method: 'POST',

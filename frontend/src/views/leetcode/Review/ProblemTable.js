@@ -77,6 +77,7 @@ const ProblemsTable = ({ data, filter, editMode }) => {
   };
 
   const handleSubmit = async () => {
+    console.log('filteredData', filteredData);
     try {
       const response = await fetch(
         `${leetcodeAPIURL}/users/${uuid}/review_problems/submit`,
@@ -85,7 +86,7 @@ const ProblemsTable = ({ data, filter, editMode }) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(problems),
+          body: JSON.stringify(filteredData),
         }
       );
 
@@ -115,19 +116,19 @@ const ProblemsTable = ({ data, filter, editMode }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
                 Id
               </TableCell>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
                 Problem Name
               </TableCell>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
                 User Rating (1-5)
               </TableCell>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
                 Last Reviewed
               </TableCell>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
                 Next Review
               </TableCell>
             </TableRow>
@@ -140,10 +141,15 @@ const ProblemsTable = ({ data, filter, editMode }) => {
                 const {
                   id,
                   name,
-                  user_rating = '',
-                  last_reviewed_timestamp = '',
-                  next_review_timestamp = '',
+                  user_rating = problem.user_rating ? problem.user_rating : '',
+                  last_reviewed_timestamp = problem.last_reviewed_timestamp
+                    ? problem.last_reviewed_timestamp
+                    : '',
+                  next_review_timestamp = problem.next_review_timestamp
+                    ? problem.next_review_timestamp
+                    : '',
                 } = problem;
+                console.log('problem to submit:', problem);
 
                 return (
                   <TableRow

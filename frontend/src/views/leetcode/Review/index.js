@@ -30,15 +30,18 @@ const LeetcodeView = () => {
   const { uuid } = useContext(AuthContext);
   const [filter, setFilter] = useState('All');
   const [loading, setLoading] = useState(true);
-  const [problemsData, setProblemsData] = useState([]);
+  const [userProblemSubmissions, setUserProblemSubmissions] = useState([]);
   const [view, setView] = useState('types');
-  const [selectedReviewCategories, setSelectedReviewCategories] = useState([]);
+  const [
+    problemCategoriesMarkedForReview,
+    setProblemCategoriesMarkedForReview,
+  ] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   useEffect(() => {
-    const fetchSelectedReviewCategories = async (uuid) => {
+    const fetchProblemCategoriesMarkedForReviewByUser = async (uuid) => {
       setLoading(true);
       try {
         const response = await fetch(
@@ -46,7 +49,7 @@ const LeetcodeView = () => {
         );
         const data = await response.json();
         console.log('Review Categories', data);
-        setSelectedReviewCategories(data);
+        setProblemCategoriesMarkedForReview(data);
       } catch (error) {
         console.error('Request failed:', error.message);
       } finally {
@@ -54,14 +57,14 @@ const LeetcodeView = () => {
       }
     };
 
-    const fetchUsersLeetcodeQuestions = async (uuid) => {
+    const fetchUsersLeetcodeQuestionsSubmissions = async (uuid) => {
       setLoading(true);
 
       try {
         const response = await fetch(`${leetcodeAPIURL}/users/${uuid}`);
         const data = await response.json();
-        console.log(data);
-        setProblemsData(data);
+        console.log('user leetcode submissions:', data);
+        setUserProblemSubmissions(data);
       } catch (error) {
         console.error('Request failed:', error.message);
       } finally {
@@ -70,20 +73,24 @@ const LeetcodeView = () => {
     };
 
     if (uuid) {
-      fetchUsersLeetcodeQuestions(uuid);
-      fetchSelectedReviewCategories(uuid);
+      fetchUsersLeetcodeQuestionsSubmissions(uuid);
+      fetchProblemCategoriesMarkedForReviewByUser(uuid);
     }
   }, [uuid]);
 
-  const problemCategories = predefinedProblemCategories.map((category) => {
-    const count =
-      problemsData.length > 0
-        ? problemsData.filter(
-            (problem) => problem.problem_category === category.name
-          ).length
-        : 0;
-    return { ...category, count };
-  });
+  const userSubmissionsByReviewCategory = predefinedProblemCategories.map(
+    (category) => {
+      const count =
+        userProblemSubmissions.length > 0
+          ? userProblemSubmissions.filter(
+              (problem) => problem.category === category.name
+            ).length
+          : 0;
+      return { ...category, count };
+    }
+  );
+
+  console.log('userProblemSubmissions', userProblemSubmissions);
 
   const handleTypeClick = (category) => {
     setSelectedCategory(category);
@@ -92,7 +99,7 @@ const LeetcodeView = () => {
   };
 
   const handleCheckboxChange = (category) => {
-    setSelectedReviewCategories((prevSelectedCategories) =>
+    setProblemCategoriesMarkedForReview((prevSelectedCategories) =>
       prevSelectedCategories.includes(category)
         ? prevSelectedCategories.filter((c) => c !== category)
         : [...prevSelectedCategories, category]
@@ -126,9 +133,9 @@ const LeetcodeView = () => {
       </Box>
       {view === 'types' && !loading && (
         <ProblemCategoriesTable
-          problemCategories={problemCategories}
-          selectedCategories={selectedReviewCategories}
-          // selectedReviewCategories={selectedReviewCategories}
+          userSubmissionsByReviewCategory={userSubmissionsByReviewCategory}
+          problemCategoriesMarkedForReview={problemCategoriesMarkedForReview}
+          userProblemSubmissions={userProblemSubmissions}
           onTypeClick={handleTypeClick}
           onCheckboxChange={handleCheckboxChange}
           editMode={editMode}
@@ -140,7 +147,7 @@ const LeetcodeView = () => {
             Back to Types
           </Button>
           <ProblemsTable
-            data={problemsData}
+            data={userProblemSubmissions}
             filter={filter}
             editMode={editMode}
           />
