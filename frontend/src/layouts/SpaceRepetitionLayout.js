@@ -50,7 +50,7 @@ const MainContent = styled('main')(({ theme }) => ({
   overflowY: 'auto',
 }));
 
-const DashboardLayout = () => {
+const SpaceRepetitionLayout = () => {
   return (
     <Root>
       <NavBar />
@@ -97,4 +97,4 @@ const DashboardLayout = () => {
   );
 };
 
-export default DashboardLayout;
+export default SpaceRepetitionLayout;
