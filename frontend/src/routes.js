@@ -4,7 +4,8 @@ import SplashScreen from './components/SplashScreen';
 import LandingLayout from './layouts/LandingLayout';
 import MentorLayout from 'layouts/MentorLayout';
 import { Dashboard } from '@mui/icons-material';
-import DashboardLayout from 'layouts/DashboardLayout';
+import SpaceRepetitionLayout from 'layouts/SpaceRepetitionLayout';
+import BootstrapLayout from 'layouts/BootstrapLayout';
 
 const renderRoutes = (routes = []) => {
   return routes.map((route) => {
@@ -64,14 +65,7 @@ const landingPages = [
         path: '/people',
         element: lazy(() => import('./views/cards')),
       },
-      // {
-      //   path: '/leetcode',
-      //   element: lazy(() => import('./views/leetcode')),
-      // },
-      {
-        path: '/bootstrap',
-        element: lazy(() => import('./views/bootstrap')),
-      },
+
       {
         path: '/login',
         element: lazy(() => import('./views/auth/SignIn')),
@@ -100,9 +94,9 @@ const otherPages = [
   },
 ];
 
-const dashBoardPages = [
+const spaceRepetitionPages = [
   {
-    element: DashboardLayout,
+    element: SpaceRepetitionLayout,
     children: [
       {
         path: '/leetcode',
@@ -120,7 +114,32 @@ const dashBoardPages = [
   },
 ];
 
-const routes = [...landingPages, ...otherPages, ...dashBoardPages];
+const bootstrapPages = [
+  {
+    element: BootstrapLayout,
+    children: [
+      {
+        path: '/bootstrap',
+        element: lazy(() => import('./views/bootstrap')),
+      },
+      {
+        path: '/bootstrap/all',
+        element: lazy(() => import('./views/bootstrap')), //Todo - should route to new view
+      },
+      {
+        path: '/bootstrap/form',
+        element: lazy(() => import('./views/bootstrap')), //Todo - should route to new view (form view)
+      },
+    ],
+  },
+];
+
+const routes = [
+  ...landingPages,
+  ...otherPages,
+  ...spaceRepetitionPages,
+  ...bootstrapPages,
+];
 
 const router = createBrowserRouter(renderRoutes(routes));
 
