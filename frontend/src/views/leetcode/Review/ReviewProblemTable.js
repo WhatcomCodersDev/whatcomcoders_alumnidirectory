@@ -125,7 +125,7 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                     <TableCell>
                       {editableRow === id ? (
                         <EditUserRatingSelection
-                          value={user_rating}
+                          user_rating={user_rating}
                           onChange={(e) =>
                             handleUserRatingChange(id, e.target.value)
                           }
