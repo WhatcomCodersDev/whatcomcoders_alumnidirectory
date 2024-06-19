@@ -1,6 +1,8 @@
+@import './fonts.css';
+
 /* General Styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Anek Gujarati", sans-serif;
   background-color: #efefef;
   color: #333333;
 }

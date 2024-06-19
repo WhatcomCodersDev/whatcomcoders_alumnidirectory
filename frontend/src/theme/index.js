@@ -6,7 +6,9 @@ import { softShadows, strongShadows } from "./shadows";
 
 const baseOptions = createTheme({
   direction: "ltr",
-  typography,
+  typography: {
+    fontFamily: '"Anek Gujarati", sans-serif'
+  },
   overrides: {
     MuiLinearProgress: {
       root: {
@@ -46,7 +48,7 @@ const themesOptions = [
         // paper: common.white,
       },
       primary: {
-        main: "#FFFFFF", // We use this one for theme, the other ones not I think
+        main: "#003F87", // We use this one for theme, the other ones not I think
         dark: "#333333",
       },
       secondary: {
