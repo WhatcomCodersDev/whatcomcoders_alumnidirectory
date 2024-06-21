@@ -171,7 +171,7 @@ const LandingView = () => {
       sx={{
         width: "100vw",
         height: "100vh",
-        backgroundImage: `url(${wwuBG})`,
+        backgroundImage: `linear-gradient(rgba(19, 129, 255, 0.15), rgba(19, 129, 255, 0.15)), url(${wwuBG})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         display: "flex",
