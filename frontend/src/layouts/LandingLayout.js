@@ -14,8 +14,6 @@ const Root = styled('div')(({ theme }) => ({
 
 const Content = styled('div')(({ theme }) => ({
   flex: '1', // This makes the content grow and fill available space, pushing the FootBar down
-  marginTop: '64px', // Adjust based on NavBar height to prevent overlap
-  marginBottom: '64px',
 }));
 
 const LandingLayout = () => {

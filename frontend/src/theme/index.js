@@ -7,7 +7,7 @@ import { softShadows, strongShadows } from "./shadows";
 const baseOptions = createTheme({
   direction: "ltr",
   typography: {
-    fontFamily: '"Anek Gujarati", sans-serif'
+    fontFamily: '"Anek Gujarati", sans-serif',
   },
   overrides: {
     MuiLinearProgress: {

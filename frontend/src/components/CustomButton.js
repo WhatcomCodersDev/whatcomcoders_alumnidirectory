@@ -12,9 +12,10 @@ const StyledButton = styled(Button)(({ theme }) => ({
   textTransform: "lowercase",
 }));
 
-const NavButton = ({ text, url, icon, children, onClick, ...rest }) => {
+const NavButton = ({ sx, text, url, icon, children, onClick, ...rest }) => {
   return (
     <StyledButton
+      sx={sx}
       href={url}
       variant="outlined"
       endIcon={icon}
