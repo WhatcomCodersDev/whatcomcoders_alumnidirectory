@@ -1,43 +1,55 @@
-// src/App.js
 import React, { useContext, useState, useEffect } from 'react';
 import AllProblemTable from './AllProblemTable';
-// import Filter from './ProblemTypeFilter';
 import { AuthContext } from 'contexts/authContext';
-
-const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
-console.log(leetcodeAPIURL);
+import ProblemCategoriesFilter from '../ProblemCategoriesFilter';
+import { fetchUserSubmissionsOnlyProblemIds } from 'services/leetcode_review/apiFetchUserSubmissions';
+import { fetchAllLeetcodeQuestionsBlocking } from 'services/leetcode_review/apiFetchAllLeetcodeQuestions';
+import EditButton from '../common/EditButton';
+import { fetchAllUserData } from 'services/leetcode_review/apiFetchAllUserData';
 
 const LeetcodeView = () => {
-  //   const [filter, setFilter] = useState('All');
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [filter, setFilter] = useState('All');
+  const [loading, setLoading] = useState(true);
   const [problemsData, setProblemsData] = useState([]);
+  const [submittedProblems, setSubmittedProblems] = useState([]); // State to hold user's submitted problems
+  const [selectedCategories] = useState([]);
+  const [editMode, setEditMode] = useState(false); // State to manage edit mode
+
+  const { uuid } = useContext(AuthContext);
+  console.log('uuid:', uuid);
 
   useEffect(() => {
-    const fetchAllLeetcodeQuestions = async () => {
-      setLoading(true); // Start loading
+    fetchUserSubmissionsOnlyProblemIds(uuid, setLoading, setSubmittedProblems);
+    fetchAllLeetcodeQuestionsBlocking(setLoading, setProblemsData);
 
-      try {
-        const response = await fetch(`${leetcodeAPIURL}/problems/all`);
-        const data = await response.json();
-        console.log(data);
-        setProblemsData(data);
-      } catch (error) {
-        console.error('Request failed:', error.message);
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    };
+    // Wraps promise around fetchUserSubmissions and fetchAllLeetcodeQuestions
+    fetchAllUserData(uuid, setLoading);
+  }, [uuid]);
 
-    fetchAllLeetcodeQuestions();
-  }, []);
+  const handleCheckboxChange = (problemId) => {
+    setSubmittedProblems((prevSubmittedProblems) =>
+      prevSubmittedProblems.includes(problemId)
+        ? prevSubmittedProblems.filter((id) => id !== problemId)
+        : [...prevSubmittedProblems, problemId]
+    );
+  };
 
-  console.log(problemsData);
   return (
     <div>
-      <h1>Problems Table</h1>
       {loading && <p>Loading...</p>}
-      {/* <Filter filter={filter} setFilter={setFilter} /> */}
-      {!loading && <AllProblemTable data={problemsData} />}
+      <ProblemCategoriesFilter filter={filter} setFilter={setFilter} />
+      <EditButton editMode={editMode} setEditMode={setEditMode} />
+
+      {!loading && (
+        <AllProblemTable
+          data={problemsData}
+          filter={filter}
+          selectedCategories={selectedCategories}
+          onCheckboxChange={handleCheckboxChange}
+          editMode={editMode}
+          submittedProblems={submittedProblems} // Pass submitted problems to the table
+        />
+      )}
     </div>
   );
 };

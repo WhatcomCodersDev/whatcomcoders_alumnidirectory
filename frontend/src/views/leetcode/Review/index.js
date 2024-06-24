@@ -1,46 +1,99 @@
-// src/App.js
 import React, { useContext, useState, useEffect } from 'react';
-import ProblemsTable from './ProblemTable';
-import Filter from './ProblemTypeFilter';
+import ReviewProblemsTable from './ReviewProblemTable';
+import ProblemCategoriesTable from './ProblemCategoriesTable';
 import { AuthContext } from 'contexts/authContext';
-
-const leetcodeAPIURL = process.env.REACT_APP_LEETCODE_API_URL;
-console.log(leetcodeAPIURL);
+import { Button } from '@mui/material';
+import EditButton from '../common/EditButton';
+import { PREDEFINED_PROBLEM_CATEGORIES } from 'services/leetcode_review/constants';
+import { fetchProblemCategoriesMarkedForReviewByUser } from 'services/leetcode_review/apiFetchProblemCategoriesMarkedForReview';
+import { fetchUserSubmissions } from 'services/leetcode_review/apiFetchUserSubmissions';
 
 const LeetcodeView = () => {
   const { uuid } = useContext(AuthContext);
   const [filter, setFilter] = useState('All');
-  const [loading, setLoading] = useState(true); // Add loading state
-  const [problemsData, setProblemsData] = useState([]);
+  const [view, setView] = useState('categories');
+  const [loading, setLoading] = useState(true);
+  const [userProblemSubmissions, setUserProblemSubmissions] = useState([]);
+  const [
+    problemCategoriesMarkedForReview,
+    setProblemCategoriesMarkedForReview,
+  ] = useState([]);
+  const [, setSelectedCategory] = useState(null);
+  const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   useEffect(() => {
-    const fetchUsersLeetcodeQuestions = async (uuid) => {
-      setLoading(true); // Start loading
-
-      try {
-        const response = await fetch(`${leetcodeAPIURL}/users/${uuid}`);
-        const data = await response.json();
-        console.log(data);
-        setProblemsData(data);
-      } catch (error) {
-        console.error('Request failed:', error.message);
-      } finally {
-        setLoading(false); // Stop loading
-      }
-    };
-
     if (uuid) {
-      fetchUsersLeetcodeQuestions(uuid);
+      fetchUserSubmissions(uuid, setLoading, setUserProblemSubmissions);
+
+      fetchProblemCategoriesMarkedForReviewByUser(
+        uuid,
+        setLoading,
+        setProblemCategoriesMarkedForReview
+      );
     }
   }, [uuid]);
 
-  console.log(problemsData);
+  const userSubmissionsByReviewCategory = PREDEFINED_PROBLEM_CATEGORIES.map(
+    (category) => {
+      const count =
+        userProblemSubmissions.length > 0
+          ? userProblemSubmissions.filter(
+              (problem) => problem.category === category.name
+            ).length
+          : 0;
+      return { ...category, count };
+    }
+  );
+
+  console.log('userProblemSubmissions', userProblemSubmissions);
+
+  const handleTypeClick = (category) => {
+    setSelectedCategory(category);
+    setFilter(category);
+    setView('problems');
+  };
+
+  const handleCheckboxChange = (category) => {
+    setProblemCategoriesMarkedForReview((prevSelectedCategories) =>
+      prevSelectedCategories.includes(category)
+        ? prevSelectedCategories.filter((c) => c !== category)
+        : [...prevSelectedCategories, category]
+    );
+  };
+
+  const handleBackClick = () => {
+    setView('categories');
+    setSelectedCategory(null);
+    setFilter('All');
+  };
+
   return (
     <div>
-      <h1>Problems Table</h1>
       {loading && <p>Loading...</p>}
-      <Filter filter={filter} setFilter={setFilter} />
-      {!loading && <ProblemsTable data={problemsData} filter={filter} />}
+
+      <EditButton editMode={editMode} setEditMode={setEditMode} />
+      {view === 'categories' && !loading && (
+        <ProblemCategoriesTable
+          userSubmissionsByReviewCategory={userSubmissionsByReviewCategory}
+          problemCategoriesMarkedForReview={problemCategoriesMarkedForReview}
+          userProblemSubmissions={userProblemSubmissions}
+          onTypeClick={handleTypeClick}
+          onCheckboxChange={handleCheckboxChange}
+          editMode={editMode}
+        />
+      )}
+      {view === 'problems' && !loading && (
+        <div>
+          <Button variant='contained' onClick={handleBackClick}>
+            Back to Categories
+          </Button>
+          <ReviewProblemsTable
+            data={userProblemSubmissions}
+            filter={filter}
+            editMode={editMode}
+          />
+        </div>
+      )}
     </div>
   );
 };
