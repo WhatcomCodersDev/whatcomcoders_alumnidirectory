@@ -1,5 +1,5 @@
-import { styled } from '@mui/material/styles';
-import React, { useContext } from 'react';
+import { styled } from "@mui/material/styles";
+import React, { useContext } from "react";
 import {
   Avatar,
   AppBar,
@@ -8,29 +8,19 @@ import {
   Typography,
   Button,
   Box,
-} from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
-import { AuthContext } from '../contexts/authContext';
-import Logo from './Logo';
+  Stack,
+} from "@mui/material";
+import { AuthContext } from "../contexts/authContext";
+import Logo from "./Logo";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCompass, faUser } from "@fortawesome/free-solid-svg-icons";
+import CustomCoreIcon from "./CustomCoreIcon";
+import { NavButton, LoginButton } from "./CustomButton";
 
 // Styled AppBar component
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.background.primary,
-  display: 'flex', // Using flexbox for the navbar layout
-}));
-
-// Styled Link component
-const StyledLink = styled(Link)(({ theme }) => ({
-  textDecoration: 'none',
-  color: 'inherit',
-  marginRight: '20px', // Consistent spacing between elements
-  verticalAlign: 'middle', // Aligning items in the middle vertically
-  '&:last-child': {
-    marginRight: 0, // Removing margin from the last item
-  },
-  '&:hover': {
-    color: '#ccc', // Lighter color on hover
-  },
+  backgroundColor: "#FFFFFF",
+  display: "flex", // Using flexbox for the navbar layout
 }));
 
 const NavBar = () => {
@@ -38,84 +28,40 @@ const NavBar = () => {
     useContext(AuthContext);
 
   return (
-    <StyledAppBar position='static'>
+    <StyledAppBar position="static">
       <Toolbar sx={{ minHeight: 64 }}>
-        <Logo />
-        <Box display='flex' flexGrow={1}>
-          <Typography variant='h6' sx={{ marginRight: '20px' }}>
-            <StyledLink component={RouterLink} to={'/'}></StyledLink>
-          </Typography>
-          <Typography variant='h6' sx={{ marginRight: '20px' }}>
-            <StyledLink
-              to={'/resources'}
-              component={RouterLink}
-              sx={{ color: 'white' }} //temp
-            >
-              Resources
-            </StyledLink>
-          </Typography>
-          <Typography variant='h6' sx={{ marginRight: '20px' }}>
-            <StyledLink
-              component={RouterLink}
-              to={'/people'}
-              sx={{ color: 'white' }}
-            >
-              People
-            </StyledLink>
-          </Typography>
-
-          <Typography variant='h6' sx={{ marginRight: '20px' }}>
-            <StyledLink
-              component={RouterLink}
-              to={'/leetcode'}
-              sx={{ color: 'white' }}
-            >
-              Leetcode
-            </StyledLink>
-          </Typography>
-
-          <Typography variant='h6'>
-            <StyledLink
-              component={RouterLink}
-              to={'/bootstrap'}
-              sx={{ color: 'white' }}
-            >
-              Bootstrap
-            </StyledLink>
-          </Typography>
-        </Box>
-
-        <Box display='flex'>
-          {isLoggedIn ? (
-            <>
-              <StyledLink>
-                <Button
-                  color='inherit'
-                  component={RouterLink}
-                  to='/userinfo'
-                  sx={{ color: 'white', display: 'flex', alignItems: 'center' }}
-                >
-                  {userProfilePic && (
-                    <Avatar
-                      src={userProfilePic}
-                      sx={{ width: 24, height: 24, marginRight: 1 }}
-                    />
-                  )}
-                  {userName}{' '}
-                </Button>
-              </StyledLink>
-              <Button color='inherit' onClick={logout}>
-                Logout
-              </Button>
-            </>
-          ) : (
-            <StyledLink>
-              <Button color='inherit' component={RouterLink} to='/login'>
-                Login
-              </Button>
-            </StyledLink>
-          )}
-        </Box>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          sx={{ width: "100%" }}
+        >
+          <Stack direction="row" spacing={3} alignItems="center">
+            <Logo />
+            <NavButton
+              text="Resources"
+              url="/resources"
+              icon={<FontAwesomeIcon icon={faCompass} />}
+            />
+            <NavButton
+              text="People"
+              url="/people"
+              icon={<FontAwesomeIcon icon={faUser} />}
+            />
+            <NavButton
+              text="Leetcode"
+              url="/leetcode"
+              icon={<CustomCoreIcon iconName="cibLeetcode" />}
+            />
+            <NavButton text="Bootstrap" url="/bootstrap" />
+          </Stack>
+          <LoginButton
+            isLoggedIn={isLoggedIn}
+            userName={userName}
+            userProfilePic={userProfilePic}
+            onClick={logout}
+          />
+        </Stack>
       </Toolbar>
     </StyledAppBar>
   );

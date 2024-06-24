@@ -1,21 +1,20 @@
-import { Outlet } from 'react-router-dom';
-import { styled } from '@mui/material/styles';
-import NavBar from 'components/NavBar';
-import FootBar from 'components/FootBar';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+import NavBar from "components/NavBar";
+import FootBar from "components/FootBar";
 // import useAuth from 'hooks/useAuth';
 
-const Root = styled('div')(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
+const Root = styled("div")(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
   backgroundColor: theme.palette.primary.default,
-  minHeight: '100vh', // Ensure at least full viewport height
+  minHeight: "100vh", // Ensure at least full viewport height
   // flex: '1 1 auto',
 }));
 
-const Content = styled('div')(({ theme }) => ({
-  flex: '1', // This makes the content grow and fill available space, pushing the FootBar down
-  marginTop: '64px', // Adjust based on NavBar height to prevent overlap
-  marginBottom: '64px',
+const Content = styled("div")(({ theme }) => ({
+  flex: "1", // This makes the content grow and fill available space, pushing the FootBar down
 }));
 
 const LandingLayout = () => {
@@ -26,7 +25,7 @@ const LandingLayout = () => {
   // const onMobileNavOpen = () => {
   //   setMobileNavOpen(true);
   // };
-
+  
   return (
     <Root>
       <NavBar />
