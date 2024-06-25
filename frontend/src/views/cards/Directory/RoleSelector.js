@@ -1,16 +1,16 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button } from "@mui/material";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const RoleSelector = ({ setFilteredUsers }) => {
+const RoleSelector = ({ sx, setFilteredUsers }) => {
   const fetchStudentsAPI = async () => {
     try {
       const response = await fetch(`${apiUrl}/api/directory/getStudents`);
       const data = await response.json();
-      console.log(data);
+      console.log("fetching students", data);
       setFilteredUsers(data);
     } catch (error) {
-      console.log('Failed to fetch students:', error);
+      console.log("Failed to fetch students:", error);
     }
   };
 
@@ -21,7 +21,7 @@ const RoleSelector = ({ setFilteredUsers }) => {
       console.log(data);
       setFilteredUsers(data);
     } catch (error) {
-      console.log('Failed to fetch mentors:', error);
+      console.log("Failed to fetch mentors:", error);
     }
   };
 
@@ -32,25 +32,58 @@ const RoleSelector = ({ setFilteredUsers }) => {
       console.log(data);
       setFilteredUsers(data);
     } catch (error) {
-      console.log('Failed to fetch alumni:', error);
+      console.log("Failed to fetch alumni:", error);
     }
   };
 
   return (
-    <div>
-      {/* Navigation Links */}
-      <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center', gap: 2 }}>
-        <Button onClick={fetchStudentsAPI} color='inherit'>
-          Students
-        </Button>
-        <Button onClick={fetchMentorsAPI} color='inherit'>
-          Mentors
-        </Button>
-        <Button onClick={fetchAlumniAPI} color='inherit'>
-          Alumni
-        </Button>
-      </Box>
-    </div>
+    <Box sx={{ display: "flex", justifyContent: "center", gap: 2, ...sx }}>
+      <Button
+        sx={{
+          borderRadius: 0,
+          borderBottom: 1,
+          borderColor: "transparent",
+          "&:hover": {
+            borderBottom: 1,
+          },
+          paddingBottom: 0,
+        }}
+        onClick={fetchStudentsAPI}
+        color="inherit"
+      >
+        Students
+      </Button>
+      <Button
+        sx={{
+          borderRadius: 0,
+          borderBottom: 1,
+          borderColor: "transparent",
+          "&:hover": {
+            borderBottom: 1,
+          },
+          paddingBottom: 0,
+        }}
+        onClick={fetchMentorsAPI}
+        color="inherit"
+      >
+        Mentors
+      </Button>
+      <Button
+        sx={{
+          borderRadius: 0,
+          borderBottom: 1,
+          borderColor: "transparent",
+          "&:hover": {
+            borderBottom: 1,
+          },
+          paddingBottom: 0,
+        }}
+        onClick={fetchAlumniAPI}
+        color="inherit"
+      >
+        Alumni
+      </Button>
+    </Box>
   );
 };
 

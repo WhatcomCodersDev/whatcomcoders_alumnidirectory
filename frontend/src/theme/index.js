@@ -40,11 +40,11 @@ const themesOptions = [
     palette: {
       type: "light",
       action: {
-        active: "#ff9966",
+        active: "#000000",
       },
       background: {
-        default: "#ff9966",
-        dark: "#ff9966",
+        default: "#000000",
+        dark: "#000000",
         // paper: common.white,
       },
       primary: {
@@ -52,8 +52,8 @@ const themesOptions = [
         dark: "#333333",
       },
       secondary: {
-        main: "#ff9966",
-        dark: "#ff9966",
+        main: "#000000",
+        dark: "#000000",
       },
       text: {
         primary: "#003F87",

@@ -22,10 +22,7 @@ import { faGithub, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import profileCardIcon from "../../static/profilecards_layout.jpeg";
 import networkingIcon from "../../static/networkingicon_layout.png";
 import resourcesIcon from "../../static/educationicon_layout.png";
-import wwuBackground from "../../static/wwu.webp";
-import DiscordIcon from "../../static/discord.png"; // Assuming you have this logo
 import wwuBG from "../../static/wwuBG.png";
-import CustomCoreIcon from "components/CustomCoreIcon";
 
 const HeroImage = styled(Box)(({ theme }) => ({
   height: "500px",
