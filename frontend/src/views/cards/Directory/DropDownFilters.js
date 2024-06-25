@@ -21,7 +21,7 @@ const DropDownFilters = ({ sx, setFilteredUsers }) => {
         endpoint = `/api/directory/getSkills?filter=${value}`; // Assuming query parameter
         break;
       default:
-        endpoint = `/api/directory/`;
+        //   endpoint = `/api/directory/`;
         return;
     }
 
@@ -65,7 +65,7 @@ const DropDownFilters = ({ sx, setFilteredUsers }) => {
           sx={{
             minWidth: 150,
             flexGrow: 1,
-            maxWidth: "30%",
+            maxWidth: "25%",
             bgcolor: "white",
             borderRadius: 2,
           }}
@@ -89,7 +89,7 @@ const DropDownFilters = ({ sx, setFilteredUsers }) => {
           sx={{
             minWidth: 200,
             flexGrow: 1,
-            maxWidth: "30%",
+            maxWidth: "25%",
             bgcolor: "white",
             borderRadius: 2,
           }}
@@ -115,7 +115,7 @@ const DropDownFilters = ({ sx, setFilteredUsers }) => {
           sx={{
             minWidth: 120,
             flexGrow: 1,
-            maxWidth: "30%",
+            maxWidth: "20%",
             bgcolor: "white",
             borderRadius: 2,
           }}

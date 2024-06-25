@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const RoleSelector = ({ sx, setFilteredUsers }) => {
+const RoleSelector = ({ sx, buttonSize, setFilteredUsers }) => {
   const fetchStudentsAPI = async () => {
     try {
       const response = await fetch(`${apiUrl}/api/directory/getStudents`);
@@ -47,6 +47,7 @@ const RoleSelector = ({ sx, setFilteredUsers }) => {
             borderBottom: 1,
           },
           paddingBottom: 0,
+          fontSize: buttonSize,
         }}
         onClick={fetchStudentsAPI}
         color="inherit"
@@ -62,6 +63,7 @@ const RoleSelector = ({ sx, setFilteredUsers }) => {
             borderBottom: 1,
           },
           paddingBottom: 0,
+          fontSize: buttonSize,
         }}
         onClick={fetchMentorsAPI}
         color="inherit"
@@ -77,6 +79,7 @@ const RoleSelector = ({ sx, setFilteredUsers }) => {
             borderBottom: 1,
           },
           paddingBottom: 0,
+          fontSize: buttonSize,
         }}
         onClick={fetchAlumniAPI}
         color="inherit"

@@ -12,11 +12,11 @@ import {
 import SearchIcon from "@mui/icons-material/Search"; // Importing the search icon
 import FilterListIcon from "@mui/icons-material/FilterList"; // Importing the filter icon
 import RoleSelector from "./Directory/RoleSelector";
-// import DropDownFilters from "./Directory/DropDownFilters";
+import DropDownFilters from "./Directory/DropDownFilters";
 import zIndex from "@mui/material/styles/zIndex";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-console.log(apiUrl);
+console.log("url", apiUrl);
 
 const ProfileCardsDirectoryView = () => {
   const [users, setUsers] = useState([]);
@@ -181,10 +181,10 @@ const ProfileCardsDirectoryView = () => {
         justifyContent: "center",
         overflow: "hidden",
         position: "relative",
-        direction: "column",
       }}
+      direction="column"
     >
-      {/* <img
+      <img
         src="/people_Vector 6.png"
         style={{
           position: "absolute",
@@ -216,7 +216,7 @@ const ProfileCardsDirectoryView = () => {
           bottom: 0,
           zIndex: 1,
         }}
-      /> */}
+      />
       <Box
         sx={{ position: "relative", zIndex: 2, justifyContent: "flex-start" }}
       >
@@ -229,7 +229,7 @@ const ProfileCardsDirectoryView = () => {
           spacing={2}
         >
           <Typography
-            variant="h4"
+            variant="h3"
             component="h1"
             sx={{
               color: "white",
@@ -241,6 +241,7 @@ const ProfileCardsDirectoryView = () => {
           {/* Role selector */}
           <RoleSelector
             sx={{ color: "white" }}
+            buttonSize="1.25rem"
             setFilteredUsers={setFilteredUsers}
           />
         </Stack>
@@ -275,26 +276,35 @@ const ProfileCardsDirectoryView = () => {
           }}
         />
         {/* Dropdown Filters */}
-        {/* <DropDownFilters
+        <DropDownFilters
           sx={{
             position: "relative",
             zIndex: 3,
           }}
           setFilteredUsers={setFilteredUsers}
-        /> */}
+        />
       </Box>
       <Box
         sx={{
-          height: "300vh",
+          height: "80vh",
           backgroundColor: "red",
           zIndex: 2,
           position: "relative",
         }}
       >
-        <Typography>hello</Typography>
+        <Typography>snap scroll</Typography>
       </Box>
       {/* Profile Cards Grid */}
-      <Grid container spacing={4} justifyContent="flex-start">
+      <Grid
+        container
+        spacing={4}
+        justifyContent="center"
+        sx={{
+          zIndex: 2,
+          position: "relative",
+          width: "100%",
+        }}
+      >
         {filteredUsers.map((user) => (
           <Grid item key={user.email} xs={12} sm={6} md={4} lg={3}>
             <ProfileCard
