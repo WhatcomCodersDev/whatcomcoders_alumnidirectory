@@ -174,7 +174,7 @@ const ProfileCardsDirectoryView = () => {
   return (
     <Stack
       sx={{
-        width: "100vw",
+        width: "100%",
         height: "auto",
         backgroundPosition: "center",
         alignItems: "center",
@@ -188,10 +188,8 @@ const ProfileCardsDirectoryView = () => {
         src="/people_Vector 6.png"
         style={{
           position: "absolute",
-          top: -150,
-          right: 0,
-          left: 0,
-          bottom: 0,
+          top: -200,
+          width: "100%",
           zIndex: 1,
         }}
       />
@@ -199,10 +197,8 @@ const ProfileCardsDirectoryView = () => {
         src="/people_Vector 4.png"
         style={{
           position: "absolute",
-          top: -150,
-          right: 0,
-          left: 0,
-          bottom: 0,
+          top: -200,
+          width: "100%",
           zIndex: 1,
         }}
       />
@@ -210,10 +206,8 @@ const ProfileCardsDirectoryView = () => {
         src="/people_Vector 5.png"
         style={{
           position: "absolute",
-          top: -150,
-          right: 0,
-          left: 0,
-          bottom: 0,
+          top: -200,
+          width: "100%",
           zIndex: 1,
         }}
       />
@@ -229,7 +223,7 @@ const ProfileCardsDirectoryView = () => {
           spacing={2}
         >
           <Typography
-            variant="h3"
+            variant="h4"
             component="h1"
             sx={{
               color: "white",
@@ -241,7 +235,7 @@ const ProfileCardsDirectoryView = () => {
           {/* Role selector */}
           <RoleSelector
             sx={{ color: "white" }}
-            buttonSize="1.25rem"
+            buttonSize="1.20rem"
             setFilteredUsers={setFilteredUsers}
           />
         </Stack>
