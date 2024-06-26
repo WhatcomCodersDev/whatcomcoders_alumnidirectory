@@ -223,7 +223,7 @@ const ProfileCardsDirectoryView = () => {
           spacing={2}
         >
           <Typography
-            variant="h4"
+            variant="h3"
             component="h1"
             sx={{
               color: "white",
@@ -235,7 +235,7 @@ const ProfileCardsDirectoryView = () => {
           {/* Role selector */}
           <RoleSelector
             sx={{ color: "white" }}
-            buttonSize="1.20rem"
+            buttonSize="1.3rem"
             setFilteredUsers={setFilteredUsers}
           />
         </Stack>
@@ -248,7 +248,6 @@ const ProfileCardsDirectoryView = () => {
           onChange={handleSearch}
           sx={{
             width: "100%",
-            maxWidth: "800px",
             "& .MuiOutlinedInput-root": {
               borderRadius: 2,
             },
@@ -256,6 +255,7 @@ const ProfileCardsDirectoryView = () => {
             borderRadius: 2,
             zIndex: 2,
             position: "relative",
+            boxShadow: 5,
           }}
           InputProps={{
             startAdornment: (

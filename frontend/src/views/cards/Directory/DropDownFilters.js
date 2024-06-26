@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Box, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -75,6 +78,7 @@ const DropDownFilters = ({ sx, setFilteredUsers }) => {
             value={meetMeFor}
             label="meet me for"
             onChange={handleDropdownChange("meetMeFor")}
+            sx={{ boxShadow: 5 }}
           >
             <MenuItem value="">
               <em>None</em>
@@ -99,6 +103,7 @@ const DropDownFilters = ({ sx, setFilteredUsers }) => {
             value={areasOfExpertise}
             label="area of expertise"
             onChange={handleDropdownChange("areasOfExpertise")}
+            sx={{ boxShadow: 5 }}
           >
             <MenuItem value="">
               <em>None</em>
@@ -125,6 +130,7 @@ const DropDownFilters = ({ sx, setFilteredUsers }) => {
             value={skills}
             label="industry" // industry = skills
             onChange={handleDropdownChange("skills")}
+            sx={{ boxShadow: 5 }}
           >
             <MenuItem value="">
               <em>None</em>

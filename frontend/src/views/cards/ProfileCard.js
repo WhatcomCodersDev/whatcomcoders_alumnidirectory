@@ -49,7 +49,6 @@ const ProfileCard = ({ data, onToggleFullscreen, isFullscreen }) => {
     >
       <Photo data={data} isFullscreen={isFullscreen} />
       <GeneralInfo data={data} isFullscreen={isFullscreen} />
-      <UserMedia data={data} isFullscreen={isFullscreen} />
     </Card>
   );
 };
