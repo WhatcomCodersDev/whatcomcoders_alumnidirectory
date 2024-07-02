@@ -52,7 +52,7 @@ const ProfileCardsDirectoryView = () => {
           (people) => people.completed_profile === true
         );
 
-        console.log(completedProfileUsers);
+        console.log('users fetched:', completedProfileUsers);
         setUsers(completedProfileUsers);
         setFilteredUsers(completedProfileUsers);
       } catch (error) {
@@ -72,104 +72,6 @@ const ProfileCardsDirectoryView = () => {
   };
 
   console.log("filtered users:", filteredUsers);
-
-  // const handleClickAway = (e) => {
-  //   console.log(e.target);
-  //   if (isFullscreen) {
-  //     toggleFullscreen(selectedUser);
-  //   }
-  // };
-
-  // const handleBackgroundClick = () => {
-  //   if (isFullscreen) {
-  //     toggleFullscreen(selectedUser);
-  //   }
-  // };
-
-  // return (
-  //   <Container maxWidth="lg" sx={{ position: "relative" }}>
-  //     <img
-  //       src="/people_Vector 4.png"
-  //       style={{
-  //         position: "absolute",
-  //         top: 90,
-  //         left: 0,
-  //         bottom: 0,
-  //         margin: "auto",
-  //       }}
-  //     />
-  //     <Typography
-  //       variant="h4"
-  //       component="h1"
-  //       gutterBottom
-  //       align="center"
-  //       sx={{ mt: 4, mb: 2 }}
-  //     >
-  //       Meet WWU Alumni
-  //     </Typography>
-
-  //     {/* Navigation Links
-  //     <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center', gap: 2 }}>
-  //       <Button color='inherit'>Students</Button>
-  //       <Button color='inherit'>Alumni</Button>
-  //       <Button color='inherit'>Mentors</Button>
-  //     </Box> */}
-  //     <RoleSelector setFilteredUsers={setFilteredUsers} />
-
-  //     <Box
-  //       sx={{
-  //         mb: 4,
-  //         display: "flex",
-  //         justifyContent: "space-between",
-  //         alignItems: "center",
-  //       }}
-  //     >
-  //       {/* Search Bar */}
-  //       <TextField
-  //         variant="outlined"
-  //         placeholder="Search by name, company, role"
-  //         size="medium"
-  //         value={searchTerm}
-  //         onChange={handleSearch}
-  //         sx={{
-  //           width: "100%",
-  //           maxWidth: "500px",
-  //           "& .MuiOutlinedInput-root": {
-  //             borderRadius: "20px",
-  //           },
-  //         }}
-  //         InputProps={{
-  //           startAdornment: (
-  //             <InputAdornment position="start">
-  //               <SearchIcon />
-  //             </InputAdornment>
-  //           ),
-  //         }}
-  //       />
-  //       {/* Filters Icon */}
-  //       <Box sx={{ display: "flex", alignItems: "center" }}>
-  //         <FilterListIcon sx={{ mr: 1, cursor: "pointer" }} />
-  //         <Typography sx={{ cursor: "pointer" }}>Filters</Typography>
-  //       </Box>
-  //     </Box>
-
-  //     {/* Dropdown Filters */}
-  //     <DropDownFilters setFilteredUsers={setFilteredUsers} />
-
-  //     {/* Profile Cards Grid */}
-  //     <Grid container spacing={4} justifyContent="flex-start">
-  //       {filteredUsers.map((user) => (
-  //         <Grid item key={user.email} xs={12} sm={6} md={4} lg={3}>
-  //           <ProfileCard
-  //             data={user}
-  //             onToggleFullscreen={() => toggleFullscreen(user)}
-  //             isFullscreen={isFullscreen && selectedUser === user}
-  //           />
-  //         </Grid>
-  //       ))}
-  //     </Grid>
-  //   </Container>
-  // );
 
   return (
     <Stack
