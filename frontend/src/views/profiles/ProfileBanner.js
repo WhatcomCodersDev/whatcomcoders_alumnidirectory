@@ -66,7 +66,7 @@ const ProfileBanner = ({ sx, name, role, company, avatarUrl, data }) => {
             color="primary"
             aria-label="Get Intro"
             size="small"
-            sx={{ padding: 0, margin: 0 }}
+            sx={{ padding: 0, paddingBottom: 0.4}}
             onClick={sendIntroEmail}
           >
             <MailIcon fontSize="large" />

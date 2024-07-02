@@ -161,6 +161,8 @@ const ProfileViews = () => {
                 overflow: "scroll",
                 width: "70%",
                 height: "70vh",
+                boxShadow:
+                  "inset 0px -20px 10px -10px rgba(235, 241, 250, 0.95)",
               }}
             >
               {/* Intro */}
@@ -171,7 +173,7 @@ const ProfileViews = () => {
                 <Typography>{person.description}</Typography>
               </Box>
 
-              {/* Ice breakers */}
+              {/* Ice breakers - hardcoded*/}
               <Box sx={{ marginBottom: 2 }}>
                 <Typography variant="h6" fontWeight="regular">
                   Favorite WWU Professor
@@ -182,6 +184,8 @@ const ProfileViews = () => {
                 </Typography>
                 <Typography>CSCI 247: OS</Typography>
               </Box>
+
+              {/* Meet me for - hardcoded */}
               <Box sx={{ marginBottom: 2 }}>
                 <Typography variant="h5" fontWeight="medium" marginBottom={1}>
                   Meet Me For
