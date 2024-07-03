@@ -4,35 +4,31 @@ import { common } from "@mui/material/colors";
 import typography from "./typography";
 import { softShadows, strongShadows } from "./shadows";
 
-const baseOptions = createTheme({
+const baseOptions = {
   direction: "ltr",
   typography: {
     fontFamily: '"Anek Gujarati", sans-serif',
   },
-  overrides: {
-    MuiLinearProgress: {
-      root: {
-        borderRadius: 3,
-        overflow: "hidden",
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          height: 35,
+          textTransform: "lowercase",
+        },
       },
     },
-    MuiListItemIcon: {
-      root: {
-        minWidth: 32,
-      },
-    },
-    MuiChip: {
-      root: {
-        backgroundColor: "white",
-      },
-    },
-    MuiDialogTitle: {
-      root: {
-        backgroundColor: "#3949ab",
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          boxShadow: "none",
+          backdropFilter: "blur(10px)",
+          display: "flex", // Using flexbox for the navbar layout
+        },
       },
     },
   },
-});
+};
 
 const themesOptions = [
   {
@@ -40,11 +36,11 @@ const themesOptions = [
     palette: {
       type: "light",
       action: {
-        active: "#ff9966",
+        active: "#000000",
       },
       background: {
-        default: "#ff9966",
-        dark: "#ff9966",
+        default: "#000000",
+        dark: "#000000",
         // paper: common.white,
       },
       primary: {
@@ -52,12 +48,12 @@ const themesOptions = [
         dark: "#333333",
       },
       secondary: {
-        main: "#ff9966",
-        dark: "#ff9966",
+        main: "#000000",
+        dark: "#000000",
       },
       text: {
-        primary: "#003F87",
-        secondary: "#000000",
+        primary: "#000000",
+        secondary: "rgb(0, 0, 0, 77%)",
       },
     },
     shadows: softShadows,
@@ -102,9 +98,12 @@ export const createWebTheme = (config = {}) => {
     [themeOptions] = themesOptions;
   }
 
-  let theme = createTheme(baseOptions, themeOptions, {
-    direction: config.direction,
-  });
+  let theme = createTheme(
+    { ...baseOptions, ...themeOptions },
+    {
+      direction: config.direction,
+    }
+  );
 
   if (config.responsiveFontSizes) {
     theme = responsiveFontSizes(theme);

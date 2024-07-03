@@ -2,20 +2,42 @@ import React from "react";
 import { styled } from "@mui/material";
 import { Avatar, Button, Box } from "@mui/material";
 
-const StyledButton = styled(Button)(({ theme }) => ({
-  borderRadius: 25,
-  border: "3px solid",
-  "&:hover": {
-    border: "3px solid",
-  },
-  height: 35,
-  textTransform: "lowercase",
-}));
-
 const NavButton = ({ sx, text, url, icon, children, onClick, ...rest }) => {
   return (
-    <StyledButton
-      sx={sx}
+    <Button
+      sx={{
+        fontSize: "1.1rem",
+        color: "rgb(0,63,135,80%)",
+        ...sx,
+      }}
+      href={url}
+      variant="text"
+      endIcon={icon}
+      onClick={onClick}
+    >
+      {text}
+      {children}
+    </Button>
+  );
+};
+
+const LandingButton = ({ sx, text, url, icon, children, onClick, ...rest }) => {
+  return (
+    <Button
+      sx={{
+        borderRadius: 2.5,
+        border: "2px solid",
+        "&:hover": {
+          border: "2px solid",
+        },
+        color: "white",
+        width: "45%",
+        justifyContent: "space-between",
+        fontSize: "1.15rem",
+        px: 3,
+        py: 2.5,
+        ...sx,
+      }}
       href={url}
       variant="outlined"
       endIcon={icon}
@@ -23,7 +45,7 @@ const NavButton = ({ sx, text, url, icon, children, onClick, ...rest }) => {
     >
       {text}
       {children}
-    </StyledButton>
+    </Button>
   );
 };
 
@@ -57,4 +79,4 @@ const LoginButton = ({
   );
 };
 
-export { NavButton, LoginButton };
+export { NavButton, LandingButton, LoginButton };

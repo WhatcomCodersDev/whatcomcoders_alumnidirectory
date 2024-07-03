@@ -10,7 +10,6 @@ function App() {
   const theme = createWebTheme({
     direction: "ltr",
     responsiveFontSizes: true,
-    theme: THEMES.LIGHT,
   });
 
   return (

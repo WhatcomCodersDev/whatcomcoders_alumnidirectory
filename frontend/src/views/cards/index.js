@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import ProfileCard from './ProfileCard';
+import React, { useState, useEffect } from "react";
+import ProfileCard from "./ProfileCard";
 import {
   Box,
   Container,
@@ -7,18 +7,68 @@ import {
   Grid,
   TextField,
   InputAdornment,
-} from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search'; // Importing the search icon
-import FilterListIcon from '@mui/icons-material/FilterList'; // Importing the filter icon
-import RoleSelector from './Directory/RoleSelector';
-import DropDownFilters from './Directory/DropDownFilters';
+  Stack,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search"; // Importing the search icon
+import FilterListIcon from "@mui/icons-material/FilterList"; // Importing the filter icon
+import RoleSelector from "./Directory/RoleSelector";
+import DropDownFilters from "./Directory/DropDownFilters";
+import zIndex from "@mui/material/styles/zIndex";
 
 const apiUrl = process.env.REACT_APP_API_URL;
-console.log(apiUrl);
+console.log("url", apiUrl);
 
+const BackgroundWavesPhoto = ({ children }) => {
+  return (
+    <Stack
+      sx={{
+        width: "100%",
+        height: "auto",
+        backgroundPosition: "center",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+        position: "relative",
+      }}
+    >
+      <img
+        src="/people_Vector 6.png"
+        style={{
+          position: "absolute",
+          top: -200,
+          width: "100%",
+          zIndex: 1,
+        }}
+      />
+      <img
+        src="/people_Vector 4.png"
+        style={{
+          position: "absolute",
+          top: -200,
+          width: "100%",
+          zIndex: 1,
+        }}
+      />
+      <img
+        src="/people_Vector 5.png"
+        style={{
+          position: "absolute",
+          top: -200,
+          width: "100%",
+          zIndex: 1,
+        }}
+      />
+      <Container
+        sx={{ position: "relative", zIndex: 2, justifyContent: "flex-start" }}
+      >
+        {children}
+      </Container>
+    </Stack>
+  );
+};
 const ProfileCardsDirectoryView = () => {
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -50,11 +100,11 @@ const ProfileCardsDirectoryView = () => {
           (people) => people.completed_profile === true
         );
 
-        console.log(completedProfileUsers);
+        console.log("users fetched:", completedProfileUsers);
         setUsers(completedProfileUsers);
         setFilteredUsers(completedProfileUsers);
       } catch (error) {
-        console.log('Failed to fetch users:', error);
+        console.log("Failed to fetch users:", error);
       }
     }
     fetchUsers();
@@ -69,83 +119,88 @@ const ProfileCardsDirectoryView = () => {
     setSelectedUser(isFullscreen ? null : user);
   };
 
-  // const handleClickAway = (e) => {
-  //   console.log(e.target);
-  //   if (isFullscreen) {
-  //     toggleFullscreen(selectedUser);
-  //   }
-  // };
-
-  // const handleBackgroundClick = () => {
-  //   if (isFullscreen) {
-  //     toggleFullscreen(selectedUser);
-  //   }
-  // };
+  console.log("filtered users:", filteredUsers);
 
   return (
-    <Container maxWidth='lg'>
-      <Typography
-        variant='h4'
-        component='h1'
-        gutterBottom
-        align='center'
-        sx={{ mt: 4, mb: 2 }}
-      >
-        Meet WWU Alumni
-      </Typography>
-
-      {/* Navigation Links
-      <Box sx={{ mb: 2, display: 'flex', justifyContent: 'center', gap: 2 }}>
-        <Button color='inherit'>Students</Button>
-        <Button color='inherit'>Alumni</Button>
-        <Button color='inherit'>Mentors</Button>
-      </Box> */}
-      <RoleSelector setFilteredUsers={setFilteredUsers} />
-
-      <Box
+    <BackgroundWavesPhoto>
+      {/* Header */}
+      <Stack
         sx={{
-          mb: 4,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          marginTop: 10,
+          marginBottom: 2,
+        }}
+        direction="row"
+        spacing={2}
+      >
+        <Typography
+          variant="h3"
+          component="h1"
+          sx={{
+            color: "white",
+          }}
+        >
+          {`connect with us >`}
+        </Typography>
+
+        {/* Role selector */}
+        <RoleSelector
+          sx={{ color: "white" }}
+          buttonSize="1.3rem"
+          setFilteredUsers={setFilteredUsers}
+        />
+      </Stack>
+      {/* Search Bar */}
+      <TextField
+        variant="outlined"
+        placeholder="Search by name, company, role"
+        size="medium"
+        value={searchTerm}
+        onChange={handleSearch}
+        sx={{
+          width: "100%",
+          "& .MuiOutlinedInput-root": {
+            borderRadius: 2,
+          },
+          backgroundColor: "white",
+          borderRadius: 2,
+          zIndex: 2,
+          position: "relative",
+          boxShadow: 5,
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Typography
+                sx={{ fontWeight: "bold", color: "black", fontSize: 30 }}
+              >
+                {">"}
+              </Typography>
+            </InputAdornment>
+          ),
+        }}
+      />
+      {/* Dropdown Filters */}
+      <DropDownFilters
+        sx={{
+          position: "relative",
+          zIndex: 3,
+        }}
+        setFilteredUsers={setFilteredUsers}
+      />
+      {/* Profile Cards Grid */}
+      <Grid
+        container
+        spacing={3}
+        sx={{
+          zIndex: 2,
+          position: "relative",
+          justifyContent: "center",
+          display: "flex",
+          flexDirection: "row",
         }}
       >
-        {/* Search Bar */}
-        <TextField
-          variant='outlined'
-          placeholder='Search by name, company, role'
-          size='medium'
-          value={searchTerm}
-          onChange={handleSearch}
-          sx={{
-            width: '100%',
-            maxWidth: '500px',
-            '& .MuiOutlinedInput-root': {
-              borderRadius: '20px',
-            },
-          }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position='start'>
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-        {/* Filters Icon */}
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <FilterListIcon sx={{ mr: 1, cursor: 'pointer' }} />
-          <Typography sx={{ cursor: 'pointer' }}>Filters</Typography>
-        </Box>
-      </Box>
-
-      {/* Dropdown Filters */}
-      <DropDownFilters setFilteredUsers={setFilteredUsers} />
-
-      {/* Profile Cards Grid */}
-      <Grid container spacing={4} justifyContent='flex-start'>
         {filteredUsers.map((user) => (
-          <Grid item key={user.email} xs={12} sm={6} md={4} lg={3}>
+          <Grid item key={user.email} xs={12} md={6} lg={4}>
             <ProfileCard
               data={user}
               onToggleFullscreen={() => toggleFullscreen(user)}
@@ -154,7 +209,7 @@ const ProfileCardsDirectoryView = () => {
           </Grid>
         ))}
       </Grid>
-    </Container>
+    </BackgroundWavesPhoto>
   );
 };
 

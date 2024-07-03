@@ -9,7 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 import styled from "@emotion/styled";
-import { NavButton } from "components/CustomButton";
+import { LandingButton } from "components/CustomButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCompass,
@@ -22,10 +22,7 @@ import { faGithub, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import profileCardIcon from "../../static/profilecards_layout.jpeg";
 import networkingIcon from "../../static/networkingicon_layout.png";
 import resourcesIcon from "../../static/educationicon_layout.png";
-import wwuBackground from "../../static/wwu.webp";
-import DiscordIcon from "../../static/discord.png"; // Assuming you have this logo
 import wwuBG from "../../static/wwuBG.png";
-import CustomCoreIcon from "components/CustomCoreIcon";
 
 const HeroImage = styled(Box)(({ theme }) => ({
   height: "500px",
@@ -131,58 +128,22 @@ const LandingView = () => {
                   wwu's network for success in tech
                 </Typography>
               </Box>
-              <NavButton
-                sx={{
-                  color: "white",
-                  width: "45%",
-                  justifyContent: "space-between",
-                  fontSize: "1rem",
-                  px: 3,
-                  py: 2.5,
-                  borderRadius: 5,
-                }}
+              <LandingButton
                 text="join our discord"
                 url="/https://discord.gg/r6ShrR73Jx"
                 icon={<FontAwesomeIcon icon={faDiscord} />}
               />
-              <NavButton
-                sx={{
-                  color: "white",
-                  width: "45%",
-                  justifyContent: "space-between",
-                  fontSize: "1rem",
-                  px: 3,
-                  py: 2.5,
-                  borderRadius: 5,
-                }}
+              <LandingButton
                 text="connect with us"
                 url="/people"
                 icon={<FontAwesomeIcon icon={faUser} />}
               />
-              <NavButton
-                sx={{
-                  color: "white",
-                  width: "45%",
-                  justifyContent: "space-between",
-                  fontSize: "1rem",
-                  px: 3,
-                  py: 2.5,
-                  borderRadius: 5,
-                }}
+              <LandingButton
                 text="explore resources"
                 url="/resources"
                 icon={<FontAwesomeIcon icon={faCompass} />}
               />
-              <NavButton
-                sx={{
-                  color: "white",
-                  width: "45%",
-                  justifyContent: "space-between",
-                  fontSize: "1rem",
-                  px: 3,
-                  py: 2.5,
-                  borderRadius: 5,
-                }}
+              <LandingButton
                 text="learn more"
                 url=""
                 icon={<FontAwesomeIcon icon={faAngleDown} />}
