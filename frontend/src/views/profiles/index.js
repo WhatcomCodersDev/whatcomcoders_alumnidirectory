@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {
   Box,
-  Typography,
-  Chip,
   Container,
   Stack,
   Paper,
-  Tab,
-  Tabs,
-  Avatar,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { styled } from "@mui/material/styles";
 import ProfileBanner from "./ProfileBanner";
 import ProfileDescription from "./ProfileDescription";
 
@@ -20,9 +14,6 @@ import ProfileDescription from "./ProfileDescription";
 const compliment = `Very friendly mentor. Listen to my concern and give good advice. Very realistic, not too overly pessimistic nor optimistic`;
 
 const apiUrl = process.env.REACT_APP_API_URL;
-
-// const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
-
 
 const BackgroundWavesPhoto = ({ children }) => {
   return (
@@ -119,7 +110,7 @@ const ProfileViews = () => {
               avatarUrl={person.picture}
               data={person}
             />
-            <ProfileDescription person={person}/>
+            <ProfileDescription person={person} />
           </Stack>
         </Paper>
       </BackgroundWavesPhoto>

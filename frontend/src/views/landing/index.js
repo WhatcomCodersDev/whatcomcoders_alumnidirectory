@@ -9,7 +9,7 @@ import {
   Stack,
 } from "@mui/material";
 import styled from "@emotion/styled";
-import { NavButton } from "components/CustomButton";
+import { LandingButton } from "components/CustomButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCompass,
@@ -128,58 +128,22 @@ const LandingView = () => {
                   wwu's network for success in tech
                 </Typography>
               </Box>
-              <NavButton
-                sx={{
-                  color: "white",
-                  width: "45%",
-                  justifyContent: "space-between",
-                  fontSize: "1rem",
-                  px: 3,
-                  py: 2.5,
-                  borderRadius: 5,
-                }}
+              <LandingButton
                 text="join our discord"
                 url="/https://discord.gg/r6ShrR73Jx"
                 icon={<FontAwesomeIcon icon={faDiscord} />}
               />
-              <NavButton
-                sx={{
-                  color: "white",
-                  width: "45%",
-                  justifyContent: "space-between",
-                  fontSize: "1rem",
-                  px: 3,
-                  py: 2.5,
-                  borderRadius: 5,
-                }}
+              <LandingButton
                 text="connect with us"
                 url="/people"
                 icon={<FontAwesomeIcon icon={faUser} />}
               />
-              <NavButton
-                sx={{
-                  color: "white",
-                  width: "45%",
-                  justifyContent: "space-between",
-                  fontSize: "1rem",
-                  px: 3,
-                  py: 2.5,
-                  borderRadius: 5,
-                }}
+              <LandingButton
                 text="explore resources"
                 url="/resources"
                 icon={<FontAwesomeIcon icon={faCompass} />}
               />
-              <NavButton
-                sx={{
-                  color: "white",
-                  width: "45%",
-                  justifyContent: "space-between",
-                  fontSize: "1rem",
-                  px: 3,
-                  py: 2.5,
-                  borderRadius: 5,
-                }}
+              <LandingButton
                 text="learn more"
                 url=""
                 icon={<FontAwesomeIcon icon={faAngleDown} />}

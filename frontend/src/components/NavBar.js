@@ -19,25 +19,31 @@ import { NavButton, LoginButton } from "./CustomButton";
 
 // Styled AppBar component
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  backgroundColor: "#FFFFFF",
-  display: "flex", // Using flexbox for the navbar layout
-}));
+  backgroundColor: "transparent",
+}))
 
 const NavBar = () => {
   const { isLoggedIn, userName, logout, userProfilePic } =
     useContext(AuthContext);
 
   return (
-    <StyledAppBar position="static">
-      <Toolbar sx={{ minHeight: 64 }}>
+    <StyledAppBar position="sticky">
+      <Toolbar sx={{ minHeight: 60 }}>
         <Stack
           direction="row"
           justifyContent="space-between"
           alignItems="center"
           sx={{ width: "100%" }}
         >
-          <Stack direction="row" spacing={3} alignItems="center">
-            <Logo />
+          <Logo />
+          <Stack
+            direction="row"
+            spacing={4}
+            sx={{
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <NavButton
               text="Resources"
               url="/resources"
