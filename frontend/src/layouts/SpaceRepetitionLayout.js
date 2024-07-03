@@ -19,7 +19,7 @@ const Root = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   minHeight: '100vh',
-  backgroundColor: theme.palette.background.default,
+  backgroundColor: theme.palette.primary.default,
 }));
 
 const Sidebar = styled(Drawer)(({ theme }) => ({
