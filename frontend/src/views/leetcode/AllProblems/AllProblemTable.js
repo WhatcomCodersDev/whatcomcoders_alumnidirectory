@@ -30,10 +30,14 @@ const AllProblemTable = ({
   console.log('submitted', submittedProblems);
   console.log('problem', data);
 
-  const filteredData =
+  let filteredData =
     filter === 'All'
       ? data
       : data.filter((problem) => problem.category === filter);
+
+  // Keep only problems that have a problem.category for now
+  // This is a temporary fix for the data inconsistency issue
+  filteredData = data.filter((problem) => problem.category);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
