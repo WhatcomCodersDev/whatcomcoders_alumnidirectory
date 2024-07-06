@@ -30,7 +30,7 @@ export const fetchUserSubmissions = async (
   try {
     const response = await fetch(`${LEETCODE_API_URL}/users/${uuid}`);
     const data = await response.json();
-    console.log('data:', data);
+    console.log('fetch User Submissiosn results:', data);
     setSubmittedProblems(data);
   } catch (error) {
     console.error('Request failed:', error.message);

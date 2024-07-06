@@ -32,7 +32,7 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
     (problem) => problem.category === filter
   );
 
-  console.log(filteredData);
+  console.log('filteredData:', filteredData);
 
   const handleUserRatingChange = (id, newUserRating) => {
     setProblems((prevProblems) =>
@@ -110,6 +110,7 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                   next_review_timestamp = problem.next_review_timestamp
                     ? problem.next_review_timestamp
                     : '',
+                  link = problem.link,
                 } = problem;
                 console.log('problem to submit:', problem);
 
@@ -121,7 +122,15 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                     }}
                   >
                     <TableCell>{id}</TableCell>
-                    <TableCell>{name}</TableCell>
+                    <TableCell>
+                      <a
+                        href={`${link}`}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        {name}
+                      </a>
+                    </TableCell>{' '}
                     <TableCell>
                       {editableRow === id ? (
                         <EditUserRatingSelection
