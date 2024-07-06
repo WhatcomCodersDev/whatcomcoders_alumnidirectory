@@ -12,6 +12,8 @@ import {
   Box,
 } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
+import TodayIcon from '@mui/icons-material/Today';
+import SchoolIcon from '@mui/icons-material/School';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import ProfileIcon from '@mui/icons-material/Person';
 
@@ -28,8 +30,9 @@ const Sidebar = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
     width: 240,
     boxSizing: 'border-box',
-    top: '64px',
+    top: '128px',
     bottom: 0,
+    position: 'absolute',
   },
 }));
 
@@ -50,6 +53,18 @@ const MainContent = styled('main')(({ theme }) => ({
   overflowY: 'auto',
 }));
 
+const SidebarHeader = styled(Typography)(({ theme }) => ({
+  fontSize: '1.5rem', // Adjust this value to change the font size
+  fontWeight: 'bold',
+  marginBottom: theme.spacing(2),
+}));
+
+const ListItemTextStyled = styled(ListItemText)(({ theme }) => ({
+  '& .MuiListItemText-primary': {
+    fontSize: '1.2rem', // Adjust this value to change the font size
+  },
+}));
+
 const SpaceRepetitionLayout = () => {
   return (
     <Root>
@@ -57,7 +72,7 @@ const SpaceRepetitionLayout = () => {
       <Box sx={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
         <Sidebar variant='permanent' anchor='left'>
           <SidebarContent>
-            <Typography variant='h6' noWrap>
+            <Typography variant='h5' noWrap>
               Spaced Repetition
             </Typography>
             <List>
@@ -65,25 +80,31 @@ const SpaceRepetitionLayout = () => {
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary='All Problems' />
+                <ListItemTextStyled primary='All Problems' />
+              </ListItem>
+              <ListItem component={Link} to='/leetcode/due'>
+                <ListItemIcon>
+                  <TodayIcon />
+                </ListItemIcon>
+                <ListItemTextStyled primary='Problems Due' />
               </ListItem>
               <ListItem component={Link} to='/leetcode/review'>
                 <ListItemIcon>
-                  <AnalyticsIcon />
+                  <SchoolIcon />
                 </ListItemIcon>
-                <ListItemText primary='Review' />
+                <ListItemTextStyled primary='Review' />
               </ListItem>
               <ListItem button>
                 <ListItemIcon>
                   <AnalyticsIcon />
                 </ListItemIcon>
-                <ListItemText primary='Analytics' />
+                <ListItemTextStyled primary='Analytics' />
               </ListItem>
               <ListItem button>
                 <ListItemIcon>
                   <ProfileIcon />
                 </ListItemIcon>
-                <ListItemText primary='Admin' />
+                <ListItemTextStyled primary='Admin' />
               </ListItem>
             </List>
           </SidebarContent>

@@ -77,20 +77,50 @@ const AllProblemTable = ({
           <TableHead>
             <TableRow>
               {editMode && (
-                <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+                <TableCell
+                  sx={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                    fontSize: '20px',
+                  }}
+                >
                   Attempted?
                 </TableCell>
               )}
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Id
               </TableCell>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Problem Name
               </TableCell>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Category
               </TableCell>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Difficulty
               </TableCell>
             </TableRow>
@@ -109,8 +139,8 @@ const AllProblemTable = ({
                       onChange={() => onCheckboxChange(problem.id)}
                     />
                   )}
-                  <TableCell>{problem.id}</TableCell>
-                  <TableCell>
+                  <TableCell sx={{ fontSize: '18px' }}>{problem.id}</TableCell>
+                  <TableCell sx={{ fontSize: '18px' }}>
                     <a
                       href={`${problem.link}`}
                       target='_blank'
@@ -119,7 +149,9 @@ const AllProblemTable = ({
                       {problem.name}
                     </a>
                   </TableCell>
-                  <TableCell>{problem.category}</TableCell>
+                  <TableCell sx={{ fontSize: '18px' }}>
+                    {problem.category}
+                  </TableCell>
                   <Difficulty problem_difficulty={problem.problem_difficulty} />
                 </TableRow>
               ))}

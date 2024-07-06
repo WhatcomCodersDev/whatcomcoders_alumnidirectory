@@ -1,9 +1,7 @@
 import { LinearProgress, Box, TableCell, Typography } from '@mui/material';
 
 const ProgressBar = ({ userProblemSubmissions, category }) => {
-  console.log('userProblemSubmissions:', userProblemSubmissions);
   const calculateProgress = (category) => {
-    console.log('category:', category);
     const problems = userProblemSubmissions.filter(
       (problem) => problem.category === category.name
     );
@@ -18,28 +16,31 @@ const ProgressBar = ({ userProblemSubmissions, category }) => {
     return {
       completed,
       total: category.count,
-      progress: category.count ? (completed / category.count) * 100 : 0,
+      streaks: category.count ? (completed / category.count) * 100 : 0,
     };
   };
 
-  const { completed, total, progress } = calculateProgress(category);
+  const { completed, total, streaks } = calculateProgress(category);
 
   return (
     <TableCell>
       <Box display='flex' alignItems='center'>
         <Box minWidth={35}>
           <Typography
+            sx={{ fontSize: '18px', paddingRight: 7 }}
             variant='body2'
             color='textSecondary'
-          >{`${completed} / ${total}`}</Typography>
+          >{`(${completed} / ${total})`}</Typography>
         </Box>
-        <Box width='100%' ml={1}>
+        <Box width='80%' ml={1}>
           <LinearProgress
             variant='determinate'
-            value={progress}
+            value={streaks}
             sx={{
+              height: 25,
+              borderRadius: 5,
               '& .MuiLinearProgress-barColorPrimary': {
-                backgroundColor: progress === 100 ? 'green' : 'orange',
+                backgroundColor: streaks === 100 ? 'green' : 'orange',
               },
             }}
           />
