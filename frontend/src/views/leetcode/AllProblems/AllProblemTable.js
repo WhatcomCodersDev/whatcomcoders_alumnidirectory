@@ -88,7 +88,15 @@ const AllProblemTable = ({
                     />
                   )}
                   <TableCell>{problem.id}</TableCell>
-                  <TableCell>{problem.name}</TableCell>
+                  <TableCell>
+                    <a
+                      href={`${problem.link}`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      {problem.name}
+                    </a>
+                  </TableCell>
                   <Difficulty problem_difficulty={problem.problem_difficulty} />
                 </TableRow>
               ))}
