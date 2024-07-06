@@ -28,8 +28,9 @@ const Sidebar = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
     width: 240,
     boxSizing: 'border-box',
-    top: '64px',
+    top: '128px',
     bottom: 0,
+    position: 'absolute',
   },
 }));
 

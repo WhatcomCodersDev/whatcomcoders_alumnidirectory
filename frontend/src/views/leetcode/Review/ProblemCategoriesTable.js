@@ -56,7 +56,6 @@ const ProblemCategoriesTable = ({
         sx={{
           maxWidth: 180,
           borderRadius: '50px',
-          // overflow: 'hidden',
         }}
       >
         <InputLabel id='problem-type-filter-label'>Filter</InputLabel>
@@ -78,15 +77,36 @@ const ProblemCategoriesTable = ({
           <TableHead>
             <TableRow>
               {editMode && (
-                <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
+                <TableCell
+                  sx={{
+                    backgroundColor: '#333',
+                    color: 'white',
+                    padding: '16px',
+                    fontSize: '20px',
+                  }}
+                >
                   Reviewing?
                 </TableCell>
               )}
-              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: '#333',
+                  color: 'white',
+                  padding: '16px',
+                  fontSize: '20px',
+                }}
+              >
                 Category
               </TableCell>
-              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
-                Progress
+              <TableCell
+                sx={{
+                  backgroundColor: '#333',
+                  color: 'white',
+                  padding: '16px',
+                  fontSize: '20px',
+                }}
+              >
+                Streaks
               </TableCell>
             </TableRow>
           </TableHead>
@@ -99,7 +119,7 @@ const ProblemCategoriesTable = ({
                     backgroundColor: problemCategoriesMarkedForReview.includes(
                       category.name
                     )
-                      ? 'rgba(0, 0, 0, 0.2)'
+                      ? 'rgba(0, 0, 0, 0.3)'
                       : 'inherit',
                   }}
                 >
@@ -111,7 +131,10 @@ const ProblemCategoriesTable = ({
                       onChange={() => onCheckboxChange(category.name)}
                     />
                   )}
-                  <TableCell onClick={() => onTypeClick(category.name)}>
+                  <TableCell
+                    sx={{ fontSize: '18px' }}
+                    onClick={() => onTypeClick(category.name)}
+                  >
                     {category.name}
                   </TableCell>
                   <ProgressBar

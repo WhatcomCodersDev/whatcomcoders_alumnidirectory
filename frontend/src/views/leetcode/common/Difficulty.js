@@ -20,6 +20,7 @@ const Difficulty = ({ problem_difficulty }) => {
       sx={{
         color: getDifficultyColor(problem_difficulty),
         textTransform: 'uppercase',
+        fontSize: '18px',
       }}
     >
       {problem_difficulty}

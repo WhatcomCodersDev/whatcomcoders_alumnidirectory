@@ -8,12 +8,17 @@ import {
   TableRow,
   Paper,
   TablePagination,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
 } from '@mui/material';
 import { AuthContext } from 'contexts/authContext';
 import Difficulty from '../common/Difficulty';
 import { addAllProblemsToSubmission } from 'services/leetcode_review/apiAddAllProblemsToSubmission';
 import CustomCheckbox from '../common/CustomCheckbox';
 import SubmitButton from '../common/SubmitButton';
+import ProblemCategoriesFilter from '../ProblemCategoriesFilter';
 
 const AllProblemTable = ({
   data,
@@ -29,11 +34,25 @@ const AllProblemTable = ({
 
   console.log('submitted', submittedProblems);
   console.log('problem', data);
+  console.log('filter', filter);
 
-  const filteredData =
+  // Keep only problems that have a problem.category for now
+  // This is a temporary fix for the data inconsistency issue
+  let problemsWithCategoryOnly = data.filter((problem) => problem.category);
+
+  let filteredData =
     filter === 'All'
-      ? data
-      : data.filter((problem) => problem.category === filter);
+      ? problemsWithCategoryOnly
+      : problemsWithCategoryOnly.filter(
+          (problem) => problem.category === filter
+        );
+
+  // const filteredProblemCategories =
+  //   filter === 'All'
+  //     ? userSubmissionsByReviewCategory
+  //     : userSubmissionsByReviewCategory.filter((category) =>
+  //         problemCategoriesMarkedForReview.includes(category.name)
+  //       );
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -58,17 +77,50 @@ const AllProblemTable = ({
           <TableHead>
             <TableRow>
               {editMode && (
-                <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+                <TableCell
+                  sx={{
+                    backgroundColor: 'black',
+                    color: 'white',
+                    fontSize: '20px',
+                  }}
+                >
                   Attempted?
                 </TableCell>
               )}
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Id
               </TableCell>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Problem Name
               </TableCell>
-              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
+                Category
+              </TableCell>
+              <TableCell
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Difficulty
               </TableCell>
             </TableRow>
@@ -87,8 +139,19 @@ const AllProblemTable = ({
                       onChange={() => onCheckboxChange(problem.id)}
                     />
                   )}
-                  <TableCell>{problem.id}</TableCell>
-                  <TableCell>{problem.name}</TableCell>
+                  <TableCell sx={{ fontSize: '18px' }}>{problem.id}</TableCell>
+                  <TableCell sx={{ fontSize: '18px' }}>
+                    <a
+                      href={`${problem.link}`}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      {problem.name}
+                    </a>
+                  </TableCell>
+                  <TableCell sx={{ fontSize: '18px' }}>
+                    {problem.category}
+                  </TableCell>
                   <Difficulty problem_difficulty={problem.problem_difficulty} />
                 </TableRow>
               ))}

@@ -32,7 +32,7 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
     (problem) => problem.category === filter
   );
 
-  console.log(filteredData);
+  console.log('filteredData:', filteredData);
 
   const handleUserRatingChange = (id, newUserRating) => {
     setProblems((prevProblems) =>
@@ -78,19 +78,49 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: '#333',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Id
               </TableCell>
-              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: '#333',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Problem Name
               </TableCell>
-              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: '#333',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 User Rating (1-5)
               </TableCell>
-              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: '#333',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Last Reviewed
               </TableCell>
-              <TableCell sx={{ backgroundColor: '#333', color: 'white' }}>
+              <TableCell
+                sx={{
+                  backgroundColor: '#333',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
                 Next Review
               </TableCell>
             </TableRow>
@@ -110,6 +140,7 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                   next_review_timestamp = problem.next_review_timestamp
                     ? problem.next_review_timestamp
                     : '',
+                  link = problem.link,
                 } = problem;
                 console.log('problem to submit:', problem);
 
@@ -117,12 +148,21 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                   <TableRow
                     key={id}
                     sx={{
+                      fontSize: '18px',
                       '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' },
                     }}
                   >
-                    <TableCell>{id}</TableCell>
-                    <TableCell>{name}</TableCell>
-                    <TableCell>
+                    <TableCell sx={{ fontSize: '18px' }}>{id}</TableCell>
+                    <TableCell sx={{ fontSize: '18px' }}>
+                      <a
+                        href={`${link}`}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        {name}
+                      </a>
+                    </TableCell>
+                    <TableCell sx={{ fontSize: '18px' }}>
                       {editableRow === id ? (
                         <EditUserRatingSelection
                           user_rating={user_rating}
@@ -136,7 +176,7 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                         </div>
                       )}
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ fontSize: '18px' }}>
                       {editableRow === id &&
                       editingField === 'lastCompleted' ? (
                         <EditableDatePicker
@@ -158,7 +198,9 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                         </div>
                       )}
                     </TableCell>
-                    <TableCell>{formatDate(next_review_timestamp)}</TableCell>
+                    <TableCell sx={{ fontSize: '18px' }}>
+                      {formatDate(next_review_timestamp)}
+                    </TableCell>
                   </TableRow>
                 );
               })}
