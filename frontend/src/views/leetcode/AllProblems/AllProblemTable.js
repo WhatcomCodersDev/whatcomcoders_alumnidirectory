@@ -8,12 +8,17 @@ import {
   TableRow,
   Paper,
   TablePagination,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
 } from '@mui/material';
 import { AuthContext } from 'contexts/authContext';
 import Difficulty from '../common/Difficulty';
 import { addAllProblemsToSubmission } from 'services/leetcode_review/apiAddAllProblemsToSubmission';
 import CustomCheckbox from '../common/CustomCheckbox';
 import SubmitButton from '../common/SubmitButton';
+import ProblemCategoriesFilter from '../ProblemCategoriesFilter';
 
 const AllProblemTable = ({
   data,
@@ -29,15 +34,25 @@ const AllProblemTable = ({
 
   console.log('submitted', submittedProblems);
   console.log('problem', data);
-
-  let filteredData =
-    filter === 'All'
-      ? data
-      : data.filter((problem) => problem.category === filter);
+  console.log('filter', filter);
 
   // Keep only problems that have a problem.category for now
   // This is a temporary fix for the data inconsistency issue
-  filteredData = data.filter((problem) => problem.category);
+  let problemsWithCategoryOnly = data.filter((problem) => problem.category);
+
+  let filteredData =
+    filter === 'All'
+      ? problemsWithCategoryOnly
+      : problemsWithCategoryOnly.filter(
+          (problem) => problem.category === filter
+        );
+
+  // const filteredProblemCategories =
+  //   filter === 'All'
+  //     ? userSubmissionsByReviewCategory
+  //     : userSubmissionsByReviewCategory.filter((category) =>
+  //         problemCategoriesMarkedForReview.includes(category.name)
+  //       );
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -73,6 +88,9 @@ const AllProblemTable = ({
                 Problem Name
               </TableCell>
               <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
+                Category
+              </TableCell>
+              <TableCell sx={{ backgroundColor: 'black', color: 'white' }}>
                 Difficulty
               </TableCell>
             </TableRow>
@@ -101,6 +119,7 @@ const AllProblemTable = ({
                       {problem.name}
                     </a>
                   </TableCell>
+                  <TableCell>{problem.category}</TableCell>
                   <Difficulty problem_difficulty={problem.problem_difficulty} />
                 </TableRow>
               ))}
