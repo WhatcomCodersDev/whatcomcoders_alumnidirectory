@@ -11,6 +11,7 @@ import {
 import styled from "@emotion/styled";
 import { LandingButton } from "components/CustomButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
   faCompass,
   faUser,
@@ -63,36 +64,20 @@ const LandingView = () => {
         }}
       >
         <img
-          src="/Vector 6.png"
+          src="/Group 6_large.svg"
           style={{
             position: "absolute",
-            top: 90,
+            top: 0,
             left: 0,
             bottom: 0,
-            margin: "auto",
+            width: "100%",
+            objectFit: "cover",
           }}
         />
-        <img
-          src="/Vector 4.png"
-          style={{
-            position: "absolute",
-            top: 300,
-            left: 0,
-            bottom: 0,
-            margin: "auto",
-          }}
-        />
-        <img
-          src="/Vector 5.png"
-          style={{
-            position: "absolute",
-            top: 220,
-            left: -50,
-            bottom: 0,
-            margin: "auto",
-          }}
-        />
-        <Stack sx={{ position: "absolute", left: 200 }} spacing={2}>
+        <Stack
+          sx={{ position: "absolute", left: "clamp(5%, 15vw, 20%)" }}
+          spacing={2}
+        >
           <Stack direction="row">
             <Typography
               sx={{
