@@ -17,6 +17,7 @@ import { submitUserReviewProblems } from 'services/leetcode_review/apiSubmitAllR
 import { formatDate } from 'services/leetcode_review/utils';
 import EditUserRatingSelection from './EditUserRatingSelection';
 import EditableDatePicker from './EditableDatePicker';
+import { format } from 'date-fns';
 
 const ReviewProblemsTable = ({ data, filter, editMode }) => {
   const [editableRow, setEditableRow] = useState(null);
@@ -50,7 +51,7 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
         problem.id === id
           ? {
               ...problem,
-              last_reviewed_timestamp: newDate.toISOString(),
+              last_reviewed_timestamp: newDate, // Store as Date object
             }
           : problem
       )
@@ -60,7 +61,22 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
   };
 
   const handleSubmit = async () => {
-    submitUserReviewProblems(uuid, filteredData);
+    const dataToSubmit = filteredData.map((problem) => ({
+      ...problem,
+      last_reviewed_timestamp: problem.last_reviewed_timestamp
+        ? format(
+            new Date(problem.last_reviewed_timestamp),
+            'MMM dd, yyyy, h:mm:ss.SSS a'
+          )
+        : null,
+      next_review_timestamp: problem.next_review_timestamp
+        ? format(
+            new Date(problem.next_review_timestamp),
+            'MMM dd, yyyy, h:mm:ss.SSS a'
+          )
+        : null,
+    }));
+    await submitUserReviewProblems(uuid, dataToSubmit);
   };
 
   const handleChangePage = (event, newPage) => {
