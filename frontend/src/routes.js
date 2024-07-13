@@ -110,6 +110,10 @@ const spaceRepetitionPages = [
         path: '/leetcode/review',
         element: lazy(() => import('./views/leetcode/Review')),
       },
+      {
+        path: '/leetcode/due',
+        element: lazy(() => import('./views/leetcode/DueProblems')),
+      },
     ],
   },
 ];
