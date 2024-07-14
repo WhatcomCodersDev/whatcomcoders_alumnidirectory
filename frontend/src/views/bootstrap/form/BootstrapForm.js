@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 
 const BootstrapForm = () => {
+  const BOOTSTRAP_API_URL = process.env.REACT_APP_BOOTSTRAP_API_URL;
   const [githubUsername, setGithubUsername] = useState('');
   const [language, setLanguage] = useState('');
   const [service, setService] = useState('');
@@ -21,7 +22,7 @@ const BootstrapForm = () => {
       service: service,
     };
 
-    fetch('/api/submit', {
+    fetch(`${BOOTSTRAP_API_URL}/bootstrap/submit-form`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
