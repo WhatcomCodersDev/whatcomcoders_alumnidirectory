@@ -1,0 +1,1 @@
+export const BOOTSTRAP_API_URL = process.env.REACT_APP_BOOTSTRAP_API_URL;

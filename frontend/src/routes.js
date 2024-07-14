@@ -124,15 +124,15 @@ const bootstrapPages = [
     children: [
       {
         path: '/bootstrap',
-        element: lazy(() => import('./views/bootstrap')),
+        element: lazy(() => import('./views/bootstrap/form')),
       },
       {
         path: '/bootstrap/all',
-        element: lazy(() => import('./views/bootstrap')), //Todo - should route to new view
+        element: lazy(() => import('./views/bootstrap/allServices')), //Todo - should route to new view
       },
       {
         path: '/bootstrap/form',
-        element: lazy(() => import('./views/bootstrap')), //Todo - should route to new view (form view)
+        element: lazy(() => import('./views/bootstrap/form')), //Todo - should route to new view (form view)
       },
     ],
   },

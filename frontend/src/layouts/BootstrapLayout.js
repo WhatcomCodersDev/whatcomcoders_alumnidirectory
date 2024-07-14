@@ -68,7 +68,7 @@ const BootstrapLayout = () => {
                 </ListItemIcon>
                 <ListItemText primary='All Bootstrap Services' />
               </ListItem>
-              <ListItem component={Link} to='/bootstrap/all'>
+              <ListItem component={Link} to='/bootstrap/form'>
                 {/* TODO: adjust to  in the future */}
                 <ListItemIcon>
                   <AnalyticsIcon />
