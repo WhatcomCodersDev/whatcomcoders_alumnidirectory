@@ -40,6 +40,7 @@ const ProblemCategoriesTable = ({
     updateProblemReviewCategories(uuid, problemCategoriesMarkedForReview);
   };
 
+  /** Show ALL categories or categories that need to be reviewed  */
   const filteredProblemCategories =
     filter === 'All'
       ? userSubmissionsByReviewCategory
