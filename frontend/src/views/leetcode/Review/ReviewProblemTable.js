@@ -29,6 +29,8 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
 
   console.log(data);
 
+  const TIME_WINDOW = 24 * 60 * 60 * 1000; // 1 day
+
   const filteredData = problems.filter(
     (problem) => problem.category === filter
   );
@@ -139,12 +141,36 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
               >
                 Next Review
               </TableCell>
+              <TableCell
+                sx={{
+                  backgroundColor: '#333',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              >
+                Time Window Due Date
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filteredData
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((problem) => {
+                // Convert next_review_timestamp to a Date object
+                // Turn it into a millisecond value
+                // Add TIME_WINDOW (one day) to it
+                const problemTimeWindowMilliSecond =
+                  new Date(problem.next_review_timestamp).getTime() +
+                  TIME_WINDOW;
+
+                // Convert the millisecond value back to a Date object and then to a string
+                const problemTimeWindow = new Date(
+                  problemTimeWindowMilliSecond
+                ).toISOString();
+
+                console.log('problemTimeWindow:', problemTimeWindow);
+
+                console.log('current date', Date.now());
                 // Initialize default values if fields are missing
                 const {
                   id,
@@ -216,6 +242,12 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                     </TableCell>
                     <TableCell sx={{ fontSize: '18px' }}>
                       {formatDate(next_review_timestamp)}
+                    </TableCell>
+                    <TableCell sx={{ fontSize: '18px' }}>
+                      {/* Check if current date is greater than next_review_timestamp */}
+                      {Date.now() > new Date(next_review_timestamp).getTime()
+                        ? formatDate(problemTimeWindow)
+                        : 'Not in the review window yet'}
                     </TableCell>
                   </TableRow>
                 );
