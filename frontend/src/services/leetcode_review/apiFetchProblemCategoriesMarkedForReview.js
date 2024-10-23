@@ -1,4 +1,4 @@
-import { LEETCODE_API_URL } from "./constants";
+import { LEETCODE_API_URL } from './constants';
 
 export const fetchProblemCategoriesMarkedForReviewByUser = async (
   uuid,
@@ -18,12 +18,12 @@ export const fetchProblemCategoriesMarkedForReviewByUser = async (
 
     const data = await response.json();
 
-    if (data == null) {
+    if (data.length === 0 || Object.keys(data).length === 0) {
       setProblemCategoriesMarkedForReview([]);
-      console.log(`User ${uuid} has null data for review problem categories`);
+      console.log(`User ${uuid} has not set any review problem categories`);
     } else {
       setProblemCategoriesMarkedForReview(data);
-      console.log("Review Categories", data);
+      console.log('Review Categories', data);
     }
   } catch (error) {
     console.error(`Request failed: ${error.message}`);

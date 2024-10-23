@@ -163,10 +163,15 @@ const ReviewProblemsTable = ({ data, filter, editMode }) => {
                   new Date(problem.next_review_timestamp).getTime() +
                   TIME_WINDOW;
 
-                // Convert the millisecond value back to a Date object and then to a string
-                const problemTimeWindow = new Date(
-                  problemTimeWindowMilliSecond
-                ).toISOString();
+                let problemTimeWindow;
+                if (problemTimeWindow) {
+                  // Convert the millisecond value back to a Date object and then to a string
+                  problemTimeWindow = new Date(
+                    problemTimeWindowMilliSecond
+                  ).toISOString();
+                } else {
+                  problemTimeWindow = null;
+                }
 
                 console.log('problemTimeWindow:', problemTimeWindow);
 

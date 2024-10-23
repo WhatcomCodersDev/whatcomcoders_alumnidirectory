@@ -8,24 +8,18 @@ import {
   TableRow,
   Paper,
   TablePagination,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
 } from '@mui/material';
 import { AuthContext } from 'contexts/authContext';
 import Difficulty from '../common/Difficulty';
 import { addAllProblemsToSubmission } from 'services/leetcode_review/apiAddAllProblemsToSubmission';
 import CustomCheckbox from '../common/CustomCheckbox';
 import SubmitButton from '../common/SubmitButton';
-import ProblemCategoriesFilter from '../ProblemCategoriesFilter';
 
 const AllProblemTable = ({
   data,
   filter,
   onCheckboxChange,
   selectedCategories,
-  editMode,
   submittedProblems,
 }) => {
   const { uuid } = useContext(AuthContext);
@@ -76,17 +70,13 @@ const AllProblemTable = ({
         <Table>
           <TableHead>
             <TableRow>
-              {editMode && (
-                <TableCell
-                  sx={{
-                    backgroundColor: 'black',
-                    color: 'white',
-                    fontSize: '20px',
-                  }}
-                >
-                  Attempted?
-                </TableCell>
-              )}
+              <TableCell
+                sx={{
+                  backgroundColor: 'black',
+                  color: 'white',
+                  fontSize: '20px',
+                }}
+              ></TableCell>
               <TableCell
                 sx={{
                   backgroundColor: 'black',
@@ -133,12 +123,10 @@ const AllProblemTable = ({
                   key={problem.id}
                   sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f9f9f9' } }}
                 >
-                  {editMode && (
-                    <CustomCheckbox
-                      checked={submittedProblems.includes(problem.id)}
-                      onChange={() => onCheckboxChange(problem.id)}
-                    />
-                  )}
+                  <CustomCheckbox
+                    checked={submittedProblems.includes(problem.id)}
+                    onChange={() => onCheckboxChange(problem.id)}
+                  />
                   <TableCell sx={{ fontSize: '18px' }}>{problem.id}</TableCell>
                   <TableCell sx={{ fontSize: '18px' }}>
                     <a
@@ -158,7 +146,7 @@ const AllProblemTable = ({
           </TableBody>
         </Table>
       </TableContainer>
-      {editMode && <SubmitButton handleSubmit={handleSubmit} />}
+      <SubmitButton handleSubmit={handleSubmit} />
       <TablePagination
         rowsPerPageOptions={[10, 20, 50]}
         component='div'

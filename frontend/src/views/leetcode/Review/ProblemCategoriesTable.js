@@ -37,15 +37,23 @@ const ProblemCategoriesTable = ({
   }, []);
 
   const handleSubmit = async () => {
-    updateProblemReviewCategories(uuid, problemCategoriesMarkedForReview);
+    updateProblemReviewCategories(
+      uuid,
+      problemCategoriesMarkedForReviewTempBugFix
+    );
   };
+
+  const problemCategoriesMarkedForReviewTempBugFix =
+    problemCategoriesMarkedForReview.length > 0
+      ? problemCategoriesMarkedForReview
+      : [];
 
   /** Show ALL categories or categories that need to be reviewed  */
   const filteredProblemCategories =
     filter === 'All'
       ? userSubmissionsByReviewCategory
       : userSubmissionsByReviewCategory.filter((category) =>
-          problemCategoriesMarkedForReview.includes(category.name)
+          problemCategoriesMarkedForReviewTempBugFix.includes(category.name)
         );
 
   return (
@@ -117,16 +125,17 @@ const ProblemCategoriesTable = ({
                 <TableRow
                   key={category.name}
                   sx={{
-                    backgroundColor: problemCategoriesMarkedForReview.includes(
-                      category.name
-                    )
-                      ? 'rgba(0, 0, 0, 0.3)'
-                      : 'inherit',
+                    backgroundColor:
+                      problemCategoriesMarkedForReviewTempBugFix.includes(
+                        category.name
+                      )
+                        ? 'rgba(0, 0, 0, 0.3)'
+                        : 'inherit',
                   }}
                 >
                   {editMode && (
                     <CustomCheckbox
-                      checked={problemCategoriesMarkedForReview.includes(
+                      checked={problemCategoriesMarkedForReviewTempBugFix.includes(
                         category.name
                       )}
                       onChange={() => onCheckboxChange(category.name)}

@@ -13,7 +13,6 @@ const LeetcodeView = () => {
   const [problemsData, setProblemsData] = useState([]);
   const [submittedProblems, setSubmittedProblems] = useState([]); // State to hold user's submitted problems
   const [selectedCategories] = useState([]);
-  const [editMode, setEditMode] = useState(false); // State to manage edit mode
 
   const { uuid } = useContext(AuthContext);
   console.log('uuid:', uuid);
@@ -38,7 +37,6 @@ const LeetcodeView = () => {
     <div>
       {loading && <p>Loading...</p>}
       <ProblemCategoriesFilter filter={filter} setFilter={setFilter} />
-      <EditButton editMode={editMode} setEditMode={setEditMode} />
 
       {!loading && (
         <AllProblemTable
@@ -46,7 +44,6 @@ const LeetcodeView = () => {
           filter={filter}
           selectedCategories={selectedCategories}
           onCheckboxChange={handleCheckboxChange}
-          editMode={editMode}
           submittedProblems={submittedProblems} // Pass submitted problems to the table
         />
       )}

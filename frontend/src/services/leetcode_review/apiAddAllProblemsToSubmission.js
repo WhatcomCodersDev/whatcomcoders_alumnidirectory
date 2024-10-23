@@ -1,37 +1,20 @@
 import { LEETCODE_API_URL } from './constants';
+import Problem from './ProblemData';
 
 export const addAllProblemsToSubmission = async (uuid, selectedProblems) => {
   console.log('selectedProblems', selectedProblems);
 
   try {
-    for (const problem of selectedProblems) {
-      console.log('problem', problem);
-      const payload = {
-        problem_difficulty: 3,
-        id: problem.id,
-        isInBlind50: problem.isInBlind50,
-        isInBlind75: problem.isInBlind75,
-        isInGrind75: problem.isInGrind75,
-        isInNeetcode: problem.isInNeetcode,
-        isInSeanPrasadList: problem.isInSeanPrasadList,
-        link: problem.link,
-        name: problem.name,
-        tag: problem.tag,
-        category: problem.category,
-        user_id: uuid,
-        user_rating: problem.user_rating ? problem.user_rating : '',
-        last_reviewed_timestamp: problem.last_reviewed_timestamp
-          ? problem.last_reviewed_timestamp
-          : '',
-        next_review_timestamp: problem.next_review_timestamp
-          ? problem.next_review_timestamp
-          : '',
-        attempted: true,
-      };
+    for (const problemData of selectedProblems) {
+      const problem = new Problem(problemData);
+      let payload = problem.toDict();
+      payload.user_id = uuid;
+
+      console.log('new problem', problem);
 
       console.log('payload', payload);
 
-      await fetch(`${LEETCODE_API_URL}/space_repetition/${problem.id}/submit`, {
+      await fetch(`${LEETCODE_API_URL}/users/${problem.id}/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
