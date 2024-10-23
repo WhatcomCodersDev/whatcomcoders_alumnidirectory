@@ -20,6 +20,11 @@ export const fetchAllUpcomingDueProblems = async (
     );
     const data = await response.json();
     console.log('data:', data);
+
+    if (data['review_problems'] == null) {
+      setDueProblems([]);
+      return;
+    }
     setDueProblems(data['review_problems']);
   } catch (error) {
     console.error('Request failed:', error.message);
